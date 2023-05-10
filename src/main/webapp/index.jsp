@@ -20,10 +20,6 @@
             <p>Du er logget ind som "${sessionScope.user.role}".</p>
         </c:if>
 
-        <c:if test="${sessionScope.user == null}">
-            <p>Du er ikke logget ind. Log ind her: <a
-                    href="login.jsp">Login</a></p>
-        </c:if>
 
     </jsp:body>
 
