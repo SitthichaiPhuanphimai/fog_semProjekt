@@ -1,4 +1,6 @@
-package dat.backend.model.entities;
+package dat.backend.model.services;
+
+import dat.backend.model.entities.Item;
 
 import java.util.ArrayList;
 import java.util.List;
