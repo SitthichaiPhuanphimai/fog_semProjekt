@@ -4,6 +4,7 @@ import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +16,7 @@ class UserMapper
 
         User user = null;
 
-        String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+        String sql = "SELECT * FROM fog.user WHERE username = ? AND password = ?";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -68,6 +69,34 @@ class UserMapper
         }
         return user;
     }
+
+    static ArrayList<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException
+    {
+        ArrayList<User> userList = new ArrayList<>();
+        try
+        {
+
+            Connection connection = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM fog.user";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next())
+            {
+                String name = rs.getString("username");
+                String password = rs.getString("password");
+                String role = rs.getString("role");
+
+                User user = new User(name, password, role);
+                userList.add(user);
+            }
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
 
 
 }
