@@ -19,7 +19,7 @@
         <div id="orderOverview" class="container mt-4">
             <h2>Din Order inkluderer: </h2>
             <br>
-            <h3> Du har valgt Højden: ${sessionScope.uHeight}</h3> <br>
+            <h3> Du har valgt Højden: ${sessionScope.uLength}</h3> <br>
             <h3> Du har valgt bredden: ${sessionScope.uWidth}</h3> <br>
             <c:if test="${sessionScope.skur != null}">
                 <h3> Din carport kommer med et skur </h3>

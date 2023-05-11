@@ -19,10 +19,47 @@
     <!-- Form for orders -->
     <div id="body" class="container mt-4" style="min-height: 400px;">
         <form action="ServletOrderPlacement" method="post">
-            <input type="number" name="height" placeholder="Højde" min="0" step="0.01" required="'required'" pattern="{1,100}" title="Det ønskede mål er ikke muligt">
+            <p>Vælg den øsnkede længde til din carport</p>
+            <select name="length" id="length">
+                <option value="0.0" selected disabled>Vælg længde:</option>
+                <option value="2.40">2.40</option>
+                <option value="2.70">2.70</option>
+                <option value="3.00">3.00</option>
+                <option value="3.30">3.30</option>
+                <option value="3.60">3.60</option>
+                <option value="3.90">3.90</option>
+                <option value="4.20">4.20</option>
+                <option value="4.50">4.50</option>
+                <option value="4.80">4.80</option>
+                <option value="5.10">5.10</option>
+                <option value="5.40">5.40</option>
+                <option value="5.70">5.70</option>
+                <option value="6.00">6.00</option>
+                <option value="6.30">6.30</option>
+                <option value="6.60">6.60</option>
+                <option value="6.90">6.90</option>
+                <option value="7.20">7.20</option>
+                <option value="7.50">7.50</option>
+                <option value="7.80">7.80</option>
+            </select>
             <br>
-            <br>
-            <input type="number" name="width" placeholder="Bredde" min="0" step="0.01" required="'required'" pattern="{1,100}" title="det ønskede mål er ikke muligt">
+            <p>Vælg den ønskede bredde til din carport</p>
+            <select name="width" id="width">
+                <option value="0.0" selected disabled>Vælg bredde:</option>
+                <option value="2.40">2.40</option>
+                <option value="2.70">2.70</option>
+                <option value="3.00">3.00</option>
+                <option value="3.30">3.30</option>
+                <option value="3.60">3.60</option>
+                <option value="3.90">3.90</option>
+                <option value="4.20">4.20</option>
+                <option value="4.50">4.50</option>
+                <option value="4.80">4.80</option>
+                <option value="5.10">5.10</option>
+                <option value="5.40">5.40</option>
+                <option value="5.70">5.70</option>
+                <option value="6.00">6.00</option>
+            </select>
             <br>
             <br>
             <p>Skal carporten have et skur tilknyttet</p>
@@ -32,8 +69,9 @@
                 </select>
             <br>
             <br>
-            <input type="submit" name="order" value="Bestil">
+            <input type="submit" name="order" value="Bestil" >
         </form>
+
     </div>
 
     </jsp:body>

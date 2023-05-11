@@ -24,16 +24,16 @@ public class ServletOrderPlacement extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        String h = request.getParameter("height");
-        double uHeight = Double.parseDouble(h);
-        session.setAttribute("uHeight", uHeight);
-
+        String l = request.getParameter("length");
+        Double uLength = Double.parseDouble(l);
+        session.setAttribute("uLength", uLength);
 
         String w = request.getParameter("width");
-        double uWidth = Double.parseDouble(w);
+        Double uWidth = Double.parseDouble(w);
         session.setAttribute("uWidth", uWidth);
 
         String skur = request.getParameter("skur");
+
 
         if(skur.equals("ja"))
         {
