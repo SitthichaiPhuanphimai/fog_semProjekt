@@ -16,7 +16,8 @@ public class ItemMapper {
              "FROM fog.material\n" +
              "INNER JOIN fog.material_type\n" +
              "ON fog.material.material_type_id = fog.material_type.id\n" +
-             "WHERE fog.material.length >= ? AND fog.material_type.type = ?\n" +
+             "WHERE fog.material.length >= ? AND fog.material_type.type = ?" +
+             "\n" +
              "ORDER BY fog.material.length ASC LIMIT 1;";
 
      // Skal jeg escape ? i type med single quotes, fordi det er en String i SQL?

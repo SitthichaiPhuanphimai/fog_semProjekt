@@ -2,6 +2,7 @@ package dat.backend.model.services;
 
 import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Item;
+import dat.backend.model.entities.ItemList;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.ItemFacade;
@@ -16,9 +17,6 @@ public class Calculator {
    List<Item> itemList = new ArrayList<>();
    private float length;
    private float width;
-   private Result calculatedBeams;
-   private Result calculatedSupportBeams;
-   private Result calculatedBraces;
 
 
    public Calculator(float length, float width) {
@@ -27,57 +25,18 @@ public class Calculator {
    }
 
 
-   public float getLength() {
-      return length;
-   }
-
-   public void setLength(float length) {
-      this.length = length;
-   }
-
-   public float getWidth() {
-      return width;
-   }
-
-   public void setWidth(float width) {
-      this.width = width;
-   }
-
-   public Result getCalculatedBeams() {
-      return calculatedBeams;
-   }
-
-   public void setCalculatedBeams(Result calculatedBeams) {
-      this.calculatedBeams = calculatedBeams;
-   }
-
-   public Result getCalculatedSupportBeams() {
-      return calculatedSupportBeams;
-   }
-
-   public void setCalculatedSupportBeams(Result calculatedSupportBeams) {
-      this.calculatedSupportBeams = calculatedSupportBeams;
-   }
-
-   public Result getCalculatedBraces() {
-      return calculatedBraces;
-   }
-
-   public void setCalculatedBraces(Result calculatedBraces) {
-      this.calculatedBraces = calculatedBraces;
-   }
 
 
-
-public Result calcSupportBeams() throws DatabaseException {
+public List<Item> calcSupportBeams() throws DatabaseException {
       double amountOfSupportBeamsRounded = Math.ceil(length / 0.55);
 
-      float supportBeamLength = getOptimalItem(length, "SupportBeam").getLength();
+      Item supportBeamWithOptimalLength = getOptimalItem(width, "SupportBeam");
 
 
-      Result result = new Result(amountOfSupportBeamsRounded, supportBeamLength);
+      Result result = new Result(amountOfSupportBeamsRounded, supportBeamWithOptimalLength);
+      result.addItemByQuantity(itemList);
 
-      return result;
+      return itemList;
    }
 
 
@@ -89,10 +48,15 @@ public Result calcSupportBeams() throws DatabaseException {
    }
 
 
-   public Result calcBraces() throws DatabaseException {
+   public List<Item> calcBraces() throws DatabaseException {
 
+        double amountOfBraces = 2;
+        Item braceWithOptimalLength = getOptimalItem(length, "Brace");
+        Result result = new Result(amountOfBraces, braceWithOptimalLength);
+        result.addItemByQuantity(itemList);
 
-return null;
+        return itemList;
+
    }
 
    // Float x is the value of the item you need to calculate upon, and String type is the type of item you need to calculate upon
@@ -101,6 +65,8 @@ return null;
       return ItemFacade.getOptimalItem(x, type, connectionPool);
 
    }
+
+
 
 
 }
