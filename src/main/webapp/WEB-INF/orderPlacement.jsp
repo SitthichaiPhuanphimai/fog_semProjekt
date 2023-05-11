@@ -15,12 +15,18 @@
     </jsp:attribute>
 
     <jsp:body>
+        <!-- Show error message -->
+        <c:if test="${not empty errorMessage}">
+            <div class="alert alert-danger" role="alert">
+                    ${errorMessage}
+            </div>
+        </c:if>
 
     <!-- Form for orders -->
     <div id="body" class="container mt-4" style="min-height: 400px;">
         <form action="ServletOrderPlacement" method="post">
             <p>Vælg den øsnkede længde til din carport</p>
-            <select name="length" id="length">
+            <select name="length" id="length" required>
                 <option value="0.0" selected disabled>Vælg længde:</option>
                 <option value="2.40">2.40</option>
                 <option value="2.70">2.70</option>
@@ -44,7 +50,7 @@
             </select>
             <br>
             <p>Vælg den ønskede bredde til din carport</p>
-            <select name="width" id="width">
+            <select name="width" id="width" required>
                 <option value="0.0" selected disabled>Vælg bredde:</option>
                 <option value="2.40">2.40</option>
                 <option value="2.70">2.70</option>

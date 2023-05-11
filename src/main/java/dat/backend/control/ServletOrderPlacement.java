@@ -25,14 +25,37 @@ public class ServletOrderPlacement extends HttpServlet {
         HttpSession session = request.getSession();
 
         String l = request.getParameter("length");
-        Double uLength = Double.parseDouble(l);
-        session.setAttribute("uLength", uLength);
+        //Double uLength = Double.parseDouble(l);
+        //session.setAttribute("uLength", uLength);
 
         String w = request.getParameter("width");
-        Double uWidth = Double.parseDouble(w);
-        session.setAttribute("uWidth", uWidth);
+        //Double uWidth = Double.parseDouble(w);
+        //session.setAttribute("uWidth", uWidth);
 
         String skur = request.getParameter("skur");
+
+
+        if(l == null || l.isEmpty() || w == null || w.isEmpty() || skur == null || skur.isEmpty()) {
+            // One of the parameters is not set, redirect to an error page or show an error message
+            request.setAttribute("errorMessage", "Please choose a value for all fields");
+            request.getRequestDispatcher("WEB-INF/orderPlacement.jsp").forward(request,response);
+            return;
+        }
+
+        try {
+            Double uLength = Double.parseDouble(l);
+            session.setAttribute("uLength", uLength);
+
+            Double uWidth = Double.parseDouble(w);
+            session.setAttribute("uWidth", uWidth);
+        } catch (NumberFormatException e) {
+            // The length or width parameter was not a valid double
+            request.setAttribute("errorMessage", "Invalid length or width");
+            request.getRequestDispatcher("WEB-INF/orderPlacement.jsp").forward(request,response);
+            return;
+        }
+
+
 
 
         if(skur.equals("ja"))
