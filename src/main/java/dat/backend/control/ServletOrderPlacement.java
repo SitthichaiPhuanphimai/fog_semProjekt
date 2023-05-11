@@ -1,5 +1,10 @@
 package dat.backend.control;
 
+import dat.backend.model.config.ApplicationStart;
+import dat.backend.model.exceptions.DatabaseException;
+import dat.backend.model.persistence.ConnectionPool;
+import dat.backend.model.services.Calculator;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,11 +15,20 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletOrderPlacement", value = "/ServletOrderPlacement")
 public class ServletOrderPlacement extends HttpServlet {
+
+    private ConnectionPool connectionPool;
+
+@Override
+    public void init() throws ServletException
+    {
+        this.connectionPool = ApplicationStart.getConnectionPool();
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //request.setCharacterEncoding("UTF-8");
 
-        request.getRequestDispatcher("WEB-INF/orderPlacement.jsp").forward(request,response);
+        request.getRequestDispatcher("WEB-INF/orderPlacement.jsp").forward(request, response);
 
 
     }
@@ -25,25 +39,31 @@ public class ServletOrderPlacement extends HttpServlet {
         HttpSession session = request.getSession();
 
         String h = request.getParameter("height");
-        double uHeight = Double.parseDouble(h);
+        float uHeight = Float.parseFloat(h);   // parse as float
         session.setAttribute("uHeight", uHeight);
 
 
         String w = request.getParameter("width");
-        double uWidth = Double.parseDouble(w);
+        float uWidth = Float.parseFloat(w);    // parse as float
         session.setAttribute("uWidth", uWidth);
+
+        // Create a Calculator instance and run calculations
+        Calculator calculator = new Calculator(uHeight, uWidth);
+        try {
+            System.out.println(calculator.calcBraces(connectionPool));
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
 
         String skur = request.getParameter("skur");
 
-        if(skur.equals("ja"))
-        {
-            session.setAttribute("skur",skur);
-        }else if(skur.equals("nej"))
-        {
-            session.setAttribute("skur",null);
+        if (skur.equals("ja")) {
+            session.setAttribute("skur", skur);
+        } else if (skur.equals("nej")) {
+            session.setAttribute("skur", null);
         }
 
-        request.getRequestDispatcher("/WEB-INF/orderConfirmation.jsp").forward(request,response);
+        request.getRequestDispatcher("/WEB-INF/orderConfirmation.jsp").forward(request, response);
 
     }
 }

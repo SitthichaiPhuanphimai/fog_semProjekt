@@ -25,12 +25,18 @@ public class Calculator {
    }
 
 
+public void RunAllCalculations(ConnectionPool connectionPool) throws DatabaseException {
+   calcSupportBeams(connectionPool);
+   calcBraces(connectionPool);
+   calcBeams();
+}
 
 
-public List<Item> calcSupportBeams() throws DatabaseException {
+
+public List<Item> calcSupportBeams(ConnectionPool connectionPool) throws DatabaseException {
       double amountOfSupportBeamsRounded = Math.ceil(length / 0.55);
+        Item supportBeamWithOptimalLength = ItemFacade.getOptimalItem(length, "Spær", connectionPool);
 
-      Item supportBeamWithOptimalLength = getOptimalItem(width, "SupportBeam");
 
 
       Result result = new Result(amountOfSupportBeamsRounded, supportBeamWithOptimalLength);
@@ -48,23 +54,16 @@ public List<Item> calcSupportBeams() throws DatabaseException {
    }
 
 
-   public List<Item> calcBraces() throws DatabaseException {
-
+    public List<Item> calcBraces(ConnectionPool connectionPool) throws DatabaseException {
         double amountOfBraces = 2;
-        Item braceWithOptimalLength = getOptimalItem(length, "Brace");
+        Item braceWithOptimalLength = ItemFacade.getOptimalItem(length, "Rem", connectionPool);
         Result result = new Result(amountOfBraces, braceWithOptimalLength);
         result.addItemByQuantity(itemList);
-
         return itemList;
+    }
 
-   }
 
-   // Float x is the value of the item you need to calculate upon, and String type is the type of item you need to calculate upon
-   public Item getOptimalItem(float x, String type) throws DatabaseException {
-      ConnectionPool connectionPool = ApplicationStart.getConnectionPool();
-      return ItemFacade.getOptimalItem(x, type, connectionPool);
 
-   }
 
 
 
