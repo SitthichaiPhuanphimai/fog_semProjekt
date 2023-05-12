@@ -3,8 +3,8 @@ package dat.backend.control;
 import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
-import dat.backend.model.persistence.UserFacade;
 import dat.backend.model.persistence.ConnectionPool;
+import dat.backend.model.persistence.UserFacade;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
+import static dat.backend.model.services.Authentication.isRoleAllowed;
 
 @WebServlet(name = "login", urlPatterns = {"/login"} )
 public class Login extends HttpServlet
@@ -44,7 +46,14 @@ public class Login extends HttpServlet
             User user = UserFacade.login(username, password, connectionPool);
             session = request.getSession();
             session.setAttribute("user", user); // adding user object to session scope
-            request.getRequestDispatcher("WEB-INF/welcome.jsp").forward(request, response);
+            if (isRoleAllowed("admin",request))
+            {
+                request.getRequestDispatcher("WEB-INF/adminPage.jsp").forward(request,response);
+            } else
+            {
+                request.getRequestDispatcher("WEB-INF/welcome.jsp").forward(request, response);
+            }
+
         }
         catch (DatabaseException e)
         {
