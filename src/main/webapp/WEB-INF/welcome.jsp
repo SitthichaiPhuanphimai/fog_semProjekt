@@ -20,7 +20,8 @@
             <p>You are logged in with the role of "${sessionScope.user.role}".</p>
 
             <form action="ServletOrderPlacement" method="get">
-                <input type="submit" value="Bestil Carport"> carport</input>
+                <p>Byg og bestil din egen carport!</p>
+                <input class="btn btn-success" type="submit" value="Byg Nu">
             </form>
         </c:if>
 
