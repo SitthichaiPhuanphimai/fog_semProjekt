@@ -13,11 +13,21 @@
     </jsp:attribute>
 
     <jsp:body>
-
+        <div class="container">
         <p>You should be logged in now</p>
 
         <c:if test="${sessionScope.user != null}">
             <p>You are logged in with the role of "${sessionScope.user.role}".</p>
+<<<<<<< Updated upstream
+=======
+            <br>
+        </div>
+            <%-- Knap til order bestilling page --%>
+            <form action="ServletOrderPlacement" method="get" style="align-content: center">
+                <p>Byg og bestil din egen carport!</p>
+                <input class="btn btn-success" type="submit" name="opPage" value="Byg Nu" style="align-content: center">
+            </form>
+>>>>>>> Stashed changes
         </c:if>
 
         <c:if test="${sessionScope.user == null}">
