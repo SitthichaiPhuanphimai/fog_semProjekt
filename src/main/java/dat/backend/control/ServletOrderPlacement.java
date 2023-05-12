@@ -51,6 +51,7 @@ public class ServletOrderPlacement extends HttpServlet {
         Calculator calculator = new Calculator(uHeight, uWidth);
         try {
             System.out.println(calculator.calcBraces(connectionPool));
+            System.out.println(calculator.calcSupportBeams(connectionPool));
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
