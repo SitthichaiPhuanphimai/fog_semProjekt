@@ -32,7 +32,7 @@ public class ItemMapper {
 
             double totalLength = 0;
 
-            ps.setString(2, "%" + type + "%");
+            ps.setString(1, "%" + type + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {

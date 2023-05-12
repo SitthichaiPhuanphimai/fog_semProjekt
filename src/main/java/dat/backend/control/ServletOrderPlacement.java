@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "ServletOrderPlacement", value = "/ServletOrderPlacement")
 public class ServletOrderPlacement extends HttpServlet {
@@ -50,9 +51,11 @@ public class ServletOrderPlacement extends HttpServlet {
         // Create a Calculator instance and run calculations
         Calculator calculator = new Calculator(uHeight, uWidth);
         try {
-            System.out.println(calculator.calcBraces(connectionPool));
-            System.out.println(calculator.calcSupportBeams(connectionPool));
+            calculator.RunAllCalculations(connectionPool);
+
         } catch (DatabaseException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
