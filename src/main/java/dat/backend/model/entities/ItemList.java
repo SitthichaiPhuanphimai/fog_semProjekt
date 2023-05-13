@@ -19,5 +19,8 @@ public class ItemList {
         
     }
 
+    public void setItemList(List<Item> itemList) {
+        this.itemList = itemList;
+    }
 }
 

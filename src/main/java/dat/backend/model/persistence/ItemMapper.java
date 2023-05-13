@@ -10,27 +10,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Arrays;
 import java.util.List;
 
 public class ItemMapper {
 
-
     static List<Item> getOptimalItem(float requiredLength, String type, ConnectionPool connectionPool) throws DatabaseException, SQLException {
-
         String sql = "SELECT fog.material.description, fog.material.price_per_unit, fog.material_length.length, fog.material_type.type " +
                 "FROM fog.material " +
                 "INNER JOIN fog.material_type ON (fog.material.material_type_id = fog.material_type.id) " +
                 "INNER JOIN fog.material_length ON fog.material.material_length_id = fog.material_length.id " +
-                "WHERE fog.material_type.type LIKE ? " +
-                "ORDER BY fog.material_length.length DESC;";
+                "WHERE fog.material_type.type LIKE ?;";
 
         List<Item> materials = new ArrayList<>();
-        List<Item> selectedMaterials = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            double totalLength = 0;
 
             ps.setString(1, "%" + type + "%");
 
@@ -43,30 +40,47 @@ public class ItemMapper {
 
                     Item item = new Item(description, lengthofItem, price, itemType);
                     materials.add(item);
-
                 }
-                // We are here checking if we have enough length of the item to cover the required length
-                for (Item item : materials) {
-                    if (totalLength >= requiredLength) {
-                        break;
-                    }
-                        selectedMaterials.add(item);
-                        totalLength += item.getLength();
-                    }
-
-                    // We are sorting the selected list until we have the optimal length with minimal waste
-                    while (!selectedMaterials.isEmpty() && totalLength - selectedMaterials.get(selectedMaterials.size() - 1).getLength() > requiredLength) {
-                        totalLength -= selectedMaterials.get(selectedMaterials.size() - 1).getLength();
-                        selectedMaterials.remove(selectedMaterials.size() - 1);
-                    }
-
-                }
-
             } catch (SQLException ex) {
                 throw new DatabaseException(ex, "Error getting item. Something went wrong with the database");
             }
+        }
 
-return selectedMaterials;
+        // Sort items by length
+        Collections.sort(materials, Comparator.comparing(Item::getLength));
+
+        // Convert requiredLength to an integer to avoid dealing with floating point numbers
+        int target = (int) (requiredLength * 100);
+
+        // Initialize dp array
+        float[] dp = new float[target + 1];
+        Arrays.fill(dp, Float.MAX_VALUE);
+        dp[0] = 0;
+
+        // Initialize parent array to reconstruct the solution
+        int[] parent = new int[target + 1];
+
+        // Dynamic programming
+        for (int j = 1; j <= target; j++) {
+            for (int i = 0; i < materials.size(); i++) {
+                Item item = materials.get(i);
+                int itemLength = (int) (item.getLength() * 100);
+                if (itemLength <= j) {
+                    float waste = dp[j - itemLength] + item.getLength();
+                    if (waste < dp[j]) {
+                        dp[j] = waste;
+                        parent[j] = i;
+                    }
+                }
+            }
+        }
+
+        // Reconstruct solution
+        List<Item> selectedMaterials = new ArrayList<>();
+        for (int j = target; j > 0; j -= (int) (materials.get(parent[j]).getLength() * 100)) {
+            selectedMaterials.add(materials.get(parent[j]));
+        }
+
+        return selectedMaterials;
     }
 }
-

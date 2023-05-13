@@ -59,6 +59,8 @@ public class ServletOrderPlacement extends HttpServlet {
             e.printStackTrace();
         }
 
+        session.setAttribute("itemList", calculator.getItemList());
+
         String skur = request.getParameter("skur");
 
         if (skur.equals("ja")) {
@@ -67,7 +69,7 @@ public class ServletOrderPlacement extends HttpServlet {
             session.setAttribute("skur", null);
         }
 
-        request.getRequestDispatcher("/WEB-INF/orderConfirmation.jsp").forward(request, response);
+        request.getRequestDispatcher("testListPopulation.jsp").forward(request, response);
 
     }
 }

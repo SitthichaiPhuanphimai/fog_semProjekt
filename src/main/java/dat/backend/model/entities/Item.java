@@ -23,7 +23,21 @@ public class Item {
         this.type = type;
     }
 
+    public String getName() {
+        return description;
+    }
 
+    public float getPrice() {
+        return price;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public String getType() {
+        return type;
+    }
 
     public float getLength() {
         return length;
