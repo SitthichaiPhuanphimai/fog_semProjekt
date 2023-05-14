@@ -34,7 +34,7 @@ public class Calculator {
     public void RunAllCalculations(ConnectionPool connectionPool) throws DatabaseException, SQLException {
         calcSupportBeams(connectionPool);
         calcBraces(connectionPool);
-        calcBeams();
+        calcBeams(connectionPool);
     }
 
 // Adding the support beams to the list amountOfSupportBeamsRounded times
@@ -55,15 +55,22 @@ public class Calculator {
         return itemList;
     }
 
-
-    public int calcBeams() {
+    public int calcBeams(ConnectionPool connectionPool) throws SQLException, DatabaseException {
         int calculaAmountOfBeams = (length < 5) ? 4 : 6;
+        List<Item> beamWithOptimalLength = ItemFacade.getBraces( "søjler", connectionPool);
+
+        if (beamWithOptimalLength.isEmpty()) {
+            throw new DatabaseException("No beams where found in the database");
+        }
+
+        for (int i = 0; i < calculaAmountOfBeams; i++) {
+            itemList.addAll(beamWithOptimalLength);
+        }
 
         return calculaAmountOfBeams;
-
     }
 
-// Adding the braces to the list amountOfBraces times
+    // Adding the braces to the list amountOfBraces times
     public List<Item> calcBraces(ConnectionPool connectionPool) throws DatabaseException, SQLException {
         double amountOfBraces = 2;
         List<Item> braceWithOptimalLength = ItemFacade.getOptimalItem(length, "Rem", connectionPool);

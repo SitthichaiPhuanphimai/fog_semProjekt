@@ -12,4 +12,8 @@ public class ItemFacade {
     public static List<Item> getOptimalItem(float length, String type, ConnectionPool connectionPool) throws DatabaseException, SQLException {
         return ItemMapper.getOptimalItem(length, type, connectionPool);
     }
+
+    public static List<Item> getBraces(String type, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        return ItemMapper.getBraces(type, connectionPool);
+    }
 }
