@@ -46,15 +46,14 @@ public class ItemMapper {
             }
         }
 
-        // Sort items by length
-        Collections.sort(materials, Comparator.comparing(Item::getLength));
 
         // Convert requiredLength to an integer to avoid dealing with floating point numbers
         int target = (int) (requiredLength * 100);
 
-        // Initialize dp array
+        // filling out the dp array with the maximum value of a float. as we iterate through the array we will replace the values with the optimal solution
         float[] dp = new float[target + 1];
         Arrays.fill(dp, Float.MAX_VALUE);
+        // Starting point for our dynamic programming
         dp[0] = 0;
 
         // Initialize parent array to reconstruct the solution
