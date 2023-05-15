@@ -25,11 +25,7 @@
     <jsp:body>
 
         <form action="viewOrdersServlet" method="post">
-            <button type="submit" class="btn btn-primary">View all orders</button>
-        </form>
-        <br>
-        <form action="ViewMaterialsServlet" method="get">
-            <button type="submit" class="btn btn-primary">View Materials</button>
+            <button style="border-radius: 8px" type="submit">Se alle ordre</button>
         </form>
 
 

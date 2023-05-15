@@ -12,25 +12,45 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 
 @WebServlet(name = "viewOrdersServlet", value = "/viewOrdersServlet")
 public class ViewOrdersServlet extends HttpServlet
 {
 
+
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse respponse) throws ServletException, IOException
-    {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String orderId = request.getParameter("orderId");
+        ConnectionPool connection = new ConnectionPool();
+        String newStatus = request.getParameter("status");
+
+        try(Connection conn = connection.getConnection())
+        {
+            String sql = "UPDATE fog.order SET status = ? WHERE id = ?";
+
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                statement.setString(1, newStatus);
+                statement.setString(2, orderId);
+                statement.executeUpdate();
+
+            } catch (SQLException e)
+            {
+                System.out.println("Error in the database");
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
 
         ArrayList<Order> ordersList = OrdersMapper.getAllOrders();
 
         request.setAttribute("ordersList", ordersList);
 
-        request.getRequestDispatcher("WEB-INF/viewAllOrders.jsp").forward(request,respponse);
-
-
-
-
+        request.getRequestDispatcher("WEB-INF/viewAllOrders.jsp").forward(request,response);
 
 
     }

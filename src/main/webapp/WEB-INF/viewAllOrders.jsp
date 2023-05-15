@@ -9,8 +9,8 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page errorPage="../error.jsp" isErrorPage="false" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="dat.backend.model.entities.Order" %>
+
+
 
 
 <t:pagetemplate>
@@ -30,16 +30,34 @@
         <table>
             <tr>
                 <th>ID</th>
-                <th>Username</th>
+                <th>Email</th>
                 <th>Status</th>
+                <th>Skift status</th>
+
+
             </tr>
 
+            <c:forEach var="Order" items="${requestScope.ordersList}">
             <tr>
-                <td> ${requestScope.ordersList.get(0).id}</td>
-                <td> ${requestScope.ordersList.get(0).username}</td>
-                <td> ${requestScope.ordersList.get(0).status}</td>
+
+                <td> ${Order.id}</td>
+                <td> ${Order.username}</td>
+                <td> ${Order.status}</td>
+                <td>
+                    <form name="skift" action="viewOrdersServlet" method="post">
+                        <input type="hidden" name="orderId" value="${Order.id}">
+                        <select name="status">
+                            <option value="Approved" ${"approved".equals(Order.status) ? 'selected' : ''}>Approved</option>
+                            <option value="Pending" ${"pending".equals(Order.status) ? 'selected' : ''}>Pending</option>
+                            <option value="Declined" ${"declined".equals(Order.status) ? 'selected' : ''}>Declined</option>
+                        </select>
+                        <input type="submit" name="skift" value="Skift status">
+                    </form>
+
+                </td>
 
             </tr>
+            </c:forEach>
 
         </table>
 
