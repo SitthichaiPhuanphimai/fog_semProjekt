@@ -16,6 +16,8 @@ public class ItemList {
     }
 
     public ItemList(List<Item> itemList, float totalPrice) {
+        this.itemList = itemList;
+        this.totalPrice = totalPrice;
         
     }
 
@@ -34,5 +36,7 @@ public class ItemList {
         }
         return totalPrice;
     }
+
+
 }
 

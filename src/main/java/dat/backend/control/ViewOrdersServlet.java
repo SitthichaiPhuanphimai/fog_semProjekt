@@ -1,10 +1,8 @@
 package dat.backend.control;
 
-import com.mysql.cj.exceptions.ConnectionIsClosedException;
-import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Order;
 import dat.backend.model.persistence.ConnectionPool;
-import dat.backend.model.persistence.OrdersMapper;
+import dat.backend.model.persistence.OrderMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +44,7 @@ public class ViewOrdersServlet extends HttpServlet
         }
 
 
-        ArrayList<Order> ordersList = OrdersMapper.getAllOrders();
+        ArrayList<Order> ordersList = OrderMapper.getAllOrders();
 
         request.setAttribute("ordersList", ordersList);
 

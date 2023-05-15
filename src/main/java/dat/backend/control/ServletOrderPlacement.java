@@ -61,6 +61,7 @@ public class ServletOrderPlacement extends HttpServlet {
             e.printStackTrace();
         }
         ItemList itemList = new ItemList(calculator.getItemList());
+        session.setAttribute("itemList", itemList);
         session.setAttribute("totalPrice", itemList.calculateTotalPrice());
 
 
@@ -73,15 +74,6 @@ public class ServletOrderPlacement extends HttpServlet {
         } else if (skur.equals("nej")) {
             session.setAttribute("skur", null);
         }
-
-        String action = request.getParameter("action");
-        if("Acceptere".equals(action))
-        {
-            String username = (String) session.getAttribute("user");
-
-            OrderFacade.createOrderList(username,itemList, connectionPool);
-        }
-
 
         request.getRequestDispatcher("/WEB-INF/orderConfirmation.jsp").forward(request, response);
 

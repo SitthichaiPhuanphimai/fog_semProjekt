@@ -30,7 +30,7 @@
             <h3> Carporten kommer ikke med et skur
                 <h3>
                     </c:if>
-                    <form action="/ServletOrderPlacement" method="post">
+                    <form action="Checkout" method="post">
                         <input type="submit" name="action" class="btn btn-success" value="Acceptere">
                         <input type="submit" name="action" class="btn btn-danger" value="Annullere">
                     </form>
