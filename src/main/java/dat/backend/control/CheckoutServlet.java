@@ -44,12 +44,13 @@ public class CheckoutServlet extends HttpServlet {
             try {
                 // Create order and retrieve order ID
                 Order order = OrderFacade.createOrder(username, connectionPool);
+                session.setAttribute("order", order);
 
                 // Insert items into material_list table using the returned order ID
                 ItemListFacade.createMaterialList(order.getId(), itemList, connectionPool);
 
-                // Forward to order confirmation page
-                request.getRequestDispatcher("/WEB-INF/orderConfirmation.jsp").forward(request, response);
+
+                request.getRequestDispatcher("/WEB-INF/orderDetails.jsp").forward(request, response);
             } catch (Exception e) {
                 // Handle exceptions (log them, show an error page, etc.)
                 e.printStackTrace();

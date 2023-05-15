@@ -56,7 +56,7 @@ public class OrderMapper {
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int orderId = generatedKeys.getInt(1);
-                    order = new Order(orderId, username, "new");
+                    order = new Order(orderId, username, "pending");
                 } else {
                     throw new SQLException("Creating order failed, no ID obtained.");
                 }
