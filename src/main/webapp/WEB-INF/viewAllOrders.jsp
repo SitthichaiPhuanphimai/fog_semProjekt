@@ -30,8 +30,10 @@
         <table>
             <tr>
                 <th>ID</th>
-                <th>Username</th>
+                <th>Email</th>
                 <th>Status</th>
+
+
             </tr>
 
             <c:forEach var="Order" items="${requestScope.ordersList}">
