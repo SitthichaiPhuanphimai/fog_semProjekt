@@ -3,8 +3,10 @@ package dat.backend.control;
 import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Item;
 import dat.backend.model.entities.ItemList;
+import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
+import dat.backend.model.persistence.OrderFacade;
 import dat.backend.model.services.Calculator;
 
 import javax.servlet.ServletException;
@@ -72,6 +74,13 @@ public class ServletOrderPlacement extends HttpServlet {
             session.setAttribute("skur", null);
         }
 
+        String action = request.getParameter("action");
+        if("Acceptere".equals(action))
+        {
+            String username = (String) session.getAttribute("user");
+
+            OrderFacade.createOrderList(username,itemList, connectionPool);
+        }
 
 
         request.getRequestDispatcher("/WEB-INF/orderConfirmation.jsp").forward(request, response);

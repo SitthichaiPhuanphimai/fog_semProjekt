@@ -1,9 +1,12 @@
 package dat.backend.model.persistence;
 
+import dat.backend.model.entities.Item;
+import dat.backend.model.entities.ItemList;
 import dat.backend.model.entities.Order;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrdersMapper
 {
@@ -40,4 +43,10 @@ public class OrdersMapper
 
 
 
+
+
+    public static List<Item> createOrderList(String username, ItemList itemList, ConnectionPool connectionPool) {
+
+       String sql = "INSERT INTO fog.material_list"
+    }
 }
