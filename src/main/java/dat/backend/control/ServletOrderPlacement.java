@@ -1,6 +1,8 @@
 package dat.backend.control;
 
 import dat.backend.model.config.ApplicationStart;
+import dat.backend.model.entities.Item;
+import dat.backend.model.entities.ItemList;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.services.Calculator;
@@ -52,14 +54,15 @@ public class ServletOrderPlacement extends HttpServlet {
         Calculator calculator = new Calculator(uHeight, uWidth);
         try {
             calculator.RunAllCalculations(connectionPool);
-
         } catch (DatabaseException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        session.setAttribute("itemList", calculator.getItemList());
+        ItemList itemList =new ItemList(calculator.getItemList());
+
+        session.setAttribute("itemList",itemList.getItemList());
 
         String skur = request.getParameter("skur");
 

@@ -19,6 +19,10 @@ public class ItemList {
         
     }
 
+    public List<Item> getItemList() {
+        return this.itemList;
+    }
+
     public void setItemList(List<Item> itemList) {
         this.itemList = itemList;
     }
