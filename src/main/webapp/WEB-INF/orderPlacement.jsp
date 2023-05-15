@@ -19,7 +19,7 @@
     <!-- Form for orders -->
     <div id="body" class="container mt-4" style="min-height: 400px;">
         <form action="ServletOrderPlacement" method="post">
-            <input type="number" name="height" placeholder="Højde" min="0" step="0.01" required="'required'" pattern="{1,100}" title="Det ønskede mål er ikke muligt">
+            <input type="number" name="length" placeholder="Length" min="0" step="0.01" required="'required'" pattern="{1,100}" title="Det ønskede mål er ikke muligt">
             <br>
             <br>
             <input type="number" name="width" placeholder="Bredde" min="0" step="0.01" required="'required'" pattern="{1,100}" title="det ønskede mål er ikke muligt">

@@ -41,17 +41,16 @@ public class ServletOrderPlacement extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        String h = request.getParameter("height");
-        float uHeight = Float.parseFloat(h);   // parse as float
-        session.setAttribute("uHeight", uHeight);
+        String l = request.getParameter("length");
+        float uLength = Float.parseFloat(l);   // parse as float
+        session.setAttribute("uLength", uLength);
 
 
         String w = request.getParameter("width");
         float uWidth = Float.parseFloat(w);    // parse as float
         session.setAttribute("uWidth", uWidth);
-
         // Create a Calculator instance and run calculations
-        Calculator calculator = new Calculator(uHeight, uWidth);
+        Calculator calculator = new Calculator(uLength, uWidth);
         try {
             calculator.RunAllCalculations(connectionPool);
         } catch (DatabaseException e) {
@@ -59,10 +58,11 @@ public class ServletOrderPlacement extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        ItemList itemList = new ItemList(calculator.getItemList());
+        session.setAttribute("totalPrice", itemList.calculateTotalPrice());
 
-        ItemList itemList =new ItemList(calculator.getItemList());
 
-        session.setAttribute("itemList",itemList.getItemList());
+
 
         String skur = request.getParameter("skur");
 
@@ -72,7 +72,9 @@ public class ServletOrderPlacement extends HttpServlet {
             session.setAttribute("skur", null);
         }
 
-        request.getRequestDispatcher("testListPopulation.jsp").forward(request, response);
+
+
+        request.getRequestDispatcher("/WEB-INF/orderConfirmation.jsp").forward(request, response);
 
     }
 }

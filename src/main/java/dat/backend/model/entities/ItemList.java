@@ -23,8 +23,16 @@ public class ItemList {
         return this.itemList;
     }
 
-    public void setItemList(List<Item> itemList) {
-        this.itemList = itemList;
+    public float getTotalPrice() {
+        return this.totalPrice;
+    }
+
+    public float calculateTotalPrice() {
+        float totalPrice = 0;
+        for (Item item : itemList) {
+            totalPrice += (item.getPrice() * item.getLength());
+        }
+        return totalPrice;
     }
 }
 
