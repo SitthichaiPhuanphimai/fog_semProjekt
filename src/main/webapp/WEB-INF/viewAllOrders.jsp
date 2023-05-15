@@ -32,15 +32,29 @@
                 <th>ID</th>
                 <th>Email</th>
                 <th>Status</th>
+                <th>Skift status</th>
 
 
             </tr>
 
             <c:forEach var="Order" items="${requestScope.ordersList}">
             <tr>
+
                 <td> ${Order.id}</td>
                 <td> ${Order.username}</td>
                 <td> ${Order.status}</td>
+                <td>
+                    <form name="skift" action="viewOrdersServlet" method="post">
+                        <input type="hidden" name="orderId" value="${Order.id}">
+                        <select name="status">
+                            <option value="Approved" ${"approved".equals(Order.status) ? 'selected' : ''}>Approved</option>
+                            <option value="Pending" ${"pending".equals(Order.status) ? 'selected' : ''}>Pending</option>
+                            <option value="Declined" ${"declined".equals(Order.status) ? 'selected' : ''}>Declined</option>
+                        </select>
+                        <input type="submit" name="skift" value="Skift status">
+                    </form>
+
+                </td>
 
             </tr>
             </c:forEach>

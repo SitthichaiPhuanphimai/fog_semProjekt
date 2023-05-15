@@ -6,27 +6,32 @@ public class Order
     private String username;
     private String status;
 
-    public Order(int id, String username, String status) {
+    public Order(int id, String username, String status)
+    {
         this.id = id;
         this.username = username;
         this.status = status;
     }
 
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public String getUsername() {
+    public String getUsername()
+    {
         return username;
     }
 
-    public String getStatus() {
+    public String getStatus()
+    {
         return status;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "id:" + id +" " + "username: " + username + " "+ "status_ "+ status;
     }
 }
