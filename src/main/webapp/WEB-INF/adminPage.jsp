@@ -25,7 +25,11 @@
     <jsp:body>
 
         <form action="viewOrdersServlet" method="post">
-            <button type="submit">View all orders</button>
+            <button type="submit" class="btn btn-primary">View all orders</button>
+        </form>
+        <br>
+        <form action="ViewMaterialsServlet" method="get">
+            <button type="submit" class="btn btn-primary">View Materials</button>
         </form>
 
 

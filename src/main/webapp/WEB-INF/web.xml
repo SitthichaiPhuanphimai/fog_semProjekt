@@ -13,4 +13,23 @@
         <location>/error.jsp</location>
     </error-page>
 
+    <!--<servlet>
+        <servlet-name>UpdateMaterialServlet</servlet-name>
+        <servlet-class>dat.backend.control.ViewMaterialsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateMaterialServlet</servlet-name>
+        <url-pattern>/update-material</url-pattern>
+    </servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>UpdateMaterialServlet</servlet-name>
+        <servlet-class>dat.backend.model.services.UpdateMaterialServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UpdateMaterialServlet</servlet-name>
+        <url-pattern>/UpdateMaterialServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>
