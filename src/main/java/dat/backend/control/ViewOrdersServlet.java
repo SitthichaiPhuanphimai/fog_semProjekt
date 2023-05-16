@@ -1,7 +1,5 @@
 package dat.backend.control;
 
-import com.mysql.cj.exceptions.ConnectionIsClosedException;
-import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Order;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.OrdersMapper;
