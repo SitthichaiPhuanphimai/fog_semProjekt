@@ -42,7 +42,6 @@ public class ItemMapper {
                     String itemType = rs.getString("type");
 
 
-
                     Item item = new Item(id, description, lengthOfItem, price, unit, itemType);
                     materials.add(item);
                 }
@@ -89,7 +88,7 @@ public class ItemMapper {
     }
 
     public static List<Item> getBraces(String type, ConnectionPool connectionPool) throws DatabaseException {
-        String sql =  "SELECT fog.material.id,fog.material.description, fog.material.price_per_unit, fog.material_length.length, fog.material_type.type, fog.unit.unit "  +
+        String sql = "SELECT fog.material.id,fog.material.description, fog.material.price_per_unit, fog.material_length.length, fog.material_type.type, fog.unit.unit " +
                 "FROM fog.material " +
                 "INNER JOIN fog.material_type ON (fog.material.material_type_id = fog.material_type.id) " +
                 "INNER JOIN fog.material_length ON fog.material.material_length_id = fog.material_length.id " +
@@ -113,7 +112,6 @@ public class ItemMapper {
                     String itemType = rs.getString("type");
 
 
-
                     Item item = new Item(id, description, lengthofItem, price, unit, itemType);
                     materials.add(item);
                 }
@@ -124,6 +122,38 @@ public class ItemMapper {
             throw new DatabaseException(ex, "Error getting item. Something went wrong with the database");
         }
 
+        return materials;
+    }
+
+    public static List<Item> getNailBox(ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT fog.material.id,fog.material.description, fog.material.price_per_unit, fog.material_length.length, fog.material_type.type, fog.unit.unit " +
+                "FROM fog.material " +
+                "INNER JOIN fog.material_type ON (fog.material.material_type_id = fog.material_type.id) " +
+                "INNER JOIN fog.material_length ON fog.material.material_length_id = fog.material_length.id " +
+                "INNER JOIN fog.unit ON fog.material.unit_id = fog.unit.id " +
+                "WHERE fog.material_type.type LIKE 'søm';";
+
+        List<Item> materials = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String description = rs.getString("description");
+                    float price = rs.getFloat("price_per_unit");
+                    float lengthofItem = rs.getFloat("length");
+                    String unit = rs.getString("unit");
+                    String itemType = rs.getString("type");
+                }
+            } catch (SQLException e) {
+                throw new DatabaseException(e, "Error getting item. Something went wrong with the database");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return materials;
     }
 }
