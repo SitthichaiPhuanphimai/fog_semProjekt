@@ -36,6 +36,7 @@ public class Calculator {
         calcBraces(connectionPool);
         calcBeams(connectionPool);
         calcRoofPanel(connectionPool);
+        calcNailBox(connectionPool);
     }
 
 // Adding the support beams to the list amountOfSupportBeamsRounded times
