@@ -2,6 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page errorPage="../error.jsp" isErrorPage="false" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <t:pagetemplate>
 
@@ -21,7 +22,7 @@
             <br>
             <h3> Du har valgt længden: ${sessionScope.uLength}</h3> <br>
             <h3> Du har valgt bredden: ${sessionScope.uWidth}</h3> <br>
-            <h3> Den samlede pris for carport ${sessionScope.totalPrice}</h3>
+            <h3> Den samlede pris for carport <fmt:formatNumber value="${sessionScope.totalPrice}" type="number" minFractionDigits="2" maxFractionDigits="2"/> kr</h3>
 
             <c:if test="${sessionScope.skur != null}">
                 <h3> Din carport kommer med et skur </h3>
