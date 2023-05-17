@@ -27,7 +27,7 @@ public class ViewOrdersServlet extends HttpServlet
 
         try(Connection conn = connection.getConnection())
         {
-            String sql = "UPDATE fog.order SET status = ? WHERE id = ?";
+            String sql = "UPDATE orders SET status = ? WHERE id = ?";
 
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.setString(1, newStatus);
@@ -44,7 +44,7 @@ public class ViewOrdersServlet extends HttpServlet
         }
 
 
-        ArrayList<Order> ordersList = OrdersMapper.getAllOrders();
+        ArrayList<Order> ordersList = OrdersMapper.getAllOrders(connection);
 
         request.setAttribute("ordersList", ordersList);
 

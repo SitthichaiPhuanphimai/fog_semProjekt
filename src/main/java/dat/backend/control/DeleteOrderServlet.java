@@ -1,6 +1,8 @@
-package dat.backend.model.persistence;
+package dat.backend.control;
 
 import dat.backend.model.entities.Order;
+import dat.backend.model.persistence.ConnectionPool;
+import dat.backend.model.persistence.OrdersMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +28,9 @@ public class DeleteOrderServlet extends HttpServlet
 
         try(Connection conn = connection.getConnection())
         {
-            String sql = "DELETE FROM fog.order WHERE id = ?";
+
+            String sql = "DELETE FROM orders WHERE id = ?";
+
 
             try(PreparedStatement statement = conn.prepareStatement(sql))
             {
@@ -39,7 +43,7 @@ public class DeleteOrderServlet extends HttpServlet
             e.printStackTrace();
         }
 
-        ArrayList<Order> ordersList = OrdersMapper.getAllOrders();
+        ArrayList<Order> ordersList = OrdersMapper.getAllOrders(connection);
 
         request.setAttribute("ordersList", ordersList);
 
