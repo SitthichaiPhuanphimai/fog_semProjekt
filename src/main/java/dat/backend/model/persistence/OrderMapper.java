@@ -12,7 +12,7 @@ public class OrderMapper {
 
 
     public static ArrayList<Order> getAllOrders() {
-        String sql = "SELECT * FROM fog.order";
+        String sql = "SELECT * FROM fog.orders";
         ArrayList<Order> ordersList = new ArrayList<>();
         ConnectionPool connection = new ConnectionPool();
 
@@ -38,7 +38,7 @@ public class OrderMapper {
 
 
     public static Order createOrder(String username, ConnectionPool connectionPool) {
-        String sql = "INSERT INTO fog.order (username, status) VALUES (?, ?)";
+        String sql = "INSERT INTO fog.orders (username, status) VALUES (?, ?)";
         Order order = null;
 
         try (Connection conn = connectionPool.getConnection();

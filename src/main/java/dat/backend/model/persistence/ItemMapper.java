@@ -125,18 +125,20 @@ public class ItemMapper {
         return materials;
     }
 
-    public static List<Item> getNailBox(ConnectionPool connectionPool) throws DatabaseException {
+    public static List<Item> getNailBox(String type, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT fog.material.id,fog.material.description, fog.material.price_per_unit, fog.material_length.length, fog.material_type.type, fog.unit.unit " +
                 "FROM fog.material " +
                 "INNER JOIN fog.material_type ON (fog.material.material_type_id = fog.material_type.id) " +
                 "INNER JOIN fog.material_length ON fog.material.material_length_id = fog.material_length.id " +
                 "INNER JOIN fog.unit ON fog.material.unit_id = fog.unit.id " +
-                "WHERE fog.material_type.type LIKE 'søm';";
+                "WHERE fog.material_type.type LIKE ?;";
 
         List<Item> materials = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, "%" + type + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -146,6 +148,9 @@ public class ItemMapper {
                     float lengthofItem = rs.getFloat("length");
                     String unit = rs.getString("unit");
                     String itemType = rs.getString("type");
+
+                    Item item = new Item(id, description, lengthofItem, price, unit, itemType);
+                    materials.add(item);
                 }
             } catch (SQLException e) {
                 throw new DatabaseException(e, "Error getting item. Something went wrong with the database");

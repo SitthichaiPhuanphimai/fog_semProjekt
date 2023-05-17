@@ -111,7 +111,7 @@ public class Calculator {
     }
 
     public List<Item> calcNailBox(ConnectionPool connectionPool) throws DatabaseException, SQLException {
-        List<Item> nailBox = ItemFacade.getNailBox(connectionPool);
+        List<Item> nailBox = ItemFacade.getNailBox("Skruer", connectionPool);
         int amountOfNailBox = 0;
 
         if(length < 5){
