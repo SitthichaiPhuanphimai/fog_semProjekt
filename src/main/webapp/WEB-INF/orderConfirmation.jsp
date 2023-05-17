@@ -22,15 +22,17 @@
             <h3> Du har valgt længden: ${sessionScope.uLength}</h3> <br>
             <h3> Du har valgt bredden: ${sessionScope.uWidth}</h3> <br>
             <h3> Den samlede pris for carport ${sessionScope.totalPrice}</h3>
+
             <c:if test="${sessionScope.skur != null}">
                 <h3> Din carport kommer med et skur </h3>
             </c:if>
             <c:if test="${sessionScope.skur = null}">
-                <h3> Carporten kommer ikke med et skur <h3>
-            </c:if>
-                    <form action="/ServletOrderPlacement" method="post">
-                        <input type="submit" class="btn btn-success" value="Bekræft ordre">
-                        <input type="submit" class="btn btn-danger" value="Annuller ordre">
+            <h3> Carporten kommer ikke med et skur
+                <h3>
+                    </c:if>
+                    <form action="Checkout" method="post">
+                        <input type="submit" name="action" class="btn btn-success" value="Acceptere">
+                        <input type="submit" name="action" class="btn btn-danger" value="Annullere">
                     </form>
         </div>
 

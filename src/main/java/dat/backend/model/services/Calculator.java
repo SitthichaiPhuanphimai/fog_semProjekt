@@ -35,6 +35,8 @@ public class Calculator {
         calcSupportBeams(connectionPool);
         calcBraces(connectionPool);
         calcBeams(connectionPool);
+        calcRoofPanel(connectionPool);
+        calcNailBox(connectionPool);
     }
 
 // Adding the support beams to the list amountOfSupportBeamsRounded times
@@ -89,10 +91,54 @@ public class Calculator {
     }
 
 
+    public List<Item> calcRoofPanel(ConnectionPool connectionPool) throws DatabaseException, SQLException {
 
+        double amountOfPanelsOnWidth= width/1.09;
+
+        List<Item> roofPanelWithOptimalLength = ItemFacade.getOptimalItem(length, "Tagplader", connectionPool);
+
+        if (roofPanelWithOptimalLength.isEmpty()) {
+            throw new DatabaseException("No roofPanels where found in the database");
+        }
+
+        for (int i = 0; i < amountOfPanelsOnWidth; i++) {
+            for (Item item : roofPanelWithOptimalLength) {
+                itemList.add(item);
+            }
+        }
+
+        return itemList;
+    }
+
+    public List<Item> calcNailBox(ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        List<Item> nailBox = ItemFacade.getNailBox("Skruer", connectionPool);
+        int amountOfNailBox = 0;
+
+        if(length < 5){
+      amountOfNailBox = 1;
+        } else {
+        amountOfNailBox = 2;
+        }
+
+        if (nailBox.isEmpty()) {
+            throw new DatabaseException("No nailBox where found in the database");
+        }
+
+      for (int i = 0; i < amountOfNailBox; i++) {
+                for (Item item : nailBox) {
+                    itemList.add(item);
+                }
+            }
+
+        return itemList;
+    }
 
 
 }
+
+
+
+
 
 
 
