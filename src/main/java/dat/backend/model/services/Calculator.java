@@ -8,16 +8,17 @@ import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.ItemFacade;
 
 
+import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class Calculator {
     private List<Item> itemList = new ArrayList<>();
     private float length;
     private float width;
+    private boolean hasShed;
 
 
     public Calculator(float length, float width) {
@@ -36,10 +37,13 @@ public class Calculator {
         calcBraces(connectionPool);
         calcBeams(connectionPool);
         calcRoofPanel(connectionPool);
-        calcNailBox(connectionPool);
+        calcScrewBox(connectionPool);
+        calcHollowBand(connectionPool);
+        getUniversalFitting(connectionPool);
+
     }
 
-// Adding the support beams to the list amountOfSupportBeamsRounded times
+    // Adding the support beams to the list amountOfSupportBeamsRounded times
     public List<Item> calcSupportBeams(ConnectionPool connectionPool) throws DatabaseException, SQLException {
         double amountOfSupportBeamsRounded = Math.ceil(length / 0.55);
         List<Item> supportBeamWithOptimalLength = ItemFacade.getOptimalItem(width, "Spær", connectionPool);
@@ -59,7 +63,7 @@ public class Calculator {
 
     public int calcBeams(ConnectionPool connectionPool) throws SQLException, DatabaseException {
         int calculaAmountOfBeams = (length < 5) ? 4 : 6;
-        List<Item> beamWithOptimalLength = ItemFacade.getBraces( "søjler", connectionPool);
+        List<Item> beamWithOptimalLength = ItemFacade.getMaterial("søjler", connectionPool);
 
         if (beamWithOptimalLength.isEmpty()) {
             throw new DatabaseException("No beams where found in the database");
@@ -93,7 +97,7 @@ public class Calculator {
 
     public List<Item> calcRoofPanel(ConnectionPool connectionPool) throws DatabaseException, SQLException {
 
-        double amountOfPanelsOnWidth= width/1.09;
+        double amountOfPanelsOnWidth = width / 1.09;
 
         List<Item> roofPanelWithOptimalLength = ItemFacade.getOptimalItem(length, "Tagplader", connectionPool);
 
@@ -110,25 +114,58 @@ public class Calculator {
         return itemList;
     }
 
-    public List<Item> calcNailBox(ConnectionPool connectionPool) throws DatabaseException, SQLException {
+    public List<Item> calcScrewBox(ConnectionPool connectionPool) throws DatabaseException, SQLException {
         List<Item> nailBox = ItemFacade.getNailBox("Skruer", connectionPool);
         int amountOfNailBox = 0;
 
-        if(length < 5){
-      amountOfNailBox = 1;
+        if (length < 5) {
+            amountOfNailBox = 1;
         } else {
-        amountOfNailBox = 2;
+            amountOfNailBox = 2;
         }
 
         if (nailBox.isEmpty()) {
             throw new DatabaseException("No nailBox where found in the database");
         }
 
-      for (int i = 0; i < amountOfNailBox; i++) {
-                for (Item item : nailBox) {
-                    itemList.add(item);
-                }
+        for (int i = 0; i < amountOfNailBox; i++) {
+            for (Item item : nailBox) {
+                itemList.add(item);
             }
+        }
+
+        return itemList;
+    }
+
+    // to calculate how many HollowBand we need to use, we calculate the square root of the length^2 + width^2
+    // Then we get the diagonal
+    public List<Item> calcHollowBand(ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        float diagonal = (float) Math.sqrt(Math.pow(length, 2) + Math.pow(width, 2));
+
+        List<Item> hollowBand = ItemFacade.getOptimalItem(diagonal, "Hulbånd", connectionPool);
+
+        if (hollowBand.isEmpty()) {
+            throw new DatabaseException("No hollowBand where found in the database");
+        }
+        // We need to add the hollowBand twice, because we need to cross them from the one corner to the other
+        for (int i = 0; i < 2; i++) {
+            for (Item item : hollowBand) {
+                itemList.add(item);
+            }
+        }
+        return itemList;
+    }
+
+    public List<Item> getUniversalFitting(ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        List<Item> universalFitting = ItemFacade.getMaterial("Universal beslag", connectionPool);
+
+        if (universalFitting.isEmpty()) {
+            throw new DatabaseException("No universalFitting where found in the database");
+        }
+
+        for (Item item : universalFitting) {
+            itemList.add(item);
+        }
 
         return itemList;
     }
