@@ -16,10 +16,11 @@ class UserMapper
 
         User user = null;
 
-        String sql = "SELECT * FROM fog.user WHERE username = ? AND password = ?";
+        String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
 
         try (Connection connection = connectionPool.getConnection())
         {
+
             try (PreparedStatement ps = connection.prepareStatement(sql))
             {
                 ps.setString(1, username);
@@ -45,9 +46,10 @@ class UserMapper
     {
         Logger.getLogger("web").log(Level.INFO, "");
         User user;
-        String sql = "insert into fog.user (username, password, role) values (?,?,?)";
+        String sql = "insert into user (username, password, role) values (?,?,?)";
         try (Connection connection = connectionPool.getConnection())
         {
+
             try (PreparedStatement ps = connection.prepareStatement(sql))
             {
                 ps.setString(1, username);
@@ -78,7 +80,7 @@ class UserMapper
 
             Connection connection = connectionPool.getConnection();
 
-            String sql = "SELECT * FROM fog.user";
+            String sql = "SELECT * FROM user";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next())
