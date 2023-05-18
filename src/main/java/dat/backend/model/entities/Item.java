@@ -1,31 +1,27 @@
 package dat.backend.model.entities;
 
+import java.util.Objects;
+
 public class Item {
-    private int order_id;
     private String description;
     private float length;
     private float price;
     private String unit;
     private String type;
-    private int quantity;
+    private int id;
 
 
-    public Item(int order_id,String description, int length, String unit, String type, int quantity,float price)
-    {
-        this.order_id = order_id;
+    public Item(int id, String description, float length, float price, String unit, String type) {
+        this.id = id;
         this.description = description;
         this.length = length;
+        this.price = price;
         this.unit = unit;
         this.type = type;
-        this.quantity = quantity;
-        this.price = price;
     }
 
-    public Item(String description, float lenght, float price, String type) {
-        this.description = description;
-        this.length = lenght;
-        this.price = price;
-        this.type = type;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -48,16 +44,22 @@ public class Item {
         return length;
     }
 
-    public int getOrder_id() {
-        return order_id;
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Float.compare(item.length, length) == 0 &&
+                Float.compare(item.price, price) == 0 &&
+                id == item.id &&
+                Objects.equals(description, item.description) &&
+                Objects.equals(unit, item.unit) &&
+                Objects.equals(type, item.type);
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public int getQuantity() {
-        return quantity;
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, length, price, unit, type, id);
     }
 
     @Override

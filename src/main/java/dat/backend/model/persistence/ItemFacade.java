@@ -13,7 +13,11 @@ public class ItemFacade {
         return ItemMapper.getOptimalItem(length, type, connectionPool);
     }
 
-    public static List<Item> getBraces(String type, ConnectionPool connectionPool) throws DatabaseException, SQLException {
-        return ItemMapper.getBraces(type, connectionPool);
+    public static List<Item> getMaterial(String type, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        return ItemMapper.getMaterial(type, connectionPool);
+    }
+
+    public static List<Item> getNailBox(String type, ConnectionPool connectionPool) throws DatabaseException {
+        return ItemMapper.getNailBox(type, connectionPool);
     }
 }

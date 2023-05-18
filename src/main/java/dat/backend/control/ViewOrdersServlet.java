@@ -2,6 +2,7 @@ package dat.backend.control;
 
 import dat.backend.model.entities.Order;
 import dat.backend.model.persistence.ConnectionPool;
+import dat.backend.model.persistence.OrderMapper;
 import dat.backend.model.persistence.OrdersMapper;
 
 import javax.servlet.ServletException;
@@ -45,6 +46,7 @@ public class ViewOrdersServlet extends HttpServlet
 
 
         ArrayList<Order> ordersList = OrdersMapper.getAllOrders(connection);
+
 
         request.setAttribute("ordersList", ordersList);
 
