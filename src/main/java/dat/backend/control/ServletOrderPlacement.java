@@ -55,14 +55,15 @@ public class ServletOrderPlacement extends HttpServlet {
         Calculator calculator = new Calculator(uLength, uWidth);
         try {
             calculator.RunAllCalculations(connectionPool);
+            ItemList itemList = new ItemList(calculator.getItemList());
+            session.setAttribute("itemList", itemList);
+            session.setAttribute("totalPrice", itemList.calculateTotalPrice(connectionPool));
         } catch (DatabaseException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ItemList itemList = new ItemList(calculator.getItemList());
-        session.setAttribute("itemList", itemList);
-        session.setAttribute("totalPrice", itemList.calculateTotalPrice());
+
 
 
 

@@ -2,6 +2,7 @@ package dat.backend.model.persistence;
 
 import dat.backend.model.entities.Item;
 import dat.backend.model.entities.ItemList;
+import dat.backend.model.entities.Tax;
 import dat.backend.model.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -44,5 +45,48 @@ public class ItemListMapper {
             throw new DatabaseException("Creating material list failed");
         }
         return true;
+    }
+
+     static Tax getSalesTax(ConnectionPool connectionPool) {
+     Tax tax = null;
+        String sql = "SELECT * FROM fog.taxes WHERE tax_name = 'sales_tax'";
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("tax_name");
+                    double taxPercentage = rs.getDouble("tax_value");
+
+                    tax = new Tax(id, taxPercentage, name);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tax;
+    }
+
+
+    static Tax getMoms(ConnectionPool connectionPool) {
+        Tax tax = null;
+        String sql = "SELECT * FROM fog.taxes WHERE tax_name = 'moms'";
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("tax_name");
+                    double taxPercentage = rs.getDouble("tax_value");
+
+                    tax = new Tax(id, taxPercentage, name);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tax;
     }
 }
