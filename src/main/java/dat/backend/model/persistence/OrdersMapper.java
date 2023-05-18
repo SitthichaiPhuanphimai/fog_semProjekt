@@ -9,15 +9,16 @@ public class OrdersMapper
 {
 
 
-   public static ArrayList<Order> getAllOrders()
+   public static ArrayList<Order> getAllOrders(ConnectionPool connectionPool)
     {
-        String sql = "SELECT * FROM fog.order";
+        String sql = "SELECT * FROM orders";
         ArrayList<Order>ordersList = new ArrayList<>();
-        ConnectionPool connection = new ConnectionPool();
 
-        try(Connection conn = connection.getConnection();
+
+        try(Connection conn = connectionPool.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql))
+
         {
             while (rs.next())
             {
@@ -36,6 +37,26 @@ public class OrdersMapper
         }
 
         return ordersList;
+    }
+
+    public static void deleteOrder(String id, ConnectionPool connectionPool)
+    {
+        try(Connection conn = connectionPool.getConnection())
+        {
+
+            String sql = "DELETE FROM orders WHERE id = ?";
+
+
+            try(PreparedStatement statement = conn.prepareStatement(sql))
+            {
+                statement.setString(1, id);
+                statement.executeUpdate();
+            }
+
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
 

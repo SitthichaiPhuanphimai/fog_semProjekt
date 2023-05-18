@@ -45,6 +45,13 @@
                     </form>
 
                 </td>
+                <td>
+                    <form name="Slet" action="deleteOrderServlet" method="post">
+                        <input type="hidden" name="orderId" value="${Order.id}">
+                        <input style="border-radius: 8px; background-color: darkred; color: white"  onclick="confirm()" id="Slet" type="submit" name="Slet" value="Slet Ordre"> </form>
+
+
+                </td>
 
             </tr>
             </c:forEach>

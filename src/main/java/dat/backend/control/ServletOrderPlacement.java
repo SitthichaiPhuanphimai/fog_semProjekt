@@ -3,8 +3,10 @@ package dat.backend.control;
 import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Item;
 import dat.backend.model.entities.ItemList;
+import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
+import dat.backend.model.persistence.OrderFacade;
 import dat.backend.model.services.Calculator;
 
 import javax.servlet.ServletException;
@@ -53,13 +55,15 @@ public class ServletOrderPlacement extends HttpServlet {
         Calculator calculator = new Calculator(uLength, uWidth);
         try {
             calculator.RunAllCalculations(connectionPool);
+            ItemList itemList = new ItemList(calculator.getItemList());
+            session.setAttribute("itemList", itemList);
+            session.setAttribute("totalPrice", itemList.calculateTotalPrice(connectionPool));
         } catch (DatabaseException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ItemList itemList = new ItemList(calculator.getItemList());
-        session.setAttribute("totalPrice", itemList.calculateTotalPrice());
+
 
 
 
@@ -71,8 +75,6 @@ public class ServletOrderPlacement extends HttpServlet {
         } else if (skur.equals("nej")) {
             session.setAttribute("skur", null);
         }
-
-
 
         request.getRequestDispatcher("/WEB-INF/orderConfirmation.jsp").forward(request, response);
 

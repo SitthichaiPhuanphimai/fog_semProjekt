@@ -20,7 +20,7 @@ class UserMapperTest
 
     private final static String USER = "dev";
     private final static String PASSWORD = "3r!DE32*/fDe";
-    private final static String URL = "jdbc:mysql://164.92.165.237:3306/?user=dev";
+    private final static String URL = "jdbc:mysql://164.92.165.237:3306/fog_test?user=dev";
 
     private static ConnectionPool connectionPool;
 
@@ -33,11 +33,16 @@ class UserMapperTest
         {
             try (Statement stmt = testConnection.createStatement())
             {
+
                 // Create test database - if not exist
                 stmt.execute("CREATE DATABASE  IF NOT EXISTS fog_test;");
 
                 // TODO: Create user table. Add your own tables here
                 stmt.execute("CREATE TABLE IF NOT EXISTS fog_test.user LIKE fog.user;");
+
+
+
+
             }
         }
         catch (SQLException throwables)
@@ -54,12 +59,15 @@ class UserMapperTest
         {
             try (Statement stmt = testConnection.createStatement())
             {
+
                 // TODO: Remove all rows from all tables - add your own tables here
-                stmt.execute("delete from fog_test.user");
+                stmt.execute("delete from user");
 
                 // TODO: Insert a few users - insert rows into your own tables here
-                stmt.execute("insert into fog_test.user (username, password, role) " +
+                stmt.execute("insert into user (username, password, role) " +
                         "values ('user','1234','user'),('admin','1234','admin'), ('ben','1234','user')");
+
+
             }
         }
         catch (SQLException throwables)
@@ -83,8 +91,8 @@ class UserMapperTest
     @Test
     void login() throws DatabaseException
     {
-        User expectedUser = new User("testuser", "1234", "customer");
-        User actualUser = UserFacade.login("testuser", "1234", connectionPool);
+        User expectedUser = new User("ben", "1234", "user");
+        User actualUser = UserFacade.login("ben", "1234", connectionPool);
         assertEquals(expectedUser, actualUser);
     }
 
@@ -103,9 +111,9 @@ class UserMapperTest
     @Test
     void createUser() throws DatabaseException
     {
-        User newUser = UserFacade.createUser("test", "test1234", "customer", connectionPool);
-        User logInUser = UserFacade.login("test", "test1234", connectionPool);
-        User expectedUser = new User("test", "test1234", "customer");
+        User newUser = UserFacade.createUser("jill", "1234", "user", connectionPool);
+        User logInUser = UserFacade.login("jill", "1234", connectionPool);
+        User expectedUser = new User("jill", "1234", "user");
         assertEquals(expectedUser, newUser);
         assertEquals(expectedUser, logInUser);
 
