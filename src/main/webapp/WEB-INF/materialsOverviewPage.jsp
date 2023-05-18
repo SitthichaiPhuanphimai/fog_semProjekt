@@ -58,7 +58,7 @@
         </form>
         <br>
         <form action="RefreshMaterialsServlet" method="post">
-            <button type="submit">Refresh Data</button>
+            <button type="submit" class="btn btn-primary">Refresh Data</button>
         </form>
 
 

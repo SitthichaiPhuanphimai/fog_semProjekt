@@ -23,9 +23,6 @@
             <input type="submit" value="Update">
         </form>
         <br>
-        <br>
-        <h3>Here you can add a new material to the database</h3>
-        <br>
 
     </jsp:body>
 

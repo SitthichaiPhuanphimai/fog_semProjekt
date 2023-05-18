@@ -69,7 +69,7 @@ public class UpdateMaterialServlet extends HttpServlet {
                 preparedStatement.executeUpdate();
 
                 //update materialList with new value.
-                //Dette bliver nok erstattet med en refreshMaterialslist() metode her i UpdateMaterialServlet
+                //Dette bliver nok erstattet med en refreshMaterialslist() metode
                 for (Material m : materialList) {
                     if (m.getId() == materialID) {
                         m.setPrice(newPrice);

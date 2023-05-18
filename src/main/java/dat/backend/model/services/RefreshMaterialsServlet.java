@@ -55,7 +55,7 @@ public class RefreshMaterialsServlet extends HttpServlet {
             sqlException.printStackTrace();
         }
 
-        response.sendRedirect("materialsOverviewPage.jsp");
+        request.getRequestDispatcher("/WEB-INF/materialsOverviewPage.jsp").forward(request,response);
 
     }
 }
