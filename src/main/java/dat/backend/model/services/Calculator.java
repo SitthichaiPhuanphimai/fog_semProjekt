@@ -40,6 +40,11 @@ public class Calculator {
         calcScrewBox(connectionPool);
         calcHollowBand(connectionPool);
         getUniversalFitting(connectionPool);
+        calcUpperSternBoardFront(connectionPool);
+        calcUpperSternBoardSide(connectionPool);
+        calcLowerSternBoardSide(connectionPool);
+        calcLowerSternBoardWidth(connectionPool);
+        calcroofGutter(connectionPool);
 
     }
 
@@ -170,6 +175,82 @@ public class Calculator {
         return itemList;
     }
 
+
+    public List<Item> calcUpperSternBoardFront(ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        List<Item> upperSternBoardFront = ItemFacade.getOptimalItem(width, "Oversternsbrædde til forenden", connectionPool);
+
+        if (upperSternBoardFront.isEmpty()) {
+            throw new DatabaseException("No upperSternBoardFront where found in the database");
+        }
+
+        for (Item item : upperSternBoardFront) {
+            itemList.add(item);
+        }
+        return itemList;
+
+    }
+
+    public List<Item> calcUpperSternBoardSide(ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        List<Item> upperSternBoardSide = ItemFacade.getOptimalItem(length, "Oversternbrædde til siderne", connectionPool);
+
+        if (upperSternBoardSide.isEmpty()) {
+            throw new DatabaseException("No upperSternBoardSide where found in the database");
+        }
+
+        for (int i = 0; i < 2; i++) {
+            for (Item item : upperSternBoardSide) {
+                itemList.add(item);
+            }
+        }
+        return itemList;
+    }
+
+
+    public List<Item> calcLowerSternBoardWidth(ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        List<Item> lowerSternBoardWidth = ItemFacade.getOptimalItem(width, "Understernsbrædde til for & bagende", connectionPool);
+
+        if (lowerSternBoardWidth.isEmpty()) {
+            throw new DatabaseException("No lowerSternBoardFront where found in the database");
+        }
+
+        for (int i = 0; i < 2; i++) {
+            for (Item item : lowerSternBoardWidth) {
+                itemList.add(item);
+            }
+        }
+        return itemList;
+    }
+
+
+    public List<Item> calcLowerSternBoardSide(ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        List<Item> lowerSternBoardSide = ItemFacade.getOptimalItem(length, "Understernsbrædde til siderne", connectionPool);
+
+        if (lowerSternBoardSide.isEmpty()) {
+            throw new DatabaseException("No lowerSternBoardSide where found in the database");
+        }
+
+        for (int i = 0; i < 2; i++) {
+            for (Item item : lowerSternBoardSide) {
+                itemList.add(item);
+            }
+        }
+        return itemList;
+    }
+
+    public List<Item> calcroofGutter(ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        List<Item> roofGutter = ItemFacade.getOptimalItem(width, "Tagrende", connectionPool);
+
+        if (roofGutter.isEmpty()) {
+            throw new DatabaseException("No roofGutter where found in the database");
+        }
+
+
+            for (Item item : roofGutter) {
+                itemList.add(item);
+            }
+
+        return itemList;
+    }
 
 }
 

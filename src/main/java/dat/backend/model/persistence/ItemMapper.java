@@ -46,6 +46,7 @@ public class ItemMapper {
 
                     Item item = new Item(id, description, lengthOfItem, price, unit, itemType);
                     materials.add(item);
+
                 }
             } catch (SQLException ex) {
                 throw new DatabaseException(ex, "Error getting item. Something went wrong with the database");

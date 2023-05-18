@@ -1,5 +1,10 @@
 package dat.backend.model.entities;
 
+import dat.backend.model.exceptions.DatabaseException;
+import dat.backend.model.persistence.ConnectionPool;
+import dat.backend.model.persistence.ItemListFacade;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +34,19 @@ public class ItemList {
         return this.totalPrice;
     }
 
-    public float calculateTotalPrice() {
+    public float calculateTotalPrice(ConnectionPool connectionPool) throws SQLException, DatabaseException {
         float totalPrice = 0;
         for (Item item : itemList) {
             totalPrice += (item.getPrice() * item.getLength());
         }
-        return totalPrice;
+
+        double salesTax = totalPrice * ItemListFacade.getSalesTax(connectionPool).getValue();
+        double priceWithmoms = salesTax * ItemListFacade.getMoms(connectionPool).getValue();
+
+
+
+
+        return totalPrice + (float) priceWithmoms + (float) salesTax;
     }
 
 
