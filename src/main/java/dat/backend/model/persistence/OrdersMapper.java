@@ -40,8 +40,7 @@ public class OrdersMapper {
             String sql = "DELETE FROM orders WHERE id = ?";
 
 
-            try (PreparedStatement statement = conn.prepareStatement(sql))
-            {
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.setString(1, id);
                 statement.executeUpdate();
             }
@@ -51,8 +50,7 @@ public class OrdersMapper {
         }
     }
 
-    public static ArrayList<Item> getItemList(String id, ConnectionPool connectionPool)
-    {
+    public static ArrayList<Item> getItemList(String id, ConnectionPool connectionPool) {
         ArrayList<Item> itemsList = new ArrayList<>();
 
         String sql = "SELECT material_list.order_id, material.description, unit.unit, " +
@@ -79,7 +77,7 @@ public class OrdersMapper {
                     int quantity = rs.getInt("quantity");
                     float price = rs.getFloat("price_per_unit");
 
-                    Item item = new Item(orderID, description, length, unit, type, quantity,price);
+                    Item item = new Item(orderID, description, length, unit, type, quantity, price);
                     itemsList.add(item);
                 }
             }
@@ -90,4 +88,24 @@ public class OrdersMapper {
 
         return itemsList;
     }
- }
+
+    public static void updateOrder(String orderID, String status, ConnectionPool connectionPool) {
+        try (Connection conn = connectionPool.getConnection()) {
+            String sql = "UPDATE orders SET status = ? WHERE id = ?";
+
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                statement.setString(1, status);
+                statement.setString(2, orderID);
+                statement.executeUpdate();
+
+            } catch (SQLException e) {
+                System.out.println("Error in the database");
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+}

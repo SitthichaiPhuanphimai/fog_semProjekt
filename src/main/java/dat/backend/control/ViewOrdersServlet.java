@@ -26,23 +26,7 @@ public class ViewOrdersServlet extends HttpServlet
         ConnectionPool connection = new ConnectionPool();
         String newStatus = request.getParameter("status");
 
-        try(Connection conn = connection.getConnection())
-        {
-            String sql = "UPDATE orders SET status = ? WHERE id = ?";
-
-            try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setString(1, newStatus);
-                statement.setString(2, orderId);
-                statement.executeUpdate();
-
-            } catch (SQLException e)
-            {
-                System.out.println("Error in the database");
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        OrdersMapper.updateOrder(orderId,newStatus,connection);
 
 
         ArrayList<Order> ordersList = OrdersMapper.getAllOrders(connection);
