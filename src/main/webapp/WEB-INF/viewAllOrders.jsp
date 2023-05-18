@@ -59,8 +59,12 @@
                     <form name="Slet" action="deleteOrderServlet" method="post">
                         <input type="hidden" name="orderId" value="${Order.id}">
                         <input style="border-radius: 8px; background-color: darkred; color: white"  onclick="confirm()" id="Slet" type="submit" name="Slet" value="Slet Ordre"> </form>
-
-
+                </td>
+                <td>
+                    <form name="getList" action="getItemListServlet" method="post">
+                        <input type="hidden" name="orderId" value="${Order.id}">
+                        <input class="btn btn-primary" type="submit" name="runServlet" value="Hent materialeliste">
+                    </form>
                 </td>
 
             </tr>
