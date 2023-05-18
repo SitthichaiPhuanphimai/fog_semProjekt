@@ -23,15 +23,16 @@
     </jsp:attribute>
 
     <jsp:body>
-
-        <br>
-
         <form action="viewOrdersServlet" method="post">
             <button class="btn btn-primary" type="submit">Se alle ordre</button>
         </form>
         <br>
         <form action="ViewMaterialsServlet" method="get">
-            <button type="submit" class="btn btn-primary">View Materials</button>
+            <button type="submit" class="btn btn-primary">Se alle materialer</button>
+        </form>
+        <br>
+        <form action="ViewTaxesServlet" method="get">
+            <button type="submit" class="btn btn-primary">Ændre afgifter</button>
         </form>
 
 
