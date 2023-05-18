@@ -9,15 +9,42 @@ public class Item {
     private String unit;
     private String type;
     private int id;
+    private int order_id;
+    private int quantity;
 
 
-    public Item(int id, String description, float length, float price, String unit, String type) {
+    public Item(int id, String description, float length, float price, String unit, String type)
+    {
         this.id = id;
         this.description = description;
         this.length = length;
         this.price = price;
         this.unit = unit;
         this.type = type;
+    }
+
+    public Item(int order_id, String description, float length,String unit, String type, int quantity, float price)
+    {
+        this.order_id = order_id;
+        this.description = description;
+        this.length = length;
+        this.unit = unit;
+        this.type = type;
+        this.quantity = quantity;
+        this.price = price;
+
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getOrder_id() {
+        return order_id;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public int getId() {
