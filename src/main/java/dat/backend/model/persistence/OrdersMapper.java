@@ -39,6 +39,26 @@ public class OrdersMapper
         return ordersList;
     }
 
+    public static void deleteOrder(String id, ConnectionPool connectionPool)
+    {
+        try(Connection conn = connectionPool.getConnection())
+        {
+
+            String sql = "DELETE FROM orders WHERE id = ?";
+
+
+            try(PreparedStatement statement = conn.prepareStatement(sql))
+            {
+                statement.setString(1, id);
+                statement.executeUpdate();
+            }
+
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

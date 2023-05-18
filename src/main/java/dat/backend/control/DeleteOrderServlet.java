@@ -25,23 +25,8 @@ public class DeleteOrderServlet extends HttpServlet
         String orderId = request.getParameter("orderId");
         ConnectionPool connection = new ConnectionPool();
 
+        OrdersMapper.deleteOrder(orderId,connection);
 
-        try(Connection conn = connection.getConnection())
-        {
-
-            String sql = "DELETE FROM orders WHERE id = ?";
-
-
-            try(PreparedStatement statement = conn.prepareStatement(sql))
-            {
-                statement.setString(1, orderId);
-                statement.executeUpdate();
-            }
-
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
 
         ArrayList<Order> ordersList = OrdersMapper.getAllOrders(connection);
 
