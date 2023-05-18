@@ -44,7 +44,7 @@
                         <a href="UpdateMaterialServlet?id=${material.id}" class="btn btn-primary">Edit Price</a>
                         <form action="/DeleteMaterialServlet" method="post">
                             <input type="hidden" name="id" value="${material.id}">
-                            <input type="submit" value="Delete">
+                            <input type="submit" value="Delete" class="btn btn-primary">
                         </form>
                     </td>
                 </tr>
