@@ -24,8 +24,8 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Price Per Unit</th>
-                    <th scope="col">Unit ID</th>
+                    <th scope="col">Price Per Unit in DKK</th>
+                    <th scope="col">Unit</th>
                     <th scope="col">Material type</th>
                     <th scope="col">Material Length</th>
                     <th scope="col">Action</th>
@@ -37,9 +37,9 @@
                     <th scope="row">${material.id}</th>
                     <td>${material.description}</td>
                     <td>${material.price}</td>
-                    <td>${material.unitId}</td>
-                    <td>${material.materialType}</td>
-                    <td>${material.materialLength}</td>
+                    <td>${material.unit}</td>
+                    <td>${material.type}</td>
+                    <td>${material.length}</td>
                     <td>
                         <a href="UpdateMaterialServlet?id=${material.id}" class="btn btn-primary">Edit Price</a>
                         <form action="/DeleteMaterialServlet" method="post">
