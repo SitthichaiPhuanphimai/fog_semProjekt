@@ -42,7 +42,10 @@
                     <td>${material.materialLength}</td>
                     <td>
                         <a href="UpdateMaterialServlet?id=${material.id}" class="btn btn-primary">Edit Price</a>
-                        <a href="" class="btn btn-primary">Delete</a>
+                        <form action="/DeleteMaterialServlet" method="post">
+                            <input type="hidden" name="id" value="${material.id}">
+                            <input type="submit" value="Delete">
+                        </form>
                     </td>
                 </tr>
             </c:forEach>
@@ -50,8 +53,12 @@
         </table>
         <br>
 
-        <form action="AddNewMaterialServlet" method="post">
-            <button type="submit" class="btn btn-primary">Add Material</button>
+        <form action="AddNewMaterialServlet" method="GET">
+            <button type="submit" class="btn btn-primary" value="add">Add Material</button>
+        </form>
+        <br>
+        <form action="RefreshMaterialsServlet" method="post">
+            <button type="submit">Refresh Data</button>
         </form>
 
 

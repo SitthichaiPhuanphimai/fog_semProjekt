@@ -1,6 +1,4 @@
 package dat.backend.model.services;
-
-
 import dat.backend.model.entities.Item;
 import dat.backend.model.entities.ItemList;
 import dat.backend.model.exceptions.DatabaseException;
@@ -11,8 +9,6 @@ import dat.backend.model.persistence.ItemFacade;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 public class Calculator {
     private List<Item> itemList = new ArrayList<>();
