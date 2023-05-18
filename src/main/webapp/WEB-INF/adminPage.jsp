@@ -29,7 +29,10 @@
         </form>
         <br>
         <form action="ViewMaterialsServlet" method="get">
-            <button type="submit" class="btn btn-primary">View Materials</button>
+            <button type="submit" class="btn btn-primary">Se alle materialer</button>
+        </form>
+        <form action="SalesTaxServlet" method="get">
+            <button type="submit" class="btn btn-primary">Ændre afgifter</button>
         </form>
 
 

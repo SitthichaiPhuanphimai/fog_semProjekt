@@ -32,7 +32,7 @@ public class ViewMaterialsServlet extends HttpServlet {
                 {
                     int id = resultSet.getInt("id");
                     String description = resultSet.getString("description");
-                    int price = resultSet.getInt("price_per_unit");
+                    float price = resultSet.getFloat("price_per_unit");
                     int unitId = resultSet.getInt("unit_id");
                     int materialType = resultSet.getInt("material_type_id");
                     int materialLength = resultSet.getInt("material_length_id");
