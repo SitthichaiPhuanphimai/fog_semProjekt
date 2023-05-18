@@ -51,7 +51,7 @@ public class OrdersMapper {
         }
     }
 
-    public static ArrayList<Item> getItemList(String id, ConnectionPool connectionPool)
+    public static ArrayList<Item> getItemList(int id, ConnectionPool connectionPool)
     {
         ArrayList<Item> itemsList = new ArrayList<>();
 
@@ -67,7 +67,7 @@ public class OrdersMapper {
         try (Connection conn = connectionPool.getConnection();
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
-            statement.setString(1, id);
+            statement.setInt(1, id);
 
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {

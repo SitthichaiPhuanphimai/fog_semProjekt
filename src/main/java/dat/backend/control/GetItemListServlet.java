@@ -22,7 +22,7 @@ public class GetItemListServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
 
-        String orderId = request.getParameter("orderId");
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
         ConnectionPool connection = new ConnectionPool();
 
        OrdersMapper.getItemList(orderId,connection);

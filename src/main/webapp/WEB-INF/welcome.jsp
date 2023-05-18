@@ -23,6 +23,10 @@
                 <p>Byg og bestil din egen carport!</p>
                 <input class="btn btn-success" type="submit" value="Byg Nu">
             </form>
+
+            <form action="ViewUserOrders" method="get">
+                <p>Se dine tidligere, og igangværende ordrer</p>
+                <input class="btn btn-success" type="submit" value="Se Ordrer">
         </c:if>
 
         <c:if test="${sessionScope.user == null}">

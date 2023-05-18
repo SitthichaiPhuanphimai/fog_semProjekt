@@ -69,4 +69,29 @@ public class OrderMapper {
         return order;
     }
 
+    public static List<Order> getOrdersByUsername(String username, ConnectionPool connectionPool) {
+String sql = "SELECT * FROM fog.orders WHERE username = ?";
+        List<Order> orders = new ArrayList<>();
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int orderId = rs.getInt("id");
+                    String status = rs.getString("status");
+                    Order order = new Order(orderId, username, status);
+                    orders.add(order);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return orders;
+    }
+
 }
