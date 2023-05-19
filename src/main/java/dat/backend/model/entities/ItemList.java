@@ -22,7 +22,7 @@ public class ItemList {
     public ItemList(List<Item> itemList, float totalPrice) {
         this.itemList = itemList;
         this.totalPrice = totalPrice;
-        
+
     }
 
     public List<Item> getItemList() {
@@ -35,20 +35,18 @@ public class ItemList {
 
     public float calculateTotalPrice(ConnectionPool connectionPool) throws SQLException, DatabaseException {
 
-            float totalPrice = 0;
-            for (Item item : itemList) {
-                int quantity = item.getQuantity() > 0 ? item.getQuantity() : 1;
-                float priceForWholeLength = item.getPrice() * item.getLength();
-                totalPrice += priceForWholeLength * quantity;
-            }
+        float totalPrice = 0;
+        for (Item item : itemList) {
+            int quantity = item.getQuantity() > 0 ? item.getQuantity() : 1;
+            float priceForWholeLength = item.getPrice() * item.getLength();
+            totalPrice += priceForWholeLength * quantity;
+        }
 
-        
 
-        System.out.println(totalPrice);
         float salesTax = totalPrice * (1 + ItemListFacade.getSalesTax(connectionPool).getValue());
-        System.out.println(salesTax);
+
         float priceWithmoms = salesTax * ItemListFacade.getMoms(connectionPool).getValue();
-        System.out.println(priceWithmoms);
+
 
         return salesTax + priceWithmoms;
     }

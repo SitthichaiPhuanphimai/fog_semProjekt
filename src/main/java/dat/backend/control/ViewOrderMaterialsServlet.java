@@ -24,14 +24,14 @@ public class ViewOrderMaterialsServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         int orderId = Integer.parseInt(request.getParameter("orderId"));
 
         List<Item> orderItems = OrderFacade.getListByOrderId(orderId, connectionPool);
         ItemList itemList = new ItemList(orderItems);
 
         try {
-           double totalPrice = itemList.calculateTotalPrice(connectionPool);
-            request.setAttribute("totalPrice", totalPrice);
+            session.setAttribute("totalPrice", itemList.calculateTotalPrice(connectionPool));
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (DatabaseException e) {
