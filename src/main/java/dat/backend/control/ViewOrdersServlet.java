@@ -33,8 +33,6 @@ public class ViewOrdersServlet extends HttpServlet
         request.setAttribute("ordersList", ordersList);
 
         request.getRequestDispatcher("WEB-INF/viewAllOrders.jsp").forward(request,response);
-
-
     }
 
 }

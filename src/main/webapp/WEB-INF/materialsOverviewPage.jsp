@@ -24,8 +24,8 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Price Per Unit</th>
-                    <th scope="col">Unit ID</th>
+                    <th scope="col">Price Per Unit in DKK</th>
+                    <th scope="col">Unit</th>
                     <th scope="col">Material type</th>
                     <th scope="col">Material Length</th>
                     <th scope="col">Action</th>
@@ -37,12 +37,15 @@
                     <th scope="row">${material.id}</th>
                     <td>${material.description}</td>
                     <td>${material.price}</td>
-                    <td>${material.unitId}</td>
-                    <td>${material.materialType}</td>
-                    <td>${material.materialLength}</td>
+                    <td>${material.unit}</td>
+                    <td>${material.type}</td>
+                    <td>${material.length}</td>
                     <td>
                         <a href="UpdateMaterialServlet?id=${material.id}" class="btn btn-primary">Edit Price</a>
-                        <a href="" class="btn btn-primary">Delete</a>
+                        <form action="/DeleteMaterialServlet" method="post">
+                            <input type="hidden" name="id" value="${material.id}">
+                            <input type="submit" value="Delete" class="btn btn-primary">
+                        </form>
                     </td>
                 </tr>
             </c:forEach>
@@ -50,8 +53,12 @@
         </table>
         <br>
 
-        <form action="AddNewMaterialServlet" method="post">
-            <button type="submit" class="btn btn-primary">Add Material</button>
+        <form action="AddNewMaterialServlet" method="GET">
+            <button type="submit" class="btn btn-primary" value="add">Add Material</button>
+        </form>
+        <br>
+        <form action="RefreshMaterialsServlet" method="post">
+            <button type="submit" class="btn btn-primary">Refresh Data</button>
         </form>
 
 
