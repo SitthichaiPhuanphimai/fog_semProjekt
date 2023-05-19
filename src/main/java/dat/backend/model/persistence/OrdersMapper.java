@@ -89,7 +89,7 @@ public class OrdersMapper {
         return itemsList;
     }
 
-    public static void updateOrder(String orderID, String status, ConnectionPool connectionPool) {
+    public static void updateOrderStatus(String orderID, String status, ConnectionPool connectionPool) {
         try (Connection conn = connectionPool.getConnection()) {
             String sql = "UPDATE orders SET status = ? WHERE id = ?";
 

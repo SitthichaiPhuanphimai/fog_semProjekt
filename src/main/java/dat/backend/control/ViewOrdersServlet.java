@@ -2,7 +2,6 @@ package dat.backend.control;
 
 import dat.backend.model.entities.Order;
 import dat.backend.model.persistence.ConnectionPool;
-import dat.backend.model.persistence.OrderMapper;
 import dat.backend.model.persistence.OrdersMapper;
 
 import javax.servlet.ServletException;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.*;
 import java.util.ArrayList;
 
 @WebServlet(name = "viewOrdersServlet", value = "/viewOrdersServlet")
@@ -26,7 +24,7 @@ public class ViewOrdersServlet extends HttpServlet
         ConnectionPool connection = new ConnectionPool();
         String newStatus = request.getParameter("status");
 
-        OrdersMapper.updateOrder(orderId,newStatus,connection);
+        OrdersMapper.updateOrderStatus(orderId,newStatus,connection);
 
 
         ArrayList<Order> ordersList = OrdersMapper.getAllOrders(connection);
