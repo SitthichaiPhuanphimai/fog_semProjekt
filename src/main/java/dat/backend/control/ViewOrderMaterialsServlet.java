@@ -30,7 +30,7 @@ public class ViewOrderMaterialsServlet extends HttpServlet {
         ItemList itemList = new ItemList(orderItems);
 
         try {
-           float totalPrice = itemList.calculateTotalPrice(connectionPool);
+           double totalPrice = itemList.calculateTotalPrice(connectionPool);
             request.setAttribute("totalPrice", totalPrice);
         } catch (SQLException e) {
             e.printStackTrace();

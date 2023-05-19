@@ -56,6 +56,7 @@ public class ServletOrderPlacement extends HttpServlet {
         try {
             calculator.RunAllCalculations(connectionPool);
             ItemList itemList = new ItemList(calculator.getItemList());
+            System.out.println(itemList.toString());
             session.setAttribute("itemList", itemList);
             session.setAttribute("totalPrice", itemList.calculateTotalPrice(connectionPool));
         } catch (DatabaseException e) {
