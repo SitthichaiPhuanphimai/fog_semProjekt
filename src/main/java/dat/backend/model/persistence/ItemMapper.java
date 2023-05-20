@@ -18,12 +18,12 @@ import java.util.List;
 public class ItemMapper {
 
     static List<Item> getOptimalItem(float requiredLength, String type, ConnectionPool connectionPool) throws DatabaseException, SQLException {
-        String sql = "SELECT fog.material.id,fog.material.description, fog.material.price_per_unit, fog.material_length.length, fog.material_type.type, fog.unit.unit " +
-                "FROM fog.material " +
-                "INNER JOIN fog.material_type ON (fog.material.material_type_id = fog.material_type.id) " +
-                "INNER JOIN fog.material_length ON fog.material.material_length_id = fog.material_length.id " +
-                "INNER JOIN fog.unit ON fog.material.unit_id = fog.unit.id " +
-                "WHERE fog.material_type.type LIKE ?;";
+        String sql = "SELECT material.id,material.description, material.price_per_unit, material_length.length, material_type.type, unit.unit " +
+                "FROM material " +
+                "INNER JOIN material_type ON (material.material_type_id = material_type.id) " +
+                "INNER JOIN material_length ON material.material_length_id = material_length.id " +
+                "INNER JOIN unit ON material.unit_id = unit.id " +
+                "WHERE material_type.type LIKE ?;";
 
 
         List<Item> materials = new ArrayList<>();

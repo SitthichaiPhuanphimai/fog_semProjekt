@@ -66,7 +66,8 @@ public class OrdersMapperTest {
 
 
     @Test
-    void testConnection() throws SQLException {
+    void testConnection() throws SQLException
+    {
         Connection connection = connectionPool.getConnection();
         assertNotNull(connection);
         if (connection != null) {
@@ -107,7 +108,8 @@ public class OrdersMapperTest {
     }
 
     @Test
-    void testDeleteOrder() {
+    void testDeleteOrder()
+    {
 
         try (Connection testConnection = connectionPool.getConnection()) {
             try (Statement st = testConnection.createStatement()) {
@@ -128,6 +130,31 @@ public class OrdersMapperTest {
 
         } catch (SQLException e) {
             System.out.println("Database connection failed");
+        }
+
+
+    }
+
+    @Test
+    void testUpdateOrder()
+    {
+        try
+        {
+            ArrayList<Order> ordersList = OrdersMapper.getAllOrders(connectionPool);
+
+            String orderID = String.valueOf(ordersList.get(0).getId());
+
+            OrdersMapper.updateOrderStatus(orderID,"Approved", connectionPool);
+
+            ArrayList<Order> newOrdersList = OrdersMapper.getAllOrders(connectionPool);
+
+            String status = newOrdersList.get(0).getStatus();
+
+            assertEquals("Approved",status);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 

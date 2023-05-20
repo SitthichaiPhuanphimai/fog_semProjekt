@@ -32,7 +32,8 @@ public class Calculator {
     }
 
 
-    public void RunAllCalculations(ConnectionPool connectionPool) throws DatabaseException, SQLException {
+    public void RunAllCalculations(ConnectionPool connectionPool) throws DatabaseException, SQLException
+    {
         calcSupportBeams(connectionPool);
         calcBraces(connectionPool);
         calcBeams(connectionPool);
