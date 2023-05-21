@@ -20,9 +20,10 @@ public class OrdersMapper {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String username = rs.getString("username");
-                String status = rs.getString("Status");
+                String status = rs.getString("status");
+                float totalPrice = rs.getFloat("totalPrice");
 
-                Order order = new Order(id, username, status);
+                Order order = new Order(id, username, status, totalPrice);
                 ordersList.add(order);
             }
 

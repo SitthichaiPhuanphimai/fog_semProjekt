@@ -23,8 +23,9 @@ public class OrderMapper {
                 int id = rs.getInt("id");
                 String username = rs.getString("username");
                 String status = rs.getString("Status");
+                float totalPrice = rs.getFloat("totalPrice");
 
-                Order order = new Order(id, username, status);
+                Order order = new Order(id, username, status, totalPrice);
                 ordersList.add(order);
             }
 
@@ -37,8 +38,8 @@ public class OrderMapper {
     }
 
 
-    public static Order createOrder(String username, ConnectionPool connectionPool) {
-        String sql = "INSERT INTO fog.orders (username, status) VALUES (?, ?)";
+    public static Order createOrder(String username, float totalPrice, ConnectionPool connectionPool) {
+        String sql = "INSERT INTO fog.orders (username, status, totalPrice) VALUES (?, ?, ?)";
         Order order = null;
 
         try (Connection conn = connectionPool.getConnection();
@@ -46,6 +47,8 @@ public class OrderMapper {
 
             ps.setString(1, username);
             ps.setString(2, "pending");
+            ps.setFloat(3, totalPrice);
+
 
             int affectedRows = ps.executeUpdate();
 
@@ -56,7 +59,7 @@ public class OrderMapper {
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int orderId = generatedKeys.getInt(1);
-                    order = new Order(orderId, username, "pending");
+                    order = new Order(orderId, username, "pending", totalPrice);
                 } else {
                     throw new SQLException("Creating order failed, no ID obtained.");
                 }
@@ -78,11 +81,13 @@ String sql = "SELECT * FROM fog.orders WHERE username = ?";
 
             ps.setString(1, username);
 
+
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int orderId = rs.getInt("id");
                     String status = rs.getString("status");
-                    Order order = new Order(orderId, username, status);
+                    float totalPrice = rs.getFloat("totalPrice");
+                    Order order = new Order(orderId, username, status, totalPrice);
                     orders.add(order);
                 }
             }

@@ -34,7 +34,7 @@
                 <th>Enhed</th>
                 <th>Type</th>
                 <th>Antal</th>
-                <th>Price per Unit</th>
+                <th>Pris pr.enhed</th>
 
             </tr>
             <c:forEach var="itemList" items="${requestScope.itemList}">
@@ -53,20 +53,6 @@
 
         </table>
         </div>
-
-        <div class="-summary">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4>Samlet pris:<fmt:formatNumber value="${sessionScope.totalPrice}" type="number" minFractionDigits="2" maxFractionDigits="2"/> DKK.</h4>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="viewUserOrders.jsp" class="btn btn-primary">Tilbage</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
     </jsp:body>
 

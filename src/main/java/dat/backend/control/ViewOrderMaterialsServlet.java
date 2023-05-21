@@ -18,25 +18,18 @@ import java.util.List;
 public class ViewOrderMaterialsServlet extends HttpServlet {
     private ConnectionPool connectionPool;
     @Override
-    public void init() throws ServletException
+    public void init()
     {
         this.connectionPool = ApplicationStart.getConnectionPool();
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
+
         int orderId = Integer.parseInt(request.getParameter("orderId"));
 
         List<Item> orderItems = OrderFacade.getListByOrderId(orderId, connectionPool);
         ItemList itemList = new ItemList(orderItems);
 
-        try {
-            session.setAttribute("totalPrice", itemList.calculateTotalPrice(connectionPool));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-        }
 
         request.setAttribute("itemList", orderItems);
         request.getRequestDispatcher("WEB-INF/viewOrderMaterials.jsp").forward(request, response);
