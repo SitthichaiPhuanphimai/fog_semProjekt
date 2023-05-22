@@ -32,7 +32,6 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Page 1</a>
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Page 2</a>
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Page 3</a>
                     <c:if test="${sessionScope.user == null }">
@@ -64,39 +63,10 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <p>Har du ikke en bruger?</p>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#opretModal">Opret bruger</button>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Luk</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal for opretbruger -->
-                        <div class="modal fade" id="opretModal" tabindex="-1" aria-labelledby="opretModal"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="opretModalLabel">Opret bruger</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h3>Opret en bruger for at fortsætte</h3>
                                         <form action="signup" method="post">
-                                            <div class="mb-3"><input class="form-control" type="text" name="username" placeholder="Brugernavn"></div>
-                                            <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Kodeord"></div>
-                                            <div class="mb-3"><input class="form-control" type="password" name="confirmpassword" placeholder="Gentag kodeord"></div>
-                                            <div class="mb-3"><button class="btn btn-success d-block w-100" type="submit">Opret profil</button></div>
+                                        <p>Har du ikke en bruger?</p>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal">Opret bruger</button>
                                         </form>
-                                            ${sessionScope.passwordMismatch}
-                                            ${sessionScope.userExists}
-                                    </div>
-                                    <div class="modal-footer">
-                                        <p>Har du allerede en bruger?</p>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">Login</button>
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Luk</button>
                                     </div>
                                 </div>

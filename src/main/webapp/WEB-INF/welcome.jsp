@@ -5,28 +5,34 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-         Welcome to the logged in area
+         Velkommen, du er nu logget ind
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-        Logged in area
+        Du er nu logget ind
     </jsp:attribute>
 
     <jsp:body>
 
-        <p>You should be logged in now</p>
 
         <c:if test="${sessionScope.user != null}">
-            <p>You are logged in with the role of "${sessionScope.user.role}".</p>
+            <p>Du er nu logget ind med rollen som "${sessionScope.user.role}".</p>
 
             <form action="ServletOrderPlacement" method="get">
                 <p>Byg og bestil din egen carport!</p>
-                <input class="btn btn-success" type="submit" value="Byg Nu">
+               <input class="btn btn-success" type="submit" value="Byg nu">
             </form>
+
+            <div class="d-flex flex-row bd-highlight mb-3">
+                <div class="p-2 bd-highlight">1. Indtast målene</div>
+                <div class="p-2 bd-highlight">2. Få prisoverslag </div>
+                <div class="p-2 bd-highlight">3. Vi bekræfter</div>
+                <div class="p-2 bd-highlight">4. Materialerne leveres</div>
+            </div>
         </c:if>
 
         <c:if test="${sessionScope.user == null}">
-            <p>You are not logged in yet. You can do it here: <a
+            <p>Du er ikke logget ind endnu. Du kan logge ind her: <a
                     href="../login.jsp">Login</a></p>
         </c:if>
 

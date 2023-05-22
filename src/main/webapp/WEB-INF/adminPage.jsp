@@ -14,7 +14,7 @@
 <t:pagetemplate>
     <jsp:attribute name="header">
 
-        Velkommen admin
+        Admin Kontrolpanel - Fog A/S
 
     </jsp:attribute>
 
@@ -24,7 +24,7 @@
 
     <jsp:body>
         <form action="viewOrdersServlet" method="post">
-            <button class="btn btn-primary" type="submit">Se alle ordre</button>
+            <button class="btn btn-success" type="submit">Se alle ordre</button>
         </form>
         <br>
         <form action="ViewMaterialsServlet" method="get">
@@ -32,7 +32,7 @@
         </form>
         <br>
         <form action="ViewTaxesServlet" method="get">
-            <button type="submit" class="btn btn-primary">Ændre afgifter</button>
+            <button type="submit" class="btn btn-danger">Ændre momssatser</button>
         </form>
 
 
