@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 @WebServlet(name="getItemListServlet",value = "/getItemListServlet")
@@ -29,11 +28,9 @@ public class GetItemListServlet extends HttpServlet
 
         ArrayList<Item> itemList =  OrdersMapper.getItemList(orderId,connection);
 
-
         request.setAttribute("itemList", itemList);
 
         request.getRequestDispatcher("WEB-INF/viewItemList.jsp").forward(request,response);
-
 
     }
 }
