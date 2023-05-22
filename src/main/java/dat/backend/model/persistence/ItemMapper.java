@@ -15,9 +15,11 @@ import java.util.Comparator;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemMapper {
+public class ItemMapper
+{
 
-    static List<Item> getOptimalItem(float requiredLength, String type, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+    static List<Item> getOptimalItem(float requiredLength, String type, ConnectionPool connectionPool) throws DatabaseException, SQLException
+    {
         String sql = "SELECT material.id,material.description, material.price_per_unit, material_length.length, material_type.type, unit.unit " +
                 "FROM material " +
                 "INNER JOIN material_type ON (material.material_type_id = material_type.id) " +
@@ -30,12 +32,15 @@ public class ItemMapper {
 
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
 
             ps.setString(1, "%" + type + "%");
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet rs = ps.executeQuery())
+            {
+                while (rs.next())
+                {
                     int id = rs.getInt("id");
                     String description = rs.getString("description");
                     float price = rs.getFloat("price_per_unit");
@@ -48,7 +53,8 @@ public class ItemMapper {
                     materials.add(item);
 
                 }
-            } catch (SQLException ex) {
+            } catch (SQLException ex)
+            {
                 throw new DatabaseException(ex, "Error getting item. Something went wrong with the database");
             }
         }
@@ -67,13 +73,17 @@ public class ItemMapper {
         int[] parent = new int[target + 1];
 
         // Dynamic programming
-        for (int j = 1; j <= target; j++) {
-            for (int i = 0; i < materials.size(); i++) {
+        for (int j = 1; j <= target; j++)
+        {
+            for (int i = 0; i < materials.size(); i++)
+            {
                 Item item = materials.get(i);
                 int itemLength = (int) (item.getLength() * 100);
-                if (itemLength <= j) {
+                if (itemLength <= j)
+                {
                     float waste = dp[j - itemLength] + item.getLength();
-                    if (waste < dp[j]) {
+                    if (waste < dp[j])
+                    {
                         dp[j] = waste;
                         parent[j] = i;
                     }
@@ -83,8 +93,10 @@ public class ItemMapper {
 
         // Reconstruct solution
         List<Item> selectedMaterials = new ArrayList<>();
-        for (int j = target; j > 0; j -= (int) (materials.get(parent[j]).getLength() * 100)) {
-            if (parent[j] < materials.size()) {
+        for (int j = target; j > 0; j -= (int) (materials.get(parent[j]).getLength() * 100))
+        {
+            if (parent[j] < materials.size())
+            {
                 selectedMaterials.add(materials.get(parent[j]));
             }
         }
@@ -92,7 +104,8 @@ public class ItemMapper {
         return selectedMaterials;
     }
 
-    public static List<Item> getMaterial(String type, ConnectionPool connectionPool) throws DatabaseException {
+    public static List<Item> getMaterial(String type, ConnectionPool connectionPool) throws DatabaseException
+    {
         String sql = "SELECT fog.material.id,fog.material.description, fog.material.price_per_unit, fog.material_length.length, fog.material_type.type, fog.unit.unit " +
                 "FROM fog.material " +
                 "INNER JOIN fog.material_type ON (fog.material.material_type_id = fog.material_type.id) " +
@@ -103,12 +116,15 @@ public class ItemMapper {
         List<Item> materials = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
 
             ps.setString(1, "%" + type + "%");
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet rs = ps.executeQuery())
+            {
+                while (rs.next())
+                {
                     int id = rs.getInt("id");
                     String description = rs.getString("description");
                     float price = rs.getFloat("price_per_unit");
@@ -120,10 +136,12 @@ public class ItemMapper {
                     Item item = new Item(id, description, lengthofItem, price, unit, itemType);
                     materials.add(item);
                 }
-            } catch (SQLException ex) {
+            } catch (SQLException ex)
+            {
                 throw new DatabaseException(ex, "Error getting item. Something went wrong with the database");
             }
-        } catch (SQLException | DatabaseException ex) {
+        } catch (SQLException | DatabaseException ex)
+        {
             throw new DatabaseException(ex, "Error getting item. Something went wrong with the database");
         }
 

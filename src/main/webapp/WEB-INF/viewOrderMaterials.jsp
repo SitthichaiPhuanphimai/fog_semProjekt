@@ -26,32 +26,32 @@
     <jsp:body>
         <div class="container">
 
-        <table>
-            <tr>
-                <th>OrderID</th>
-                <th>Beskrivelse</th>
-                <th>Længde</th>
-                <th>Enhed</th>
-                <th>Type</th>
-                <th>Antal</th>
-                <th>Pris pr.enhed</th>
-
-            </tr>
-            <c:forEach var="itemList" items="${requestScope.itemList}">
+            <table>
                 <tr>
-
-                    <td> ${itemList.order_id}</td>
-                    <td> ${itemList.description}</td>
-                    <td> ${itemList.length}</td>
-                    <td> ${itemList.unit}</td>
-                    <td> ${itemList.type}</td>
-                    <td> ${itemList.quantity}</td>
-                    <td> ${itemList.price} DKK. </td>
+                    <th>OrderID</th>
+                    <th>Beskrivelse</th>
+                    <th>Længde</th>
+                    <th>Enhed</th>
+                    <th>Type</th>
+                    <th>Antal</th>
+                    <th>Pris pr.enhed</th>
 
                 </tr>
-            </c:forEach>
+                <c:forEach var="itemList" items="${requestScope.itemList}">
+                    <tr>
 
-        </table>
+                        <td> ${itemList.order_id}</td>
+                        <td> ${itemList.description}</td>
+                        <td> ${itemList.length}</td>
+                        <td> ${itemList.unit}</td>
+                        <td> ${itemList.type}</td>
+                        <td> ${itemList.quantity}</td>
+                        <td> ${itemList.price} DKK.</td>
+
+                    </tr>
+                </c:forEach>
+
+            </table>
         </div>
 
     </jsp:body>
