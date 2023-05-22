@@ -3,6 +3,7 @@ package dat.backend.control;
 import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Item;
 import dat.backend.model.entities.Material;
+import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.MaterialFacade;
@@ -20,37 +21,38 @@ import java.util.List;
 @WebServlet(name = "ViewMaterialsServlet", value = "/ViewMaterialsServlet")
 public class ViewMaterialsServlet extends HttpServlet {
     private ConnectionPool connectionPool;
+
     @Override
-    public void init() throws ServletException
-    {
+    public void init() throws ServletException {
         this.connectionPool = ApplicationStart.getConnectionPool();
     }
-
-
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else {
+
 // Ret på try catch
-        try {
-            List<Item>materialList = MaterialFacade.getMaterials(connectionPool);
+            try {
+                List<Item> materialList = MaterialFacade.getMaterials(connectionPool);
 
-            getServletContext().setAttribute("materialList", materialList);
-        } catch (DatabaseException e) {
-            e.printStackTrace();
+                getServletContext().setAttribute("materialList", materialList);
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            }
+
+
+            request.getRequestDispatcher("/WEB-INF/materialsOverviewPage.jsp").forward(request, response);
+
         }
-
-
-
-        request.getRequestDispatcher("/WEB-INF/materialsOverviewPage.jsp").forward(request, response);
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
 
     }
 }
+

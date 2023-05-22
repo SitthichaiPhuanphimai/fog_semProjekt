@@ -35,15 +35,19 @@ public class OrdersMapper {
         return ordersList;
     }
 
-    public static void deleteOrder(String id, ConnectionPool connectionPool) {
+    public static void deleteOrder(int id, ConnectionPool connectionPool) {
         try (Connection conn = connectionPool.getConnection()) {
 
-            String sql = "DELETE FROM orders WHERE id = ?";
+            String sqlDeleteMaterials = "DELETE FROM material_list WHERE order_id = ?";
+            String sqlDeleteOrder = "DELETE FROM orders WHERE id = ?";
 
+            try (PreparedStatement statement = conn.prepareStatement(sqlDeleteMaterials)) {
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            }
 
-            try (PreparedStatement statement = conn.prepareStatement(sql))
-            {
-                statement.setString(1, id);
+            try (PreparedStatement statement = conn.prepareStatement(sqlDeleteOrder)) {
+                statement.setInt(1, id);
                 statement.executeUpdate();
             }
 

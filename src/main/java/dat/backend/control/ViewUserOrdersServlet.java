@@ -25,21 +25,20 @@ public class ViewUserOrdersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession httpSession = request.getSession();
-    User user = (User) httpSession.getAttribute("user");
-    String username = user.getUsername();
+        User user = (User) httpSession.getAttribute("user");
 
-        List<Order> orders = OrderFacade.getOrdersByUsername(username, connectionPool);
-        request.setAttribute("orders", orders);
-        request.getRequestDispatcher("WEB-INF/viewUserOrders.jsp").forward(request, response);
+        if (user == null) {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else {
+            String username = user.getUsername();
+
+            List<Order> orders = OrderFacade.getOrdersByUsername(username, connectionPool);
+            request.setAttribute("orders", orders);
+            request.getRequestDispatcher("WEB-INF/viewUserOrders.jsp").forward(request, response);
 
 
-
-
-
+        }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    }
 }

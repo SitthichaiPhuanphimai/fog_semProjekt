@@ -36,6 +36,11 @@ public class CheckoutServlet extends HttpServlet {
 
         User user = (User) session.getAttribute("user");
 
+        if(user == null){
+            request.getRequestDispatcher("login.jsp").forward(request,response);
+        }
+        else{
+
         String action = request.getParameter("action");
         if("Acceptere".equals(action)) {
             String username = user.getUsername();
@@ -62,4 +67,5 @@ public class CheckoutServlet extends HttpServlet {
         }
 
     }
+}
 }

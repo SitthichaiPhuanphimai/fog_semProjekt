@@ -116,7 +116,7 @@ public class OrdersMapperTest {
 
                 ArrayList<Order> ordersList = OrdersMapper.getAllOrders(connectionPool);
 
-                String orderId = String.valueOf(ordersList.get(2).getId());
+                int orderId = ordersList.get(2).getId();
 
                 OrdersMapper.deleteOrder(orderId,connectionPool);
 

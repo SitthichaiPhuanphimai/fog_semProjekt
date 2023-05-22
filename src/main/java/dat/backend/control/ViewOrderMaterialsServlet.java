@@ -3,6 +3,7 @@ package dat.backend.control;
 import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Item;
 import dat.backend.model.entities.ItemList;
+import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.OrderFacade;
@@ -22,22 +23,26 @@ public class ViewOrderMaterialsServlet extends HttpServlet {
     {
         this.connectionPool = ApplicationStart.getConnectionPool();
     }
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
 
-        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        if (user == null) {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else {
 
-        List<Item> orderItems = OrderFacade.getListByOrderId(orderId, connectionPool);
-        ItemList itemList = new ItemList(orderItems);
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+
+            List<Item> orderItems = OrderFacade.getListByOrderId(orderId, connectionPool);
+            ItemList itemList = new ItemList(orderItems);
 
 
-        request.setAttribute("itemList", orderItems);
-        request.getRequestDispatcher("WEB-INF/viewOrderMaterials.jsp").forward(request, response);
+            request.setAttribute("itemList", orderItems);
+            request.getRequestDispatcher("WEB-INF/viewOrderMaterials.jsp").forward(request, response);
 
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        }
     }
 }
