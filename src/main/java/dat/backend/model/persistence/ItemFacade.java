@@ -17,7 +17,4 @@ public class ItemFacade {
         return ItemMapper.getMaterial(type, connectionPool);
     }
 
-    public static List<Item> getNailBox(String type, ConnectionPool connectionPool) throws DatabaseException {
-        return ItemMapper.getNailBox(type, connectionPool);
-    }
 }

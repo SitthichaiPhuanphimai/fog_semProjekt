@@ -1,5 +1,6 @@
 package dat.backend.control;
 
+import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Tax;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.TaxMapper;
@@ -14,22 +15,34 @@ import java.util.List;
 
 @WebServlet(name = "ViewTaxesServlet", value = "/ViewTaxesServlet")
 public class ViewTaxesServlet extends HttpServlet {
+    private ConnectionPool connectionPool;
+    @Override
+    public void init()
+    {
+        this.connectionPool = ApplicationStart.getConnectionPool();
+    }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Tax> taxList = TaxMapper.getTaxList();
+        HttpSession session = request.getSession();
+        String role = (String) session.getAttribute("role");
 
-        getServletContext().setAttribute("taxList", taxList);
+        if (role == null || !role.equals("admin")) {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else {
 
-        request.getRequestDispatcher("/WEB-INF/taxOverviewPage.jsp").forward(request,response);
+            List<Tax> taxList = TaxMapper.getTaxList();
+
+            getServletContext().setAttribute("taxList", taxList);
+
+            request.getRequestDispatcher("/WEB-INF/taxOverviewPage.jsp").forward(request, response);
 
 
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        ConnectionPool connectionPool = new ConnectionPool();
 
         int taxId = Integer.parseInt(request.getParameter("id"));
         double newTaxValue = Double.parseDouble(request.getParameter("taxValue"));

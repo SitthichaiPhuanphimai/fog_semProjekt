@@ -22,6 +22,7 @@
             <br>
             <h3> Du har valgt længden: ${sessionScope.uLength}</h3> <br>
             <h3> Du har valgt bredden: ${sessionScope.uWidth}</h3> <br>
+
             <h3> Den samlede pris for carport <fmt:formatNumber value="${sessionScope.totalPrice}" type="number" minFractionDigits="2" maxFractionDigits="2"/> kr</h3>
 
             <c:if test="${sessionScope.skur != null}">

@@ -57,7 +57,7 @@ public class ItemListMapper {
                 if (rs.next()) {
                     int id = rs.getInt("id");
                     String name = rs.getString("tax_name");
-                    double taxPercentage = rs.getDouble("tax_value");
+                    float taxPercentage = rs.getFloat("tax_value");
 
                     tax = new Tax(id, taxPercentage, name);
                 }
@@ -79,7 +79,7 @@ public class ItemListMapper {
                 if (rs.next()) {
                     int id = rs.getInt("id");
                     String name = rs.getString("tax_name");
-                    double taxPercentage = rs.getDouble("tax_value");
+                    float taxPercentage = rs.getFloat("tax_value");
 
                     tax = new Tax(id, taxPercentage, name);
                 }

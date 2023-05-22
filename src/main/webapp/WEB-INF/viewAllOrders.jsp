@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page errorPage="../error.jsp" isErrorPage="false" %>
 
 <t:pagetemplate>
@@ -22,6 +23,7 @@
                 <th>ID</th>
                 <th>Email</th>
                 <th>Status</th>
+                <th>Samlet pris</th>
                 <th>Skift status</th>
 
 
@@ -33,6 +35,7 @@
                 <td> ${Order.id}</td>
                 <td> ${Order.username}</td>
                 <td> ${Order.status}</td>
+                <td> <fmt:formatNumber value="${Order.totalPrice}" type="number" minFractionDigits="2" maxFractionDigits="2"/> DKK</td>
                 <td>
                     <form name="skift" action="viewOrdersServlet" method="post">
                         <input type="hidden" name="orderId" value="${Order.id}">

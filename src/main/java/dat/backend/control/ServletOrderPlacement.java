@@ -32,8 +32,15 @@ public class ServletOrderPlacement extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //request.setCharacterEncoding("UTF-8");
+        HttpSession httpSession = request.getSession();
 
-        request.getRequestDispatcher("WEB-INF/orderPlacement.jsp").forward(request, response);
+        User user = (User) httpSession.getAttribute("user");
+        if(user == null){
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }else {
+            request.getRequestDispatcher("WEB-INF/orderPlacement.jsp").forward(request, response);
+        }
+
 
 
     }
@@ -56,6 +63,7 @@ public class ServletOrderPlacement extends HttpServlet {
         try {
             calculator.RunAllCalculations(connectionPool);
             ItemList itemList = new ItemList(calculator.getItemList());
+            System.out.println(itemList.toString());
             session.setAttribute("itemList", itemList);
             session.setAttribute("totalPrice", itemList.calculateTotalPrice(connectionPool));
         } catch (DatabaseException e) {

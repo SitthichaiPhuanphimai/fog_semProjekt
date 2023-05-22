@@ -32,8 +32,14 @@ public class CheckoutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
+        float totalPrice = (float) session.getAttribute("totalPrice");
 
         User user = (User) session.getAttribute("user");
+
+        if(user == null){
+            request.getRequestDispatcher("login.jsp").forward(request,response);
+        }
+        else{
 
         String action = request.getParameter("action");
         if("Acceptere".equals(action)) {
@@ -43,7 +49,7 @@ public class CheckoutServlet extends HttpServlet {
             ItemList itemList = (ItemList) session.getAttribute("itemList");
             try {
                 // Create order and retrieve order ID
-                Order order = OrderFacade.createOrder(username, connectionPool);
+                Order order = OrderFacade.createOrder(username,totalPrice, connectionPool);
                 session.setAttribute("order", order);
 
                 // Insert items into material_list table using the returned order ID
@@ -61,4 +67,5 @@ public class CheckoutServlet extends HttpServlet {
         }
 
     }
+}
 }

@@ -20,9 +20,10 @@ public class OrdersMapper {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String username = rs.getString("username");
-                String status = rs.getString("Status");
+                String status = rs.getString("status");
+                float totalPrice = rs.getFloat("totalPrice");
 
-                Order order = new Order(id, username, status);
+                Order order = new Order(id, username, status, totalPrice);
                 ordersList.add(order);
             }
 
@@ -34,14 +35,20 @@ public class OrdersMapper {
         return ordersList;
     }
 
-    public static void deleteOrder(String id, ConnectionPool connectionPool) {
+
+    public static void deleteOrder(int id, ConnectionPool connectionPool) {
         try (Connection conn = connectionPool.getConnection()) {
 
-            String sql = "DELETE FROM orders WHERE id = ?";
+            String sqlDeleteMaterials = "DELETE FROM material_list WHERE order_id = ?";
+            String sqlDeleteOrder = "DELETE FROM orders WHERE id = ?";
 
+            try (PreparedStatement statement = conn.prepareStatement(sqlDeleteMaterials)) {
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            }
 
-            try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setString(1, id);
+            try (PreparedStatement statement = conn.prepareStatement(sqlDeleteOrder)) {
+                statement.setInt(1, id);
                 statement.executeUpdate();
             }
 
@@ -50,7 +57,9 @@ public class OrdersMapper {
         }
     }
 
-    public static ArrayList<Item> getItemList(String id, ConnectionPool connectionPool) {
+
+    public static ArrayList<Item> getItemList(int id, ConnectionPool connectionPool)
+    {
         ArrayList<Item> itemsList = new ArrayList<>();
 
         String sql = "SELECT material_list.order_id, material.description, unit.unit, " +
@@ -65,7 +74,7 @@ public class OrdersMapper {
         try (Connection conn = connectionPool.getConnection();
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
-            statement.setString(1, id);
+            statement.setInt(1, id);
 
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
