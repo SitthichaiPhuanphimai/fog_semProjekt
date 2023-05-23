@@ -23,12 +23,9 @@
                <input class="btn btn-success" type="submit" value="Byg nu">
             </form>
 
-            <div class="d-flex flex-row bd-highlight mb-3">
-                <div class="p-2 bd-highlight">1. Indtast målene</div>
-                <div class="p-2 bd-highlight">2. Få prisoverslag </div>
-                <div class="p-2 bd-highlight">3. Vi bekræfter</div>
-                <div class="p-2 bd-highlight">4. Materialerne leveres</div>
-            </div>
+            <form action="ViewUserOrders" method="get">
+                <p>Se dine tidligere, og igangværende ordrer</p>
+                <input class="btn btn-success" type="submit" value="Se Ordrer">
         </c:if>
 
         <c:if test="${sessionScope.user == null}">

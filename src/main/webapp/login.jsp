@@ -19,9 +19,9 @@
 
         <form action="login" method="post">
             <label for="username">Email: </label>
-            <input type="text" id="username" name="username"/>
+            <input type="text" id="username" name="username" value="Turan"/>
             <label for="password">Kodeord: </label>
-            <input type="password" id="password" name="password"/>
+            <input type="password" id="password" name="password" value="1234"/>
             <input type="submit"  value="Log in"/>
         </form>
 

@@ -121,20 +121,14 @@ public class Calculator {
     }
 
     public List<Item> calcScrewBox(ConnectionPool connectionPool) throws DatabaseException, SQLException {
-        List<Item> nailBox = ItemFacade.getNailBox("Skruer", connectionPool);
-        int amountOfNailBox = 0;
-
-        if (length < 5) {
-            amountOfNailBox = 1;
-        } else {
-            amountOfNailBox = 2;
-        }
+        List<Item> nailBox = ItemFacade.getMaterial("til montering", connectionPool);
+        int calcScrewBox = (length < 5) ? 1 : 2;
 
         if (nailBox.isEmpty()) {
             throw new DatabaseException("No nailBox where found in the database");
         }
 
-        for (int i = 0; i < amountOfNailBox; i++) {
+        for (int i = 0; i < calcScrewBox; i++) {
             for (Item item : nailBox) {
                 itemList.add(item);
             }

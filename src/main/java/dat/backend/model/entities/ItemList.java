@@ -11,7 +11,6 @@ import java.util.List;
 
 public class ItemList {
 
-    HashMap<String, ArrayList<String>> map = new HashMap<>();
     private List<Item> itemList;
     private float totalPrice;
 
@@ -23,7 +22,7 @@ public class ItemList {
     public ItemList(List<Item> itemList, float totalPrice) {
         this.itemList = itemList;
         this.totalPrice = totalPrice;
-        
+
     }
 
     public List<Item> getItemList() {
@@ -35,20 +34,30 @@ public class ItemList {
     }
 
     public float calculateTotalPrice(ConnectionPool connectionPool) throws SQLException, DatabaseException {
+
         float totalPrice = 0;
         for (Item item : itemList) {
-            totalPrice += (item.getPrice() * item.getLength());
+            int quantity = item.getQuantity() > 0 ? item.getQuantity() : 1;
+            float priceForWholeLength = item.getPrice() * item.getLength();
+            totalPrice += priceForWholeLength * quantity;
         }
 
-        double salesTax = totalPrice * ItemListFacade.getSalesTax(connectionPool).getValue();
-        double priceWithmoms = salesTax * ItemListFacade.getMoms(connectionPool).getValue();
+
+        float salesTax = totalPrice * (1 + ItemListFacade.getSalesTax(connectionPool).getValue());
+
+        float priceWithmoms = salesTax * ItemListFacade.getMoms(connectionPool).getValue();
 
 
-
-
-        return totalPrice + (float) priceWithmoms + (float) salesTax;
+        return salesTax + priceWithmoms;
     }
 
 
+    @Override
+    public String toString() {
+        return "ItemList{" +
+                "itemList=" + itemList +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }
 

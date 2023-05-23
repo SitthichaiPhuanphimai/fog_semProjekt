@@ -21,7 +21,7 @@ public class TaxMapper
                 {
                     int id = resultSet.getInt("id");
                     String taxName = resultSet.getString("tax_name");
-                    double taxValue = resultSet.getDouble("tax_value");
+                    float taxValue = resultSet.getFloat("tax_value");
 
                     Tax tax = new Tax(id, taxValue, taxName);
                     taxList.add(tax);

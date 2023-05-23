@@ -2,10 +2,10 @@ package dat.backend.model.entities;
 
 public class Tax {
     private int id;
-    private double value;
+    private float value;
     private String name;
 
-    public Tax(int id, double value, String name) {
+    public Tax(int id, float value, String name) {
         this.id = id;
         this.value = value;
         this.name = name;
@@ -16,7 +16,7 @@ public class Tax {
         return id;
     }
 
-    public double getValue() {
+    public float getValue() {
         return value;
     }
 
@@ -28,7 +28,7 @@ public class Tax {
         this.id = id;
     }
 
-    public void setValue(double value) {
+    public void setValue(float value) {
         this.value = value;
     }
 
