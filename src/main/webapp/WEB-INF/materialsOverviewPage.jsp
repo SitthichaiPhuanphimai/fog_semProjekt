@@ -6,29 +6,29 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-         Welcome to the logged in area
+         Materialeliste
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-        Logged in area
+        Materialeliset - Admin
     </jsp:attribute>
 
 
     <jsp:body>
         <div >
-            <h3>Here's a list of all materials:</h3>
+            <h3>Listen over alle registredede materialer i systemet</h3>
         </div>
 
-        <table class="table table-dark table-hover">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Price Per Unit in DKK</th>
-                    <th scope="col">Unit</th>
-                    <th scope="col">Material type</th>
-                    <th scope="col">Material Length</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Beskrivelse</th>
+                    <th scope="col">Pris per enhed</th>
+                    <th scope="col">Enhed</th>
+                    <th scope="col">Materiale type</th>
+                    <th scope="col">Materiale længde</th>
+                    <th scope="col">Handling</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,10 +41,10 @@
                     <td>${material.type}</td>
                     <td>${material.length}</td>
                     <td>
-                        <a href="UpdateMaterialServlet?id=${material.id}" class="btn btn-primary">Edit Price</a>
+                        <a href="UpdateMaterialServlet?id=${material.id}" style="background-color: dodgerblue; border-color: dodgerblue;color: white">Rediger pris</a>
                         <form action="/DeleteMaterialServlet" method="post">
                             <input type="hidden" name="id" value="${material.id}">
-                            <input type="submit" value="Delete" class="btn btn-primary">
+                            <input type="submit" value="Slet" style="background-color: orangered;color: white;border-color: orangered">
                         </form>
                     </td>
                 </tr>
@@ -54,11 +54,11 @@
         <br>
 
         <form action="AddNewMaterialServlet" method="GET">
-            <button type="submit" class="btn btn-primary" value="add">Add Material</button>
+            <button type="submit" class="btn btn-primary" value="add">Tilføj materiale</button>
         </form>
         <br>
         <form action="RefreshMaterialsServlet" method="post">
-            <button type="submit" class="btn btn-primary">Refresh Data</button>
+            <button type="submit" class="btn btn-success">Genindlæs data</button>
         </form>
 
 

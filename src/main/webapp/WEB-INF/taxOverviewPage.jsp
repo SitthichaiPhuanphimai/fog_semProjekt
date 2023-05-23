@@ -6,11 +6,11 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-         Hello ${sessionScope.user.role}! View all the different taxes here.
+         Hej, ${sessionScope.user.role}! - ændre momssatser her
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-        Tax overview page
+        Momsoverblik & indstillinger
     </jsp:attribute>
 
     <jsp:body>
@@ -19,9 +19,9 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Description</th>
-                <th>Value</th>
-                <th></th>
+                <th>Beskrivelse</th>
+                <th>Værdi</th>
+                <th>Handling</th>
             </tr>
             </thead>
             <tbody>
@@ -35,7 +35,7 @@
                             <input type="hidden" name="id" value="${tax.id}">
                             <input type="hidden" name="taxName" value="${tax.name}">
                             <input type="number" step="0.01" name="taxValue" value="${tax.value}">
-                            <input type="submit" class="btn btn-primary" value="Update">
+                            <input type="submit" style="background-color: #5cb85c; border-color: #5cb85c; color: white" value="Opdater">
                         </form>
                     </td>
                 </tr>
