@@ -39,8 +39,10 @@ public class SignUpServlet extends HttpServlet
             request.getSession().removeAttribute("userExists");
             request.getSession().removeAttribute("passwordMismatch");
 
-            for (User u : userList) {
-                if (username.toLowerCase().equals(u.getUsername().toLowerCase())) {
+            for (User u : userList)
+            {
+                if (username.toLowerCase().equals(u.getUsername().toLowerCase()))
+                {
                     request.getSession().setAttribute("userExists", "User already exists");
                     response.sendRedirect("signup.jsp");
                     return;

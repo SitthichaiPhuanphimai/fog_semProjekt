@@ -7,6 +7,7 @@ import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.OrderFacade;
+import dat.backend.model.services.Authentication;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -16,8 +17,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(name = "ViewOrderMaterialsServlet", value = "/ViewOrderMaterials")
-public class ViewOrderMaterialsServlet extends HttpServlet {
+public class ViewOrderMaterialsServlet extends HttpServlet
+{
     private ConnectionPool connectionPool;
+
     @Override
     public void init()
     {
@@ -26,13 +29,10 @@ public class ViewOrderMaterialsServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-
-        if (user == null) {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        if (Authentication.isUserLoggedIn(request))
+        {
 
             int orderId = Integer.parseInt(request.getParameter("orderId"));
 
@@ -43,6 +43,9 @@ public class ViewOrderMaterialsServlet extends HttpServlet {
             request.setAttribute("itemList", orderItems);
             request.getRequestDispatcher("WEB-INF/viewOrderMaterials.jsp").forward(request, response);
 
+        } else
+        {
+            Authentication.redirectToLogin(request, response);
         }
     }
 }

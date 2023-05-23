@@ -6,65 +6,66 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-
-        Orders List
-
+        <div class="text-center">
+            <h1>Ordreliste</h1>
+        </div>
     </jsp:attribute>
-
-    <jsp:attribute name="footer">
-
-    </jsp:attribute>
+    <jsp:attribute name="footer"></jsp:attribute>
 
     <jsp:body>
 
-
-        <table>
+        <table class="table table-hover">
+            <thead class="thead-dark">
             <tr>
-                <th>ID</th>
-                <th>Email</th>
+                <th>Ordre ID</th>
+                <th>Brugernavn</th>
                 <th>Status</th>
                 <th>Samlet pris</th>
-                <th>Skift status</th>
-
-
+                <th>Actions</th>
             </tr>
+            </thead>
 
             <c:forEach var="Order" items="${requestScope.ordersList}">
-            <tr>
-
-                <td> ${Order.id}</td>
-                <td> ${Order.username}</td>
-                <td> ${Order.status}</td>
-                <td> <fmt:formatNumber value="${Order.totalPrice}" type="number" minFractionDigits="2" maxFractionDigits="2"/> DKK</td>
-                <td>
-                    <form name="skift" action="viewOrdersServlet" method="post">
-                        <input type="hidden" name="orderId" value="${Order.id}">
-                        <select name="status">
-                            <option value="Approved" ${"approved".equals(Order.status) ? 'selected' : ''}>Approved</option>
-                            <option value="Pending" ${"pending".equals(Order.status) ? 'selected' : ''}>Pending</option>
-                            <option value="Declined" ${"declined".equals(Order.status) ? 'selected' : ''}>Declined</option>
-                        </select>
-                        <input type="submit" name="skift" value="Skift status">
-                    </form>
-
-                </td>
-                <td>
-                    <form name="Slet" action="deleteOrderServlet" method="post">
-                        <input type="hidden" name="orderId" value="${Order.id}">
-                        <input style="border-radius: 8px; background-color: darkred; color: white"  onclick="confirm()" id="Slet" type="submit" name="Slet" value="Slet Ordre"> </form>
-                </td>
-                <td>
-                    <form name="getList" action="getItemListServlet" method="post">
-                        <input type="hidden" name="orderId" value="${Order.id}">
-                        <input class="btn btn-primary" type="submit" name="runServlet" value="Hent materialeliste">
-                    </form>
-                </td>
-
-            </tr>
+                <tbody>
+                <tr>
+                    <td>${Order.id}</td>
+                    <td>${Order.username}</td>
+                    <td>${Order.status}</td>
+                    <td><fmt:formatNumber value="${Order.totalPrice}" type="number" minFractionDigits="2"
+                                          maxFractionDigits="2"/> DKK
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-4">
+                                <form name="skift" action="viewOrdersServlet" method="post">
+                                    <input type="hidden" name="orderId" value="${Order.id}">
+                                    <select class="form-control form-control-sm mb-2" name="status">
+                                        <option value="Approved" ${"approved".equals(Order.status) ? 'selected' : ''}>Godkendt</option>
+                                        <option value="Pending" ${"pending".equals(Order.status) ? 'selected' : ''}>Afventer</option>
+                                        <option value="Declined" ${"declined".equals(Order.status) ? 'selected' : ''}>Afvist</option>
+                                    </select>
+                                    <input class="btn btn-sm btn-success mb-2" type="submit" name="skift" value="Skift status">
+                                </form>
+                            </div>
+                            <div class="col-4">
+                                <form name="Slet" action="deleteOrderServlet" method="post" onsubmit="return confirm('Are you sure you want to delete this order?')">
+                                    <input type="hidden" name="orderId" value="${Order.id}">
+                                    <input class="btn btn-sm btn-danger mb-2" type="submit" name="Slet" value="Slet ordre">
+                                </form>
+                            </div>
+                            <div class="col-4">
+                                <form name="getList" action="getItemListServlet" method="post">
+                                    <input type="hidden" name="orderId" value="${Order.id}">
+                                    <input class="btn btn-sm btn-primary" type="submit" name="runServlet" value="Hent materialeliste">
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
             </c:forEach>
 
         </table>
 
     </jsp:body>
-
 </t:pagetemplate>
