@@ -2,6 +2,7 @@ package dat.backend.model.persistence;
 
 import dat.backend.model.entities.Item;
 import dat.backend.model.entities.Order;
+import dat.backend.model.exceptions.DatabaseException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -98,7 +99,8 @@ public class OrdersMapper {
         return itemsList;
     }
 
-    public static void updateOrderStatus(String orderID, String status, ConnectionPool connectionPool) {
+    public static void updateOrderStatus(String orderID, String status, ConnectionPool connectionPool) throws DatabaseException
+    {
         try (Connection conn = connectionPool.getConnection()) {
             String sql = "UPDATE orders SET status = ? WHERE id = ?";
 

@@ -22,11 +22,13 @@ import java.sql.SQLException;
 public class ServletOrderPlacement extends HttpServlet
 {
 
+
     private ConnectionPool connectionPool;
 
     @Override
     public void init() throws ServletException
     {
+        // Initialize database connection pool
         this.connectionPool = ApplicationStart.getConnectionPool();
     }
 
@@ -36,6 +38,10 @@ public class ServletOrderPlacement extends HttpServlet
         if (Authentication.isUserLoggedIn(request))
         {
             request.getRequestDispatcher("WEB-INF/orderPlacement.jsp").forward(request, response);
+        } else
+        {
+            // Redirect to login page if user not authenticated
+            Authentication.redirectToLogin(request, response);
         }
     }
 
@@ -44,36 +50,43 @@ public class ServletOrderPlacement extends HttpServlet
     {
         if (!Authentication.isUserLoggedIn(request))
         {
+            Authentication.redirectToLogin(request, response);
             return;
         }
 
+        try
+        {
+            processRequest(request, response);
+        } catch (DatabaseException | SQLException e)
+        {
+            // Provide a specific error message for the exception
+            request.setAttribute("errorMessage", "An error occurred while processing your request. Error: " + e.getMessage());
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+    }
+
+   // This method is to process all the backend logic for the order placement. It is called from the doPost method above.
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DatabaseException, SQLException
+    {
         HttpSession session = request.getSession();
 
         float uLength = Float.parseFloat(request.getParameter("length"));
-        session.setAttribute("uLength", uLength);
-
         float uWidth = Float.parseFloat(request.getParameter("width"));
+
+        session.setAttribute("uLength", uLength);
         session.setAttribute("uWidth", uWidth);
 
         // Create a Calculator instance and run calculations
         Calculator calculator = new Calculator(uLength, uWidth);
-        try
-        {
-            calculator.RunAllCalculations(connectionPool);
-            ItemList itemList = new ItemList(calculator.getItemList());
-            System.out.println(itemList.toString());
-            session.setAttribute("itemList", itemList);
-            session.setAttribute("totalPrice", itemList.calculateTotalPrice(connectionPool));
-        } catch (DatabaseException | SQLException e)
-        {
-            request.setAttribute("errormessage", e.getMessage());
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
+        calculator.RunAllCalculations(connectionPool);
+        ItemList itemList = new ItemList(calculator.getItemList());
+        session.setAttribute("itemList", itemList);
+        session.setAttribute("totalPrice", itemList.calculateTotalPrice(connectionPool));
 
         String skur = request.getParameter("skur");
-        if (skur.equals("ja") || skur.equals("nej"))
+        if ("ja".equals(skur) || "nej".equals(skur))
         {
-            session.setAttribute("skur", skur.equals("ja") ? skur : null);
+            session.setAttribute("skur", "ja".equals(skur) ? skur : null);
         }
 
         request.getRequestDispatcher("/WEB-INF/orderConfirmation.jsp").forward(request, response);

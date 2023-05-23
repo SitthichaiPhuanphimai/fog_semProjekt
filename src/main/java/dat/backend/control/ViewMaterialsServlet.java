@@ -35,6 +35,14 @@ public class ViewMaterialsServlet extends HttpServlet
             Authentication.redirectToLogin(request, response);
         }
 
+        String role = (String) request.getSession().getAttribute("role");
+
+        if (!"admin".equals(role))
+        {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+            return;
+        }
+
         try
         {
             List<Item> materialList = MaterialFacade.getMaterials(connectionPool);
@@ -42,8 +50,7 @@ public class ViewMaterialsServlet extends HttpServlet
             request.getRequestDispatcher("/WEB-INF/materialsOverviewPage.jsp").forward(request, response);
         } catch (DatabaseException e)
         {
-
-
+            request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher("/WEB-INF/errorPage.jsp").forward(request, response);
         }
     }

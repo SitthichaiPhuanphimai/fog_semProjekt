@@ -7,10 +7,10 @@ import java.util.List;
 
 public class TaxMapper
 {
-    public static List<Tax> getTaxList()
+    public static List<Tax> getTaxList(ConnectionPool connectionPool)
     {
             List<Tax> taxList = new ArrayList<>();
-            ConnectionPool connectionPool = new ConnectionPool();
+
             String query = "SELECT * FROM fog.taxes";
 
             try(Connection connection = connectionPool.getConnection();
@@ -36,10 +36,10 @@ public class TaxMapper
             return taxList;
     }
 
-    public static void updateTaxValue(int taxId, double newValue)
+    public static void updateTaxValue(int taxId, double newValue, ConnectionPool connectionPool)
     {
         String query = "UPDATE fog.taxes SET tax_value = ? WHERE id = ?";
-        ConnectionPool connectionPool = new ConnectionPool();
+
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query))

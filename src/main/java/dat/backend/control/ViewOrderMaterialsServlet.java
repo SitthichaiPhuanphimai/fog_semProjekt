@@ -31,21 +31,26 @@ public class ViewOrderMaterialsServlet extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        if (Authentication.isUserLoggedIn(request))
+        if (!Authentication.isUserLoggedIn(request))
         {
+            Authentication.redirectToLogin(request, response);
+            return;
+        }
 
+        try
+        {
             int orderId = Integer.parseInt(request.getParameter("orderId"));
-
             List<Item> orderItems = OrderFacade.getListByOrderId(orderId, connectionPool);
             ItemList itemList = new ItemList(orderItems);
 
-
             request.setAttribute("itemList", orderItems);
             request.getRequestDispatcher("WEB-INF/viewOrderMaterials.jsp").forward(request, response);
-
-        } else
+        } catch (DatabaseException e)
         {
-            Authentication.redirectToLogin(request, response);
+            // Handle database error here
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 }
+

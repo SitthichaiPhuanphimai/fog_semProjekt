@@ -2,6 +2,7 @@ package dat.backend.control;
 
 import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Order;
+import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.OrdersMapper;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "viewOrdersServlet", value = "/viewOrdersServlet")
 public class ViewOrdersServlet extends HttpServlet
@@ -29,19 +31,25 @@ public class ViewOrdersServlet extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+        try
+        {
+            String orderId = request.getParameter("orderId");
+            String newStatus = request.getParameter("status");
 
-        String orderId = request.getParameter("orderId");
-        String newStatus = request.getParameter("status");
-
-        OrdersMapper.updateOrderStatus(orderId, newStatus, connectionPool);
-
-
-        ArrayList<Order> ordersList = OrdersMapper.getAllOrders(connectionPool);
+            OrdersMapper.updateOrderStatus(orderId, newStatus, connectionPool);
 
 
-        request.setAttribute("ordersList", ordersList);
+            List<Order> ordersList = OrdersMapper.getAllOrders(connectionPool);
 
-        request.getRequestDispatcher("WEB-INF/viewAllOrders.jsp").forward(request, response);
+
+            request.setAttribute("ordersList", ordersList);
+
+            request.getRequestDispatcher("WEB-INF/viewAllOrders.jsp").forward(request, response);
+        } catch (DatabaseException e)
+        {
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher("/WEB-INF/errorPage.jsp").forward(request, response);
+        }
     }
 
 }

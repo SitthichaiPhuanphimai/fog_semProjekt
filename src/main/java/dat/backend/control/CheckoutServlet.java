@@ -8,6 +8,7 @@ import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.ItemListFacade;
 import dat.backend.model.persistence.OrderFacade;
+import dat.backend.model.services.Authentication;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -18,6 +19,7 @@ import java.sql.SQLException;
 @WebServlet(name = "CheckoutServlet", value = "/Checkout")
 public class CheckoutServlet extends HttpServlet
 {
+
     private ConnectionPool connectionPool;
 
     @Override
@@ -26,50 +28,63 @@ public class CheckoutServlet extends HttpServlet
         this.connectionPool = ApplicationStart.getConnectionPool();
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-
-        HttpSession session = request.getSession();
-        float totalPrice = (float) session.getAttribute("totalPrice");
-        User user = (User) session.getAttribute("user");
-
-        if (user == null)
+        if (!Authentication.isUserLoggedIn(request))
         {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else
-        {
+            Authentication.redirectToLogin(request, response);
+            return;
+        }
 
-            String action = request.getParameter("action");
+        User user = Authentication.getLoggedInUser(request);
+        String action = request.getParameter("action");
+
+        try
+        {
             if ("Acceptere".equals(action))
             {
-                String username = user.getUsername();
-
-                // Get item list from session
-                ItemList itemList = (ItemList) session.getAttribute("itemList");
-                try
-                {
-                    // Create order and retrieve order ID
-                    Order order = OrderFacade.createOrder(username, totalPrice, connectionPool);
-                    session.setAttribute("order", order);
-
-                    // Insert items into material_list table using the returned order ID
-                    ItemListFacade.createMaterialList(order.getId(), itemList, connectionPool);
-
-                    request.getRequestDispatcher("/WEB-INF/orderDetails.jsp").forward(request, response);
-                } catch (DatabaseException | SQLException e)
-                {
-                    // Set the error message attribute so the error page can display it
-                    request.setAttribute("errorMessage", e.getMessage());
-                    request.getRequestDispatcher("/error.jsp").forward(request, response);
-                }
+                acceptOrder(request, response, user);
             } else
             {
-                // Forward to order placement page
-                request.getRequestDispatcher("/WEB-INF/orderPlacement.jsp").forward(request, response);
+                redirectToOrderPlacement(request, response);
             }
 
+        } catch (DatabaseException | SQLException e)
+        {
+            handleException(request, response, e);
         }
+    }
+
+    private void acceptOrder(HttpServletRequest request, HttpServletResponse response, User user) throws DatabaseException, SQLException, ServletException, IOException
+    {
+        HttpSession session = request.getSession();
+        float totalPrice = (float) session.getAttribute("totalPrice");
+
+        String username = user.getUsername();
+
+        // Get item list from session
+        ItemList itemList = (ItemList) session.getAttribute("itemList");
+
+        // Create order and retrieve order ID
+        Order order = OrderFacade.createOrder(username, totalPrice, connectionPool);
+        session.setAttribute("order", order);
+
+        // Insert items into material_list table using the returned order ID
+        ItemListFacade.createMaterialList(order.getId(), itemList, connectionPool);
+
+        request.getRequestDispatcher("/WEB-INF/orderDetails.jsp").forward(request, response);
+    }
+
+    private void redirectToOrderPlacement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        request.getRequestDispatcher("/WEB-INF/orderPlacement.jsp").forward(request, response);
+    }
+
+    private void handleException(HttpServletRequest request, HttpServletResponse response, Exception e) throws ServletException, IOException
+    {
+        // Set the error message attribute so the error page can display it
+        request.setAttribute("errorMessage", e.getMessage());
+        request.getRequestDispatcher("/error.jsp").forward(request, response);
     }
 }
