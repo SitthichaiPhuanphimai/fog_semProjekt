@@ -8,7 +8,6 @@ public class Order
     private String username;
     private String status;
     private float totalPrice;
-    private Timestamp timestamp;
 
     public Order(int id, String username, String status, float totalPrice)
     {
@@ -42,6 +41,6 @@ public class Order
     @Override
     public String toString()
     {
-        return "id:" + id +" " + "username: " + username + " "+ "status: "+ status;
+        return "id:" + id + " " + "username: " + username + " " + "status: " + status;
     }
 }

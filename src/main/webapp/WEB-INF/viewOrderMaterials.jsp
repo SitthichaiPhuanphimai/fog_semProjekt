@@ -37,6 +37,7 @@
                     <th>Pris pr.enhed</th>
 
                 </tr>
+
                 <c:forEach var="itemList" items="${requestScope.itemList}">
                     <tr>
 
@@ -46,7 +47,7 @@
                         <td> ${itemList.unit}</td>
                         <td> ${itemList.type}</td>
                         <td> ${itemList.quantity}</td>
-                        <td> ${itemList.price} DKK.</td>
+                        <td> ${itemList.price} DKK. </td>
 
                     </tr>
                 </c:forEach>

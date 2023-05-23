@@ -10,11 +10,13 @@ public class OrderFacade
 {
 
 
-    public static Order createOrder(String username, float totalPrice, ConnectionPool connectionPool) {
+    public static Order createOrder(String username, float totalPrice, ConnectionPool connectionPool)
+    {
         return OrderMapper.createOrder(username, totalPrice, connectionPool);
     }
 
-    public static List<Order> getOrdersByUsername(String username, ConnectionPool connectionPool) {
+    public static List<Order> getOrdersByUsername(String username, ConnectionPool connectionPool) throws DatabaseException
+    {
         return OrderMapper.getOrdersByUsername(username, connectionPool);
     }
 

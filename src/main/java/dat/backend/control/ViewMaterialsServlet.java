@@ -2,19 +2,21 @@ package dat.backend.control;
 
 import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Item;
+import dat.backend.model.entities.Material;
 import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.MaterialFacade;
-import dat.backend.model.services.Authentication;
+import dat.backend.model.persistence.MaterialMapper;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+
 
 @WebServlet(name = "ViewMaterialsServlet", value = "/ViewMaterialsServlet")
 public class ViewMaterialsServlet extends HttpServlet
@@ -27,31 +29,36 @@ public class ViewMaterialsServlet extends HttpServlet
         this.connectionPool = ApplicationStart.getConnectionPool();
     }
 
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        if (!Authentication.isUserLoggedIn(request))
-        {
-            Authentication.redirectToLogin(request, response);
-        }
 
-        String role = (String) request.getSession().getAttribute("role");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
 
-        if (!"admin".equals(role))
+        if (user == null)
         {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-            return;
-        }
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else
+        {
+            try
+            {
+                List<Item> materialList = MaterialFacade.getMaterials(connectionPool);
 
-        try
-        {
-            List<Item> materialList = MaterialFacade.getMaterials(connectionPool);
-            request.setAttribute("materialList", materialList);
+                getServletContext().setAttribute("materialList", materialList);
+            } catch (DatabaseException e)
+            {
+                request.setAttribute("errorMessage", e.getMessage());
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+
+            }
+
+
             request.getRequestDispatcher("/WEB-INF/materialsOverviewPage.jsp").forward(request, response);
-        } catch (DatabaseException e)
-        {
-            request.setAttribute("errorMessage", e.getMessage());
-            request.getRequestDispatcher("/WEB-INF/errorPage.jsp").forward(request, response);
+
         }
+
+
     }
 }
