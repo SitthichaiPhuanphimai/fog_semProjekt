@@ -102,7 +102,7 @@
             <p>Lyngby</p>
         </div>
         <div class="col">
-            Copyright &copy; 2022<br/>
+            Copyright &copy; 2023<br/>
         </div>
     </div>
 

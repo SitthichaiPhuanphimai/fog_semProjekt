@@ -6,8 +6,7 @@
 <t:pagetemplate>
     <jsp:attribute name="header">
 
-        Orders List
-
+        Ordreliste
     </jsp:attribute>
 
     <jsp:attribute name="footer">
@@ -43,20 +42,23 @@
                                 <option value="Declined" ${"declined".equals(Order.status) ? 'selected' : ''}>Afvist
                                 </option>
                             </select>
-                            <input style="background-color: #5cb85c; color: white; border-color: #5cb85c" type="submit" name="skift" value="Skift status">
+                            <input style="background-color: #5cb85c; color: white; border-color: #5cb85c" type="submit"
+                                   name="skift" value="Skift status">
                         </form>
 
                     </td>
                     <td>
                         <form name="Slet" action="deleteOrderServlet" method="post">
                             <input type="hidden" name="orderId" value="${Order.id}">
-                            <input style="background-color: orangered; color: white; border-color: orangered" onclick="confirm()" id="Slet" type="submit" name="Slet"
+                            <input style="background-color: orangered; color: white; border-color: orangered"
+                                   onclick="confirm()" id="Slet" type="submit" name="Slet"
                                    value="Slet ordre"></form>
                     </td>
                     <td>
                         <form name="getList" action="getItemListServlet" method="post">
                             <input type="hidden" name="orderId" value="${Order.id}">
-                            <input style="background-color: dodgerblue; color: white; border-color: dodgerblue" type="submit" name="runServlet" value="Hent materialeliste">
+                            <input style="background-color: dodgerblue; color: white; border-color: dodgerblue"
+                                   type="submit" name="runServlet" value="Hent materialeliste">
                         </form>
                     </td>
                     </tbody>
