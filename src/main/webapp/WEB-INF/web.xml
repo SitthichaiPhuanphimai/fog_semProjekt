@@ -24,7 +24,7 @@
 
     <servlet>
         <servlet-name>UpdateMaterialServlet</servlet-name>
-        <servlet-class>dat.backend.model.services.UpdateMaterialServlet</servlet-class>
+        <servlet-class>dat.backend.control.UpdateMaterialServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

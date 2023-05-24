@@ -1,5 +1,6 @@
 package dat.backend.model.persistence;
 
+import dat.backend.model.entities.Item;
 import dat.backend.model.entities.ItemList;
 import dat.backend.model.entities.Tax;
 import dat.backend.model.exceptions.DatabaseException;
@@ -20,4 +21,5 @@ public class ItemListFacade {
     public static Tax getMoms(ConnectionPool connectionPool) throws SQLException, DatabaseException {
       return ItemListMapper.getMoms(connectionPool);
     }
+
 }

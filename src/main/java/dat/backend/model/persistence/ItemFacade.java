@@ -17,4 +17,12 @@ public class ItemFacade {
         return ItemMapper.getMaterial(type, connectionPool);
     }
 
+    public static void updatePrice(ConnectionPool connectionPool, int ID, float newPrice)
+    {
+        ItemMapper.editPrice(connectionPool, ID, newPrice);
+    }
+
+    public static Item addNewMaterial(String newDescription, float newPrice, int newUnitID, int newMaterialType, int newMaterialLength, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        return ItemMapper.addNewMaterial(newDescription, newPrice, newUnitID, newMaterialType, newMaterialLength, connectionPool);
+    }
 }
