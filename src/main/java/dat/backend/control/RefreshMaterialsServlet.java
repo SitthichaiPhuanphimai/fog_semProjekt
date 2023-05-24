@@ -25,15 +25,13 @@ public class RefreshMaterialsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Material> materialList = new ArrayList<>();
 
-        getServletContext().setAttribute("materialList", materialList);
-
         ConnectionPool connectionPool = new ConnectionPool();
 
         String query = "SELECT * FROM fog.material";
+
         try(Connection connection = connectionPool.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-        )
+            ResultSet resultSet = statement.executeQuery(query);)
         {
             while(resultSet.next())
             {
@@ -49,12 +47,13 @@ public class RefreshMaterialsServlet extends HttpServlet {
                 materialList.add(material);
             }
 
+
         }catch (SQLException sqlException)
         {
             System.out.println("problem with setup of materials");
             sqlException.printStackTrace();
         }
-
+        getServletContext().setAttribute("materialList", materialList);
         request.getRequestDispatcher("/WEB-INF/materialsOverviewPage.jsp").forward(request,response);
 
     }

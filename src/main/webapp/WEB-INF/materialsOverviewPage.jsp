@@ -42,7 +42,7 @@
                     <td>${material.length}</td>
                     <td>
                         <a href="UpdateMaterialServlet?id=${material.id}" class="btn btn-primary">Edit Price</a>
-                        <form action="/DeleteMaterialServlet" method="post">
+                        <form action="DeleteMaterialServlet" method="post">
                             <input type="hidden" name="id" value="${material.id}">
                             <input type="submit" value="Delete" class="btn btn-primary">
                         </form>
@@ -53,7 +53,7 @@
         </table>
         <br>
 
-        <form action="AddNewMaterialServlet" method="GET">
+        <form action="AddNewMaterialServlet" method="post">
             <button type="submit" class="btn btn-primary" value="add">Add Material</button>
         </form>
         <br>

@@ -13,29 +13,28 @@
     </jsp:attribute>
 
     <jsp:body>
-        <%--skift id og for til new id, matarial_ID ....... alle variabler--%>
-        <form method="post" action="AddNewMaterialServlet">
+        <form method="get" action="TestServlet">
             <div class="mb-3">
                 <label for="description" class="form-label"><strong>Description:</strong></label><br>
-                <input type="text" id="description" name="description" required="'required'"><br>
+                <input type="text" id="description" name="description" required><br>
                 <div id="descriptionHelp" class="form-text>">Enter a description for the new material:</div>
             </div>
                 <label for="price" class="form-label"><strong>Price:</strong></label><br>
-                <input type="number" id="price" name="price" required="'required'"><br>
+                <input type="number" id="price" name="price" required><br>
                 <div id="priceHelp" class="form-text>">Enter the price for the new material:</div>
             <div class="mb-3">
                 <label for="unitId" class="form-label" ><strong>Unit ID:</strong> </label><br>
-                <input type="number" id="unitId" name="unitId"required="'required'"><br>
+                <input type="number" id="unitId" name="unitId"required><br>
                 <div id="unitIDHelp" class="form-text>">Enter the unitID number:</div>
             </div>
             <div class="mb-3">
                 <label for="materialType" class="form-label" ><strong>Material Type:</strong></label><br>
-                <input type="number" id="materialType" name="materialType" required="'required'"><br>
+                <input type="number" id="materialType" name="materialType" required><br>
                 <div id="materialTypeHelp" class="form-text>">Enter the material type ID number:</div>
             </div>
             <div class="mb-3">
                 <label for="materialLength" class="form-label" ><strong>Material Length:</strong></label><br>
-                <input type="number" id="materialLength" name="materialLength" required="'required'"><br>
+                <input type="number" id="materialLength" name="materialLength" required><br>
                 <div id="materialLengthHelp" class="form-text>">Enter the length for the new material:</div>
             </div>
             <input type="submit" class="btn btn-primary" value="Submit">

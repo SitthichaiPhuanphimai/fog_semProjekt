@@ -168,7 +168,7 @@ public class ItemMapper
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 1)
             {
-            item = new Item(newUnitID, newDescription, newMaterialLength,newPrice,String.valueOf(newUnitID),String.valueOf(newMaterialType));
+                item = new Item(newUnitID, newDescription, newMaterialLength,newPrice,String.valueOf(newUnitID),String.valueOf(newMaterialType));
             }
             else
             {
@@ -201,16 +201,6 @@ public class ItemMapper
                 preparedStatement.setFloat(2, materialID);
                 preparedStatement.executeUpdate();
 
-                //update materialList with new value.
-                //Dette bliver nok erstattet med en refreshMaterialslist() metode
-                /*for (Material m : materialList)
-                {
-                    if (m.getId() == materialID)
-                    {
-                        m.setPrice(newPrice);
-                        break;
-                    }
-                }*/
 
                 System.out.println("database update succes");
             }catch (SQLException sqlException)
