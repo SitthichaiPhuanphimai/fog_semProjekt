@@ -20,7 +20,7 @@
             <input type="hidden" name="id" value="${material.id}" />
             <label for="price">Price</label>
             <input type="number" id="price" name="price" value="${material.price}" />
-            <input type="submit" value="Update">
+            <input type="submit" value="Skift Pris">
         </form>
         <br>
 

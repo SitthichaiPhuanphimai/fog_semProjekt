@@ -2,19 +2,14 @@ package dat.backend.control;
 
 import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Item;
-import dat.backend.model.entities.Material;
 import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.MaterialFacade;
-import dat.backend.model.persistence.MaterialMapper;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,6 +42,13 @@ public class ViewMaterialsServlet extends HttpServlet
                 List<Item> materialList = MaterialFacade.getMaterials(connectionPool);
 
                 getServletContext().setAttribute("materialList", materialList);
+
+
+                if (session.getAttribute("successMessage") != null)
+                {
+                request.setAttribute("successMessage", session.getAttribute("successMessage"));
+                session.removeAttribute("successMessage");
+                }
             } catch (DatabaseException e)
             {
                 request.setAttribute("errorMessage", e.getMessage());

@@ -30,7 +30,8 @@ public class DeleteMaterialServlet extends HttpServlet {
             preparedStatement.setInt(1, materialID);
             preparedStatement.executeUpdate();
 
-            request.getRequestDispatcher("/WEB-INF/materialsOverview.jsp").forward(request,response);
+            response.sendRedirect("ToViewMaterialsServlet");
+            //request.getRequestDispatcher("/WEB-INF/materialsOverview.jsp").forward(request,response);
         } catch (SQLException sqlException)
         {
             System.out.println("could not delete");
