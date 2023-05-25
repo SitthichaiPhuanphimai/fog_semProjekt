@@ -1,6 +1,7 @@
 package dat.backend.model.entities;
 
-public class Material {
+public class Material
+{
     private int id;
     private String description;
     private float price;
@@ -9,7 +10,8 @@ public class Material {
     private int materialLength;
 
 
-    public Material(int id, String description, float price, int unitId, int materialType, int materialLength) {
+    public Material(int id, String description, float price, int unitId, int materialType, int materialLength)
+    {
         this.id = id;
         this.description = description;
         this.price = price;
@@ -18,39 +20,47 @@ public class Material {
         this.materialLength = materialLength;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
-    public float getPrice() {
+    public float getPrice()
+    {
         return price;
     }
 
-    public int getUnitId() {
+    public int getUnitId()
+    {
         return unitId;
     }
 
-    public int getMaterialType() {
+    public int getMaterialType()
+    {
         return materialType;
     }
 
-    public int getMaterialLength() {
+    public int getMaterialLength()
+    {
         return materialLength;
     }
 
 
-    public void setPrice(float price) {
+    public void setPrice(float price)
+    {
         this.price = price;
     }
 
 
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Material{" +
                 "id=" + id +
                 ", description='" + description + '\'' +

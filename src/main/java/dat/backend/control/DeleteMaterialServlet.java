@@ -1,7 +1,6 @@
 package dat.backend.control;
 
 import dat.backend.model.persistence.ConnectionPool;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

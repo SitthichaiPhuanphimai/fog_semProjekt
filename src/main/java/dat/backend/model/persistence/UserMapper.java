@@ -64,8 +64,7 @@ class UserMapper
                     throw new DatabaseException("The user with username = " + username + " could not be inserted into the database");
                 }
             }
-        }
-        catch (SQLException ex)
+        } catch (SQLException ex)
         {
             throw new DatabaseException(ex, "Could not insert username into database");
         }
@@ -98,7 +97,6 @@ class UserMapper
         }
         return userList;
     }
-
 
 
 }

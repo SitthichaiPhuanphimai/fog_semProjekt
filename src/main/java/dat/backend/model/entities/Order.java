@@ -1,6 +1,5 @@
 package dat.backend.model.entities;
 
-import java.sql.Timestamp;
 
 public class Order
 {

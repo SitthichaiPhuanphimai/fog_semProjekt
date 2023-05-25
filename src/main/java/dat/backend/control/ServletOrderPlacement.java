@@ -1,14 +1,11 @@
 package dat.backend.control;
 
 import dat.backend.model.config.ApplicationStart;
-import dat.backend.model.entities.Item;
 import dat.backend.model.entities.ItemList;
 import dat.backend.model.services.Authentication;
 import dat.backend.model.services.Calculator;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
-import dat.backend.model.persistence.OrderFacade;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
