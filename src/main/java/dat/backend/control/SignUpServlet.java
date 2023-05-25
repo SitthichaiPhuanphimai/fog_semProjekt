@@ -15,17 +15,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @WebServlet(name = "SignUpServlet", value = "/signup")
-public class SignUpServlet extends HttpServlet
-{
-
+public class SignUpServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        try
-        {
+        try {
             ConnectionPool connectionPool = ApplicationStart.getConnectionPool();
 
             String username = request.getParameter("username");
@@ -34,39 +30,39 @@ public class SignUpServlet extends HttpServlet
 
             ArrayList<User> userList = UserFacade.getAllUser(connectionPool);
 
-
-            // These two lines are to remove the existing error messages if the user tries to sign up again
+            // Remove existing error messages
             request.getSession().removeAttribute("userExists");
             request.getSession().removeAttribute("passwordMismatch");
 
-            for (User u : userList) {
-                if (username.toLowerCase().equals(u.getUsername().toLowerCase())) {
-                    request.getSession().setAttribute("userExists", "User already exists");
-                    response.sendRedirect("signup.jsp");
-                    return;
-
-                }
+            if (userExists(username, userList)) {
+                request.getSession().setAttribute("userExists", "User already exists");
+                response.sendRedirect("signup.jsp");
+                return;
             }
-            if (!password.equals(confirmPassword))
-            {
+
+            if (!password.equals(confirmPassword)) {
                 request.getSession().setAttribute("passwordMismatch", "Password is not identical, please try again");
                 System.out.println("Password is not identical, please try again");
                 response.sendRedirect("signup.jsp");
                 return;
             }
-            //Creates our user object with the variables from our request.getParameter and set it to our
-            //createUser method in UserFacade so that it gets created to our DB right away
+
             User user = UserFacade.createUser(username, password, "customer", connectionPool);
 
-
-            //"user" = current user when logged in
             request.getSession().setAttribute("user", user);
             request.getRequestDispatcher("index.jsp").forward(request, response);
 
-
-        } catch (DatabaseException e)
-        {
+        } catch (DatabaseException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean userExists(String username, ArrayList<User> userList) {
+        for (User user : userList) {
+            if (username.equalsIgnoreCase(user.getUsername())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

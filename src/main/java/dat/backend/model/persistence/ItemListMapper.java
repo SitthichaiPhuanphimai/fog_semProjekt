@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class ItemListMapper {
 
-    public static boolean createMaterialList(int orderId, ItemList itemList, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+    public static boolean createMaterialList(int orderId, ItemList itemList, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "INSERT INTO fog.material_list (description, material_id, order_id, quantity) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = connectionPool.getConnection();

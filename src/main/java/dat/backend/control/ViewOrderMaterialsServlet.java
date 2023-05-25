@@ -7,6 +7,7 @@ import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.OrderFacade;
+import dat.backend.model.services.Authentication;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -16,8 +17,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(name = "ViewOrderMaterialsServlet", value = "/ViewOrderMaterials")
-public class ViewOrderMaterialsServlet extends HttpServlet {
+public class ViewOrderMaterialsServlet extends HttpServlet
+{
     private ConnectionPool connectionPool;
+
     @Override
     public void init()
     {
@@ -26,23 +29,31 @@ public class ViewOrderMaterialsServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
 
-        if (user == null) {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
+        if (!Authentication.isUserLoggedIn(request))
+        {
+            Authentication.redirectToLogin(request, response);
 
+        } else
+        {
             int orderId = Integer.parseInt(request.getParameter("orderId"));
+            try
+            {
+                List<Item> orderItems = OrderFacade.getListByOrderId(orderId, connectionPool);
 
-            List<Item> orderItems = OrderFacade.getListByOrderId(orderId, connectionPool);
-            ItemList itemList = new ItemList(orderItems);
 
-
-            request.setAttribute("itemList", orderItems);
-            request.getRequestDispatcher("WEB-INF/viewOrderMaterials.jsp").forward(request, response);
+                request.setAttribute("itemList", orderItems);
+                request.getRequestDispatcher("WEB-INF/viewOrderMaterials.jsp").forward(request, response);
+            } catch (DatabaseException e)
+            {
+                // Handle database error here
+                request.setAttribute("errorMessage", e.getMessage());
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+            }
 
         }
     }
 }
+

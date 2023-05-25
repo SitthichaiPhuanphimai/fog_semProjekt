@@ -9,51 +9,55 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ItemList {
+public class ItemList
+{
 
     private List<Item> itemList;
     private float totalPrice;
 
-    public ItemList(List<Item> itemList) {
+    public ItemList(List<Item> itemList)
+    {
         this.itemList = itemList;
         float totalprice = this.totalPrice;
     }
 
-    public ItemList(List<Item> itemList, float totalPrice) {
+    public ItemList(List<Item> itemList, float totalPrice)
+    {
         this.itemList = itemList;
         this.totalPrice = totalPrice;
 
     }
 
-    public List<Item> getItemList() {
+    public List<Item> getItemList()
+    {
         return this.itemList;
     }
 
-    public float getTotalPrice() {
+    public float getTotalPrice()
+    {
         return this.totalPrice;
     }
 
-    public float calculateTotalPrice(ConnectionPool connectionPool) throws SQLException, DatabaseException {
+    public float calculateTotalPrice(ConnectionPool connectionPool) throws SQLException, DatabaseException
+    {
 
         float totalPrice = 0;
         for (Item item : itemList) {
-            int quantity = item.getQuantity() > 0 ? item.getQuantity() : 1;
-            float priceForWholeLength = item.getPrice() * item.getLength();
-            totalPrice += priceForWholeLength * quantity;
+            totalPrice += (item.getPrice() * item.getLength());
         }
 
+        float totalPriceWithSalesTax = totalPrice * (1 + ItemListFacade.getSalesTax(connectionPool).getValue());
 
-        float salesTax = totalPrice * (1 + ItemListFacade.getSalesTax(connectionPool).getValue());
-
-        float priceWithmoms = salesTax * ItemListFacade.getMoms(connectionPool).getValue();
+        float priceWithMoms = totalPriceWithSalesTax * ItemListFacade.getMoms(connectionPool).getValue();
 
 
-        return salesTax + priceWithmoms;
+        return totalPriceWithSalesTax + priceWithMoms;
     }
 
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "ItemList{" +
                 "itemList=" + itemList +
                 ", totalPrice=" + totalPrice +

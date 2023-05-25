@@ -19,6 +19,11 @@
             <h3>Listen over alle registredede materialer i systemet</h3>
         </div>
 
+        <c:if test="${not empty successMessage}">
+            <div class="success-message">${successMessage}</div>
+        </c:if>
+
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -41,10 +46,14 @@
                     <td>${material.type}</td>
                     <td>${material.length}</td>
                     <td>
-                        <a href="UpdateMaterialServlet?id=${material.id}" style="background-color: dodgerblue; border-color: dodgerblue;color: white">Rediger pris</a>
-                        <form action="/DeleteMaterialServlet" method="post">
+                        <form action="UpdateMaterialServlet" method="get">
                             <input type="hidden" name="id" value="${material.id}">
-                            <input type="submit" value="Slet" style="background-color: orangered;color: white;border-color: orangered">
+                            <input type="submit" value="Rediger Pris" class="btn btn-primary">
+                        </form>
+<%--                        <a href="UpdateMaterialServlet?id=${material.id}" class="btn btn-primary">Edit Price</a>--%>
+                        <form action="DeleteMaterialServlet" method="post">
+                            <input type="hidden" name="id" value="${material.id}">
+                            <input type="submit" value="Delete" class="btn btn-primary">
                         </form>
                     </td>
                 </tr>
@@ -53,13 +62,14 @@
         </table>
         <br>
 
-        <form action="AddNewMaterialServlet" method="GET">
-            <button type="submit" class="btn btn-primary" value="add">Tilføj materiale</button>
+        <form action="AddNewMaterialServlet" method="get">
+            <button type="submit" class="btn btn-primary" value="add">Tilføj Materiale</button>
         </form>
         <br>
-        <form action="RefreshMaterialsServlet" method="post">
-            <button type="submit" class="btn btn-success">Genindlæs data</button>
+        <form action="AdminHomePageServlet" method="get">
+            <button type="submit" class="btn btn-primary">Tilbage til forside</button>
         </form>
+
 
 
     </jsp:body>

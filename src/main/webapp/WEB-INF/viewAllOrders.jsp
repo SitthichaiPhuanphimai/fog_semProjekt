@@ -40,15 +40,15 @@
                                 <form name="skift" action="viewOrdersServlet" method="post">
                                     <input type="hidden" name="orderId" value="${Order.id}">
                                     <select class="form-control form-control-sm mb-2" name="status">
-                                        <option value="Godkendt" ${"approved".equals(Order.status) ? 'selected' : ''}>Godkendt</option>
-                                        <option value="Afventer" ${"pending".equals(Order.status) ? 'selected' : ''}>Afventer</option>
-                                        <option value="Afvist" ${"declined".equals(Order.status) ? 'selected' : ''}>Afvist</option>
+                                        <option value="Approved" ${"approved".equals(Order.status) ? 'selected' : ''}>Godkendt</option>
+                                        <option value="Pending" ${"pending".equals(Order.status) ? 'selected' : ''}>Afventer</option>
+                                        <option value="Declined" ${"declined".equals(Order.status) ? 'selected' : ''}>Afvist</option>
                                     </select>
                                     <input class="btn btn-sm btn-success mb-2" type="submit" name="skift" value="Skift status">
                                 </form>
                             </div>
                             <div class="col-4">
-                                <form name="Slet" action="deleteOrderServlet" method="post" onsubmit="return confirm('Er du sikker på at du vil slette denne ordre?')">
+                                <form name="Slet" action="deleteOrderServlet" method="post" onsubmit="return confirm('Are you sure you want to delete this order?')">
                                     <input type="hidden" name="orderId" value="${Order.id}">
                                     <input class="btn btn-sm btn-danger mb-2" type="submit" name="Slet" value="Slet ordre">
                                 </form>
@@ -68,4 +68,5 @@
         </table>
 
     </jsp:body>
+
 </t:pagetemplate>

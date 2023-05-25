@@ -1,7 +1,6 @@
 package dat.backend.model.persistence;
 
 import dat.backend.model.entities.Item;
-import dat.backend.model.entities.Material;
 import dat.backend.model.exceptions.DatabaseException;
 
 import java.sql.*;
@@ -22,11 +21,10 @@ public class MaterialMapper
     List<Item> materials = new ArrayList<>();
 
         try (Connection conn = connectionPool.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-
-
-    try (ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = conn.prepareStatement(sql))
+        {
+    try (ResultSet rs = ps.executeQuery())
+    {
         while (rs.next()) {
             int id = rs.getInt("id");
             String description = rs.getString("description");

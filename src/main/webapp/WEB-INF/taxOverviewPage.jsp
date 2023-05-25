@@ -15,6 +15,10 @@
 
     <jsp:body>
         <h1>Taxes</h1>
+        <c:if test="${not empty successMessage}">
+            <div class="success-message">${successMessage}</div>
+        </c:if>
+
         <table>
             <thead>
             <tr>
