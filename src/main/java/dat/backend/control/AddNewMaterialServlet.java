@@ -73,7 +73,7 @@ public class AddNewMaterialServlet extends HttpServlet
             {
                 ItemFacade.addNewMaterial(newDescription, newPrice, newUnitID, newMaterialType, newMaterialLength, connectionPool);
 
-                // Refresh the materials list
+
                 List<Item> updatedMaterialsList = MaterialFacade.getMaterials(connectionPool);
                 request.getServletContext().setAttribute("materialList", updatedMaterialsList);
 
@@ -85,9 +85,8 @@ public class AddNewMaterialServlet extends HttpServlet
             }
         } catch (SQLException | ServletException | IOException | DatabaseException e)
         {
-            // Log the error
             e.printStackTrace();
-            // Set the error message and forward to an error page
+
             request.setAttribute("errorMessage", "An error occurred while processing your request");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }

@@ -23,6 +23,12 @@
             <div class="success-message">${successMessage}</div>
         </c:if>
 
+        <c:if test="${deleteSuccess == true}">
+            <p>The material was deleted successfully!</p>
+        </c:if>
+        <c:if test="${deleteSuccess == false}">
+            <p>There was a problem deleting the material.</p>
+        </c:if>
 
         <table class="table table-dark table-hover">
             <thead>
