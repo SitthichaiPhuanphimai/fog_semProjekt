@@ -15,7 +15,20 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ServletOrderPlacement", value = "/ServletOrderPlacement")
+/**
+ * The {@code ServletOrderPlacement} class is responsible for handling the order placement requests.
+ * <p>
+ * This servlet handles both GET and POST HTTP requests. The GET request is used for navigating to the order
+ * placement page, and the POST request is used for processing the order placement data.
+ * <p>
+ * In the case of the POST request, it handles the processing of the order placement data and calculates the
+ * total price of the order. If there are any exceptions during the process, it will forward the request to the
+ * error page.
+ *
+ * @version 1.0
+ */
+
+ @WebServlet(name = "ServletOrderPlacement", value = "/ServletOrderPlacement")
 public class ServletOrderPlacement extends HttpServlet
 {
 

@@ -6,12 +6,13 @@ import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.MaterialFacade;
+import dat.backend.model.services.Authentication;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
-
 
 @WebServlet(name = "ViewMaterialsServlet", value = "/ViewMaterialsServlet")
 public class ViewMaterialsServlet extends HttpServlet
@@ -28,15 +29,16 @@ public class ViewMaterialsServlet extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
 
-        if (user == null)
-        {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else
-        {
+            if (Authentication.isUserLoggedIn(request))
+            {
+                request.getRequestDispatcher("WEB-INF/orderPlacement.jsp").forward(request, response);
+            } else
+            {
+                // Redirect to login page if user not authenticated
+                Authentication.redirectToLogin(request, response);
+            }
             try
             {
                 List<Item> materialList = MaterialFacade.getMaterials(connectionPool);
@@ -63,4 +65,4 @@ public class ViewMaterialsServlet extends HttpServlet
 
 
     }
-}
+

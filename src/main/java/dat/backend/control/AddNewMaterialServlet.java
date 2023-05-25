@@ -24,7 +24,6 @@ import java.util.List;
  * It also includes security checks, redirecting to login if the user is not logged in or doesn't have
  * 'admin' role.
  * @version 1.0
- * @see javax.servlet.http.HttpServlet
  */
 @WebServlet(name = "AddNewMaterialServlet", value = "/AddNewMaterialServlet")
 public class AddNewMaterialServlet extends HttpServlet
@@ -62,6 +61,16 @@ public class AddNewMaterialServlet extends HttpServlet
             e.printStackTrace();
         }
     }
+
+
+/**
+ * Adds a new material with details provided in the request parameters
+ * to the database. After adding the new material, it retrieves the updated material list
+ * and redirects to ToViewMaterialsServlet.
+ * <p>
+ * Includes security checks, redirecting to login if the user is not logged in or doesn't have
+ * 'admin' role.
+ */
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

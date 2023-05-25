@@ -11,7 +11,17 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
-
+/**
+ * The {@code ViewTaxesServlet} class is responsible for handling
+ * the viewing and updating of tax values in the system.
+ * <p>
+ * This servlet handles GET and POST HTTP requests. The GET method retrieves the existing
+ * details of all taxes in the system, which are then forwarded to taxOverviewPage
+ *  The POST method updates the tax value
+ * based on provided user/admin input, and then forwards the updated tax list to taxOverviewPage.jsp
+ *
+ * @version 1.0
+ */
 @WebServlet(name = "ViewTaxesServlet", value = "/ViewTaxesServlet")
 public class ViewTaxesServlet extends HttpServlet {
     private ConnectionPool connectionPool;
@@ -40,6 +50,17 @@ public class ViewTaxesServlet extends HttpServlet {
         }
     }
 
+
+    /**
+     * Processes a POST request, updating the tax value based on provided user input.
+     * This is done by using a static method from the {@code TaxFacade} class.
+     * After updating, the updated tax list is forwarded to taxOverviewPage
+     *
+     * @param request  HttpServletRequest from the client
+     * @param response HttpServletResponse to the client
+     * @throws ServletException If a servlet exception occurs
+     * @throws IOException      If an I/O exception occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int taxId = Integer.parseInt(request.getParameter("id"));

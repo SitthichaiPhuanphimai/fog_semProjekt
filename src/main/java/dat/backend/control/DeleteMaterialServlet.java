@@ -9,12 +9,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The {@code DeleteMaterialServlet} class represents a servlet for
+ * handling the deletion of materials.
+ * <p>
+ * It handles POST requests to delete a specified material, identified by its ID, from the database.
+ *
+ * @version 1.0
+ */
+
 @WebServlet(name = "DeleteMaterialServlet", value = "/DeleteMaterialServlet")
 public class DeleteMaterialServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,7 +37,6 @@ public class DeleteMaterialServlet extends HttpServlet {
             preparedStatement.executeUpdate();
 
             response.sendRedirect("ToViewMaterialsServlet");
-            //request.getRequestDispatcher("/WEB-INF/materialsOverview.jsp").forward(request,response);
         } catch (SQLException sqlException)
         {
             System.out.println("could not delete");
