@@ -2,7 +2,6 @@ package dat.backend.model.persistence;
 
 import dat.backend.model.entities.Tax;
 import dat.backend.model.exceptions.DatabaseException;
-
 import java.util.List;
 
 public class TaxFacade

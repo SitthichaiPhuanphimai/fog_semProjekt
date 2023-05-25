@@ -1,19 +1,12 @@
 package dat.backend.model.persistence;
 
-import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Item;
-import dat.backend.model.entities.Material;
-import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
-
-import javax.servlet.ServletException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Arrays;
 import java.util.List;
 
@@ -168,9 +161,8 @@ public class ItemMapper
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 1)
             {
-                item = new Item(newUnitID, newDescription, newMaterialLength,newPrice,String.valueOf(newUnitID),String.valueOf(newMaterialType));
-            }
-            else
+                item = new Item(newUnitID, newDescription, newMaterialLength, newPrice, String.valueOf(newUnitID), String.valueOf(newMaterialType));
+            } else
             {
                 throw new DatabaseException("The material with description = " + newDescription + " could not be inserted into the database");
             }
@@ -188,14 +180,14 @@ public class ItemMapper
         //List<Material> materialList = (List<Material>) getServletContext().getAttribute("materialList");
 
 
-        if(materialID == 0 || newPrice < 0)
+        if (materialID == 0 || newPrice < 0)
         {
             System.out.println("material not found or price invalid");
-        }else
+        } else
         {
             String query = "UPDATE fog.material SET price_per_unit = ? WHERE id = ?";
-            try(Connection connection = connectionPool.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(query);)
+            try (Connection connection = connectionPool.getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(query);)
             {
                 preparedStatement.setFloat(1, newPrice);
                 preparedStatement.setFloat(2, materialID);
@@ -203,7 +195,7 @@ public class ItemMapper
 
 
                 System.out.println("database update succes");
-            }catch (SQLException sqlException)
+            } catch (SQLException sqlException)
             {
                 System.out.println("could not update");
                 sqlException.printStackTrace();
@@ -237,7 +229,7 @@ public class ItemMapper
                     String unit = rs.getString("unit");
                     String itemType = rs.getString("type");
 
-}
+                }
             } catch (SQLException ex)
             {
                 throw new DatabaseException(ex, "Error getting item. Something went wrong with the database");

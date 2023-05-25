@@ -5,7 +5,6 @@ import dat.backend.model.entities.Order;
 import dat.backend.model.services.Authentication;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.OrdersMapper;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

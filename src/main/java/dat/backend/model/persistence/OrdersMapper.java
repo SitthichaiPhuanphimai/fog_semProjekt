@@ -3,23 +3,26 @@ package dat.backend.model.persistence;
 import dat.backend.model.entities.Item;
 import dat.backend.model.entities.Order;
 import dat.backend.model.exceptions.DatabaseException;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersMapper {
+public class OrdersMapper
+{
 
 
-    public static ArrayList<Order> getAllOrders(ConnectionPool connectionPool) {
+    public static ArrayList<Order> getAllOrders(ConnectionPool connectionPool)
+    {
         String sql = "SELECT * FROM orders";
         ArrayList<Order> ordersList = new ArrayList<>();
 
 
         try (Connection conn = connectionPool.getConnection();
              Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) {
+             ResultSet rs = st.executeQuery(sql))
+        {
+            while (rs.next())
+            {
                 int id = rs.getInt("id");
                 String username = rs.getString("username");
                 String status = rs.getString("status");
@@ -30,7 +33,8 @@ public class OrdersMapper {
             }
 
 
-        } catch (SQLException s) {
+        } catch (SQLException s)
+        {
             System.out.println("Error in the database");
         }
 
@@ -38,23 +42,28 @@ public class OrdersMapper {
     }
 
 
-    public static void deleteOrder(int id, ConnectionPool connectionPool) {
-        try (Connection conn = connectionPool.getConnection()) {
+    public static void deleteOrder(int id, ConnectionPool connectionPool)
+    {
+        try (Connection conn = connectionPool.getConnection())
+        {
 
             String sqlDeleteMaterials = "DELETE FROM material_list WHERE order_id = ?";
             String sqlDeleteOrder = "DELETE FROM orders WHERE id = ?";
 
-            try (PreparedStatement statement = conn.prepareStatement(sqlDeleteMaterials)) {
+            try (PreparedStatement statement = conn.prepareStatement(sqlDeleteMaterials))
+            {
                 statement.setInt(1, id);
                 statement.executeUpdate();
             }
 
-            try (PreparedStatement statement = conn.prepareStatement(sqlDeleteOrder)) {
+            try (PreparedStatement statement = conn.prepareStatement(sqlDeleteOrder))
+            {
                 statement.setInt(1, id);
                 statement.executeUpdate();
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -74,12 +83,15 @@ public class OrdersMapper {
                 "WHERE material_list.order_id = ?";
 
         try (Connection conn = connectionPool.getConnection();
-             PreparedStatement statement = conn.prepareStatement(sql)) {
+             PreparedStatement statement = conn.prepareStatement(sql))
+        {
 
             statement.setInt(1, id);
 
-            try (ResultSet rs = statement.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet rs = statement.executeQuery())
+            {
+                while (rs.next())
+                {
                     int orderID = rs.getInt("order_id");
                     String description = rs.getString("description");
                     int length = rs.getInt("length");
@@ -93,7 +105,8 @@ public class OrdersMapper {
                 }
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             System.out.println("Error in the database");
         }
 
@@ -102,30 +115,37 @@ public class OrdersMapper {
 
     public static void updateOrderStatus(String orderID, String status, ConnectionPool connectionPool) throws DatabaseException
     {
-        try (Connection conn = connectionPool.getConnection()) {
+        try (Connection conn = connectionPool.getConnection())
+        {
             String sql = "UPDATE orders SET status = ? WHERE id = ?";
 
-            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            try (PreparedStatement statement = conn.prepareStatement(sql))
+            {
                 statement.setString(1, status);
                 statement.setString(2, orderID);
                 statement.executeUpdate();
 
-            } catch (SQLException e) {
+            } catch (SQLException e)
+            {
                 System.out.println("Error in the database");
             }
 
 
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
     }
-    public static Order createOrder(String username, float totalPrice, ConnectionPool connectionPool) {
+
+    public static Order createOrder(String username, float totalPrice, ConnectionPool connectionPool)
+    {
         String sql = "INSERT INTO fog.orders (username, status, totalPrice) VALUES (?, ?, ?)";
         Order order = null;
 
         try (Connection conn = connectionPool.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
+        {
 
             ps.setString(1, username);
             ps.setString(2, "pending");
@@ -134,20 +154,25 @@ public class OrdersMapper {
 
             int affectedRows = ps.executeUpdate();
 
-            if (affectedRows == 0) {
+            if (affectedRows == 0)
+            {
                 throw new SQLException("Creating order failed, no rows affected.");
             }
 
-            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
+            try (ResultSet generatedKeys = ps.getGeneratedKeys())
+            {
+                if (generatedKeys.next())
+                {
                     int orderId = generatedKeys.getInt(1);
                     order = new Order(orderId, username, "pending", totalPrice);
-                } else {
+                } else
+                {
                     throw new SQLException("Creating order failed, no ID obtained.");
                 }
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
@@ -155,18 +180,22 @@ public class OrdersMapper {
     }
 
 
-    public static List<Order> getOrdersByUsername(String username, ConnectionPool connectionPool) {
+    public static List<Order> getOrdersByUsername(String username, ConnectionPool connectionPool)
+    {
         String sql = "SELECT * FROM fog.orders WHERE username = ?";
         List<Order> orders = new ArrayList<>();
 
         try (Connection conn = connectionPool.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql))
+        {
 
             ps.setString(1, username);
 
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet rs = ps.executeQuery())
+            {
+                while (rs.next())
+                {
                     int orderId = rs.getInt("id");
                     String status = rs.getString("status");
                     float totalPrice = rs.getFloat("totalPrice");
@@ -175,7 +204,8 @@ public class OrdersMapper {
                 }
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
         }
 

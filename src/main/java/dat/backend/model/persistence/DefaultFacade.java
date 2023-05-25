@@ -4,7 +4,6 @@ import dat.backend.model.entities.LengthDefault;
 import dat.backend.model.entities.TypeDefault;
 import dat.backend.model.entities.UnitDefault;
 import dat.backend.model.exceptions.DatabaseException;
-
 import java.sql.SQLException;
 import java.util.List;
 

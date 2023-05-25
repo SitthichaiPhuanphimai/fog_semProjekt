@@ -9,31 +9,31 @@ public class TaxMapper
 {
     public static List<Tax> getTaxList(ConnectionPool connectionPool)
     {
-            List<Tax> taxList = new ArrayList<>();
+        List<Tax> taxList = new ArrayList<>();
 
-            String query = "SELECT * FROM fog.taxes";
+        String query = "SELECT * FROM fog.taxes";
 
-            try(Connection connection = connectionPool.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                ResultSet resultSet = preparedStatement.executeQuery())
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery())
+        {
+            while (resultSet.next())
             {
-                while (resultSet.next())
-                {
-                    int id = resultSet.getInt("id");
-                    String taxName = resultSet.getString("tax_name");
-                    float taxValue = resultSet.getFloat("tax_value");
+                int id = resultSet.getInt("id");
+                String taxName = resultSet.getString("tax_name");
+                float taxValue = resultSet.getFloat("tax_value");
 
-                    Tax tax = new Tax(id, taxValue, taxName);
-                    taxList.add(tax);
-                }
-
-
-            } catch (SQLException sqlException)
-            {
-                sqlException.printStackTrace();
+                Tax tax = new Tax(id, taxValue, taxName);
+                taxList.add(tax);
             }
 
-            return taxList;
+
+        } catch (SQLException sqlException)
+        {
+            sqlException.printStackTrace();
+        }
+
+        return taxList;
     }
 
     public static void updateTaxValue(int taxId, double newValue, ConnectionPool connectionPool)
