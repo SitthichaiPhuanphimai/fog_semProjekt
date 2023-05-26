@@ -69,7 +69,7 @@ public class OrdersMapper
     }
 
 
-    public static ArrayList<Item> getItemList(int id, ConnectionPool connectionPool)
+    public static ArrayList<Item> getItemList(int id, ConnectionPool connectionPool) throws SQLException
     {
         ArrayList<Item> itemsList = new ArrayList<>();
 

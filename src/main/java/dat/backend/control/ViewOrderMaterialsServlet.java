@@ -10,6 +10,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(name = "ViewOrderMaterialsServlet", value = "/ViewOrderMaterials")
@@ -42,9 +43,8 @@ public class ViewOrderMaterialsServlet extends HttpServlet
 
                 request.setAttribute("itemList", orderItems);
                 request.getRequestDispatcher("WEB-INF/viewOrderMaterials.jsp").forward(request, response);
-            } catch (DatabaseException e)
+            } catch (SQLException e)
             {
-                // Handle database error here
                 request.setAttribute("errorMessage", e.getMessage());
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
             }
