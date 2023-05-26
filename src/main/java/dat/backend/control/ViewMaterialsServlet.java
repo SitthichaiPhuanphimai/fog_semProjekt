@@ -31,14 +31,12 @@ public class ViewMaterialsServlet extends HttpServlet
     {
         HttpSession session = request.getSession();
 
-            if (Authentication.isUserLoggedIn(request))
-            {
-                request.getRequestDispatcher("WEB-INF/orderPlacement.jsp").forward(request, response);
-            } else
-            {
-                // Redirect to login page if user not authenticated
-                Authentication.redirectToLogin(request, response);
-            }
+        if (!Authentication.isUserLoggedIn(request) && !Authentication.isRoleAllowed("admin", request))
+        {
+            Authentication.redirectToLogin(request, response);
+
+        } else
+        {
             try
             {
                 List<Item> materialList = MaterialFacade.getMaterials(connectionPool);
@@ -48,8 +46,8 @@ public class ViewMaterialsServlet extends HttpServlet
 
                 if (session.getAttribute("successMessage") != null)
                 {
-                request.setAttribute("successMessage", session.getAttribute("successMessage"));
-                session.removeAttribute("successMessage");
+                    request.setAttribute("successMessage", session.getAttribute("successMessage"));
+                    session.removeAttribute("successMessage");
                 }
             } catch (DatabaseException e)
             {
@@ -65,4 +63,5 @@ public class ViewMaterialsServlet extends HttpServlet
 
 
     }
+}
 
