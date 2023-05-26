@@ -6,12 +6,13 @@ import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.MaterialFacade;
+import dat.backend.model.services.Authentication;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
-
 
 @WebServlet(name = "ViewMaterialsServlet", value = "/ViewMaterialsServlet")
 public class ViewMaterialsServlet extends HttpServlet
@@ -28,13 +29,12 @@ public class ViewMaterialsServlet extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
 
-        if (user == null)
+        if (!Authentication.isUserLoggedIn(request) && !Authentication.isRoleAllowed("admin", request))
         {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            Authentication.redirectToLogin(request, response);
+
         } else
         {
             try
@@ -46,8 +46,8 @@ public class ViewMaterialsServlet extends HttpServlet
 
                 if (session.getAttribute("successMessage") != null)
                 {
-                request.setAttribute("successMessage", session.getAttribute("successMessage"));
-                session.removeAttribute("successMessage");
+                    request.setAttribute("successMessage", session.getAttribute("successMessage"));
+                    session.removeAttribute("successMessage");
                 }
             } catch (DatabaseException e)
             {
@@ -64,3 +64,4 @@ public class ViewMaterialsServlet extends HttpServlet
 
     }
 }
+

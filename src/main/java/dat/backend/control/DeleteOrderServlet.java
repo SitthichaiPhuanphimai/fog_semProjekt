@@ -13,6 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The {@code DeleteOrderServlet} class is responsible for handling
+ * the deletion of orders.
+ * <p>
+ * It handles POST requests to delete a specified order, identified by its ID, from the database.
+ * After the deletion, it updates the list of all orders and forwards the request to the 'viewAllOrders' page.
+ *
+ * @version 1.0
+ */
 @WebServlet(name = "deleteOrderServlet", value = "/deleteOrderServlet")
 public class DeleteOrderServlet extends HttpServlet
 {

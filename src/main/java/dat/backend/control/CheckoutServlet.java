@@ -15,6 +15,18 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * The {@code CheckoutServlet} class is a HttpServlet that handles POST requests.
+ * <p>
+ * The servlet is responsible for handling the checkout process.
+ * It includes accepting an order, which involves creating an order and a material list
+ * in the database, and then forwarding the user to the order details page.
+ * If the order isn't accepted, it redirects the user to the order placement page so the user can try again.
+ * <p>
+ *
+ * @version 1.0
+ */
+
 @WebServlet(name = "CheckoutServlet", value = "/Checkout")
 public class CheckoutServlet extends HttpServlet
 {
@@ -27,6 +39,18 @@ public class CheckoutServlet extends HttpServlet
         this.connectionPool = ApplicationStart.getConnectionPool();
     }
 
+
+    /**
+     * Handles POST requests. Checks if the user is logged in, and if so, accepts or rejects an order.
+     * The methods used in the process are {@link #acceptOrder(HttpServletRequest, HttpServletResponse, User)} and {@link #redirectToOrderPlacement(HttpServletRequest, HttpServletResponse)}.
+     * Which are outside the scope of this method, and is called upon inside the try-catch block.
+     * The reason for this is to make the code more readable.
+     * <p>
+     * @param request  HttpServletRequest from the client
+     * @param response HttpServletResponse to the client
+     * @throws ServletException If a servlet exception occurs
+     * @throws IOException If an I/O exception occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {

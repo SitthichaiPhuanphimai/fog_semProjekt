@@ -10,6 +10,15 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 
+/**
+ * The {@code DeleteMaterialServlet} class represents a servlet for
+ * handling the deletion of materials.
+ * <p>
+ * It handles POST requests to delete a specified material, identified by its ID, from the database.
+ *
+ * @version 1.0
+ */
+
 @WebServlet(name = "DeleteMaterialServlet", value = "/DeleteMaterialServlet")
 public class DeleteMaterialServlet extends HttpServlet
 {

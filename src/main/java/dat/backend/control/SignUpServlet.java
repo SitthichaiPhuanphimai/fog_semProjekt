@@ -13,6 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The {@code SignUpServlet} class is responsible for handling the user sign up requests.
+ * <p>
+ * This servlet handles POST requests. The request is used for processing the sign-up data
+ * including username, password and password confirmation.
+ * <p>
+ * The servlet checks if the user already exists and if the password matches the confirmation password.
+ * If the validation is successful, it creates a new user in the system and forwards the request to the
+ * home page.
+ *
+ * @version 1.0
+ */
+
 @WebServlet(name = "SignUpServlet", value = "/signup")
 public class SignUpServlet extends HttpServlet {
 
@@ -56,6 +69,13 @@ public class SignUpServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Checks if a user already exists in the system.
+     *
+     * @param username The username to check
+     * @param userList The list of existing users
+     * @return {@code true} if the user already exists, {@code false} otherwise
+     */
     private boolean userExists(String username, ArrayList<User> userList) {
         for (User user : userList) {
             if (username.equalsIgnoreCase(user.getUsername())) {
