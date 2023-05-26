@@ -5,11 +5,11 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-         Welcome to the logged in area
+         Rediger Pris
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-        Logged in area
+        Her kan du redigerer prisen for dit materiale.
     </jsp:attribute>
 
     <jsp:body>
@@ -19,7 +19,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
-                    <form method="post" action="UpdateMaterialServlet" class='card p-3 bg-light' style=" border: 2px solid navy; border-radius: 25px;">
+                    <form method="post" action="UpdateMaterialServlet" class='card p-3 bg-light'
+                          style=" border: 2px solid navy; border-radius: 25px;">
                         <div class="w-35 p-3 rounded-lg" style="border:1px">
                             <label for="price" class="form-label"><strong>Ny Price:</strong></label><br>
                             <input type="number" id="price" name="price" class="form-control" required><br>
@@ -32,9 +33,6 @@
                     </form>
                 </div>
             </div>
-        </div>
-
-            </form>
         </div>
 
     </jsp:body>
