@@ -62,7 +62,7 @@ public class SignUpServlet extends HttpServlet {
             User user = UserFacade.createUser(username, password, "customer", connectionPool);
 
             request.getSession().setAttribute("user", user);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/welcome.jsp").forward(request, response);
 
         } catch (DatabaseException e) {
             e.printStackTrace();
