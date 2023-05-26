@@ -23,9 +23,12 @@
                <input class="btn btn-success" type="submit" value="Byg nu">
             </form>
 
+            <br>
+
             <form action="ViewUserOrders" method="get">
                 <p>Se dine tidligere, og igangværende ordrer</p>
-                <input class="btn btn-success" type="submit" value="Se Ordrer">
+                <input class="btn btn-primary" type="submit" value="Se dine ordre">
+            </form>
         </c:if>
 
         <c:if test="${sessionScope.user == null}">

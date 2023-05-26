@@ -7,34 +7,36 @@
 
 
     <jsp:attribute name="header">
-         Order placement site
+         Bestil din carport
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-        Place Orders
+        Placer ordre
     </jsp:attribute>
 
     <jsp:body>
 
-    <!-- Form for orders -->
-    <div id="body" class="container mt-4" style="min-height: 400px;">
-        <form action="ServletOrderPlacement" method="post">
-            <input type="number" name="length" placeholder="Length" min="0" step="0.01" required="'required'" pattern="{1,100}" title="Det ønskede mål er ikke muligt">
-            <br>
-            <br>
-            <input type="number" name="width" placeholder="Bredde" min="0" step="0.01" required="'required'" pattern="{1,100}" title="det ønskede mål er ikke muligt">
-            <br>
-            <br>
-            <p>Skal carporten have et skur tilknyttet</p>
-                <select name="skur" id="skur">
-                    <option value="ja">ja</option>
-                    <option value="nej">nej</option>
+        <!-- Form for orders -->
+        <div class="container-sm">
+            <form action="ServletOrderPlacement" method="post">
+                <input class="form-control" type="number" name="length" placeholder="Længde" min="0" step="0.01"
+                       required pattern="{1,100}" title="Det ønskede mål er ikke muligt">
+                <br>
+                <br>
+                <input class="form-control" type="number" name="width" placeholder="Bredde" min="0" step="0.01" required
+                       pattern="{1,100}" title="Det ønskede mål er ikke muligt">
+                <br>
+                <br>
+                <p>Skal carporten have et skur tilknyttet</p>
+                <select class="btn btn-secondary dropdown-toggle" name="skur" id="skur">
+                    <option value="ja">Ja</option>
+                    <option value="nej">Nej</option>
                 </select>
-            <br>
-            <br>
-            <input type="submit" name="order" value="Bestil">
-        </form>
-    </div>
+                <br>
+                <br>
+                <input class="btn btn-success" type="submit" name="order" value="Bestil">
+            </form>
+        </div>
 
     </jsp:body>
 

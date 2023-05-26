@@ -13,6 +13,9 @@
     </jsp:attribute>
 
     <jsp:body>
+        <span class="placeholder col-12 bg-primary"></span>
+        <span class="placeholder col-12 bg-secondary"></span>
+        <br><br>
         <style>
             div {
                 text-align: center;
@@ -27,19 +30,7 @@
         </c:if>
 
         <p>Kreer din carport på under 5 minutter</p>
-        <div class="spinner-grow text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-grow text-secondary" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-grow text-success" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
 
-        <span class="placeholder col-12 bg-primary"></span>
-        <span class="placeholder col-12 bg-secondary"></span>
-        <br><br>
 
         <iframe width="560" height="315" src="https://www.youtube.com/embed/IGdZCDEa9no"
                 title="YouTube video player"

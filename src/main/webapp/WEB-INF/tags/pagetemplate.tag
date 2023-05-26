@@ -41,6 +41,10 @@
                                 data-bs-target="#exampleModal">
                             Login
                         </button>
+                        &nbsp;
+                        <form action="signup" method="get">
+                            <input class="btn btn-primary" type="submit" value="Opret bruger"/>
+                        </form>
 
                         <!-- Modal for login -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -63,17 +67,15 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <form action="signup" method="post">
-                                        <p>Har du ikke en bruger?</p>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal">Opret bruger</button>
-                                        </form>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Luk</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Luk
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                     </c:if>
+
                     <c:if test="${sessionScope.user != null }">
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/logout">Log out</a>
                     </c:if>

@@ -8,7 +8,7 @@
 
 
     <jsp:attribute name="header">
-         Order placement site
+         Ordrebekræftelse
     </jsp:attribute>
 
     <jsp:attribute name="footer">
@@ -18,24 +18,30 @@
     <jsp:body>
 
         <div id="orderOverview" class="container mt-4">
-            <h2>Din Order inkluderer: </h2>
+            <h2>Opsummering af din ordre:</h2>
             <br>
-            <h3> Du har valgt længden: ${sessionScope.uLength}</h3> <br>
-            <h3> Du har valgt bredden: ${sessionScope.uWidth}</h3> <br>
-
-            <h3> Den samlede pris for carport <fmt:formatNumber value="${sessionScope.totalPrice}" type="number" minFractionDigits="2" maxFractionDigits="2"/> kr</h3>
+            <h4>Du har valgt længden: ${sessionScope.uLength}</h4>
+            <h4>Du har valgt bredden: ${sessionScope.uWidth}</h4>
+            <br>
 
             <c:if test="${sessionScope.skur != null}">
-                <h3> Din carport kommer med et skur </h3>
+                <h4>Tilkøb af skur = <strong>Ja</strong></h4>
             </c:if>
             <c:if test="${sessionScope.skur = null}">
-            <h3> Carporten kommer ikke med et skur
-                <h3>
+                <h4>Tilkøb af skur = <strong>Nej</strong></h4>
                     </c:if>
-                    <form action="Checkout" method="post">
-                        <input type="submit" name="action" class="btn btn-success" value="Acceptere">
-                        <input type="submit" name="action" class="btn btn-danger" value="Annullere">
-                    </form>
+
+            <br>
+
+            <h4> Den samlede pris for carport <fmt:formatNumber value="${sessionScope.totalPrice}" type="number"
+                                                                minFractionDigits="2" maxFractionDigits="2"/> kr</h4>
+
+            <br>
+
+            <form action="Checkout" method="post">
+                <input type="submit" name="action" class="btn btn-success" value="Accepter">
+                <input type="submit" name="action" class="btn btn-danger" value="Annuller">
+            </form>
         </div>
 
     </jsp:body>
