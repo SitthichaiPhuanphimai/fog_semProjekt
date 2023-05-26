@@ -27,9 +27,10 @@
             <c:if test="${sessionScope.skur != null}">
                 <h4>Tilkøb af skur = <strong>Ja</strong></h4>
             </c:if>
+
             <c:if test="${sessionScope.skur = null}">
                 <h4>Tilkøb af skur = <strong>Nej</strong></h4>
-                    </c:if>
+            </c:if>
 
             <br>
 
@@ -37,9 +38,8 @@
                                                                 minFractionDigits="2" maxFractionDigits="2"/> kr</h4>
 
             <br>
-
             <form action="Checkout" method="post">
-                <input type="submit" name="action" class="btn btn-success" value="Accepter">
+                <input type="submit" name="action" class="btn btn-success" value="Acceptere">
                 <input type="submit" name="action" class="btn btn-danger" value="Annuller">
             </form>
         </div>

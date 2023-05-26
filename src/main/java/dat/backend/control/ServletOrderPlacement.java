@@ -32,7 +32,6 @@ import java.sql.SQLException;
 public class ServletOrderPlacement extends HttpServlet
 {
 
-
     private ConnectionPool connectionPool;
 
     @Override
