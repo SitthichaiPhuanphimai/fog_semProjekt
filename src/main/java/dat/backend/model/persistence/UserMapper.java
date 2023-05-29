@@ -29,7 +29,8 @@ class UserMapper
                 if (rs.next())
                 {
                     String role = rs.getString("role");
-                    user = new User(username, password, role);
+                    String phoneNumber = rs.getString("phone_number");
+                    user = new User(username, phoneNumber, password, role);
                 } else
                 {
                     throw new DatabaseException("Wrong username or password");
@@ -42,11 +43,12 @@ class UserMapper
         return user;
     }
 
-    static User createUser(String username, String password, String role, ConnectionPool connectionPool) throws DatabaseException
+
+    static User createUser(String username, String phoneNumber, String password, String role, ConnectionPool connectionPool) throws DatabaseException
     {
         Logger.getLogger("web").log(Level.INFO, "");
         User user;
-        String sql = "insert into user (username, password, role) values (?,?,?)";
+        String sql = "insert into user (username, password, role, phone_number) values (?,?,?,?)";
         try (Connection connection = connectionPool.getConnection())
         {
 
@@ -55,10 +57,11 @@ class UserMapper
                 ps.setString(1, username);
                 ps.setString(2, password);
                 ps.setString(3, role);
+                ps.setString(4, phoneNumber);
                 int rowsAffected = ps.executeUpdate();
                 if (rowsAffected == 1)
                 {
-                    user = new User(username, password, role);
+                    user = new User(username,phoneNumber, password, role);
                 } else
                 {
                     throw new DatabaseException("The user with username = " + username + " could not be inserted into the database");
@@ -87,8 +90,9 @@ class UserMapper
                 String name = rs.getString("username");
                 String password = rs.getString("password");
                 String role = rs.getString("role");
+                String phoneNumber = rs.getString("phone_number");
 
-                User user = new User(name, password, role);
+                User user = new User(name,phoneNumber,password, role);
                 userList.add(user);
             }
         } catch (SQLException e)

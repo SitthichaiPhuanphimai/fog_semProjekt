@@ -17,6 +17,7 @@
             <tr>
                 <th>Ordre ID</th>
                 <th>Brugernavn</th>
+                <th>Telefon nummer</th>
                 <th>Status</th>
                 <th>Samlet pris</th>
                 <th>Actions</th>
@@ -28,6 +29,7 @@
                 <tr>
                     <td>${Order.id}</td>
                     <td>${Order.username}</td>
+                    <td>${Order.phoneNumber}</td>
                     <td>${Order.status}</td>
                     <td><fmt:formatNumber value="${Order.totalPrice}" type="number" minFractionDigits="2"
                                           maxFractionDigits="2"/> DKK

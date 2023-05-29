@@ -11,9 +11,9 @@ public class OrderFacade
 {
 
 
-    public static Order createOrder(String username, float totalPrice, ConnectionPool connectionPool)
+    public static Order createOrder(String username, String phoneNumber, float totalPrice, ConnectionPool connectionPool)
     {
-        return OrdersMapper.createOrder(username, totalPrice, connectionPool);
+        return OrdersMapper.createOrder(username, phoneNumber, totalPrice, connectionPool);
     }
 
     public static List<Order> getOrdersByUsername(String username, ConnectionPool connectionPool) throws DatabaseException

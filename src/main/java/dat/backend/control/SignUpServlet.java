@@ -42,6 +42,7 @@ public class SignUpServlet extends HttpServlet {
             ConnectionPool connectionPool = ApplicationStart.getConnectionPool();
 
             String username = request.getParameter("username");
+            String phoneNumber = request.getParameter("phoneNumber");
             String password = request.getParameter("password");
             String confirmPassword = request.getParameter("confirmpassword");
 
@@ -64,7 +65,7 @@ public class SignUpServlet extends HttpServlet {
                 return;
             }
 
-            User user = UserFacade.createUser(username, password, "customer", connectionPool);
+            User user = UserFacade.createUser(username,phoneNumber, password, "customer", connectionPool);
 
             request.getSession().setAttribute("user", user);
             request.getRequestDispatcher("WEB-INF/welcome.jsp").forward(request, response);

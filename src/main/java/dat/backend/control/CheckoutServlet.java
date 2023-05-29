@@ -90,12 +90,14 @@ public class CheckoutServlet extends HttpServlet
         float totalPrice = (float) session.getAttribute("totalPrice");
 
         String username = user.getUsername();
+        String phoneNumber = user.getPhoneNumber();
+
 
         // Get item list from session
         ItemList itemList = (ItemList) session.getAttribute("itemList");
 
         // Create order and retrieve order ID
-        Order order = OrderFacade.createOrder(username, totalPrice, connectionPool);
+        Order order = OrderFacade.createOrder(username, phoneNumber, totalPrice, connectionPool);
         session.setAttribute("order", order);
 
         // Insert items into material_list table using the returned order ID

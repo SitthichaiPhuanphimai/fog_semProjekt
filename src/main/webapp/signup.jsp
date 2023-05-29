@@ -26,6 +26,7 @@
 
         <form action="signup" method="post">
             <div class="mb-3"><input class="form-control" type="text" name="username" placeholder="Brugernavn" required></div>
+            <div class="mb-3"><input class="form-control" type="text" name="phoneNumber" placeholder="Telefonnummer" required></div>
             <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Kodeord" required></div>
             <div class="mb-3"><input class="form-control" type="password" name="confirmpassword" placeholder="Bekræft kodeord" required></div>
             <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Opret profil</button></div>

@@ -7,13 +7,15 @@ public class Order
     private String username;
     private String status;
     private float totalPrice;
+    private String phoneNumber;
 
-    public Order(int id, String username, String status, float totalPrice)
+    public Order(int id, String username,String phoneNumber, String status, float totalPrice)
     {
         this.id = id;
         this.username = username;
         this.status = status;
         this.totalPrice = totalPrice;
+        this.phoneNumber = phoneNumber;
     }
 
 
@@ -35,6 +37,11 @@ public class Order
     public float getTotalPrice()
     {
         return totalPrice;
+    }
+
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
     }
 
     @Override

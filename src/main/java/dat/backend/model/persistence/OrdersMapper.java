@@ -25,10 +25,11 @@ public class OrdersMapper
             {
                 int id = rs.getInt("id");
                 String username = rs.getString("username");
+                String phoneNumber = rs.getString("phone_number");
                 String status = rs.getString("status");
                 float totalPrice = rs.getFloat("totalPrice");
 
-                Order order = new Order(id, username, status, totalPrice);
+                Order order = new Order(id, username,phoneNumber, status, totalPrice);
                 ordersList.add(order);
             }
 
@@ -138,9 +139,9 @@ public class OrdersMapper
 
     }
 
-    public static Order createOrder(String username, float totalPrice, ConnectionPool connectionPool)
+    public static Order createOrder(String username, String phoneNumber, float totalPrice, ConnectionPool connectionPool)
     {
-        String sql = "INSERT INTO fog.orders (username, status, totalPrice) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO fog.orders (username, status, totalPrice, phone_number) VALUES (?, ?, ?, ?)";
         Order order = null;
 
         try (Connection conn = connectionPool.getConnection();
@@ -150,7 +151,7 @@ public class OrdersMapper
             ps.setString(1, username);
             ps.setString(2, "pending");
             ps.setFloat(3, totalPrice);
-
+            ps.setString(4, phoneNumber);
 
             int affectedRows = ps.executeUpdate();
 
@@ -164,7 +165,7 @@ public class OrdersMapper
                 if (generatedKeys.next())
                 {
                     int orderId = generatedKeys.getInt(1);
-                    order = new Order(orderId, username, "pending", totalPrice);
+                    order = new Order(orderId, username,phoneNumber, "pending", totalPrice);
                 } else
                 {
                     throw new SQLException("Creating order failed, no ID obtained.");
@@ -198,8 +199,9 @@ public class OrdersMapper
                 {
                     int orderId = rs.getInt("id");
                     String status = rs.getString("status");
+                    String phoneNumber = rs.getString("phone_number");
                     float totalPrice = rs.getFloat("totalPrice");
-                    Order order = new Order(orderId, username, status, totalPrice);
+                    Order order = new Order(orderId, username,phoneNumber, status, totalPrice);
                     orders.add(order);
                 }
             }
