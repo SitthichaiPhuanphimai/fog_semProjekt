@@ -79,6 +79,11 @@ public class CheckoutServlet extends HttpServlet
         }
     }
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("WEB-INF/orderPlacement.jsp").forward(req,resp);
+    }
+
     private void acceptOrder(HttpServletRequest request, HttpServletResponse response, User user) throws DatabaseException, SQLException, ServletException, IOException
     {
         HttpSession session = request.getSession();

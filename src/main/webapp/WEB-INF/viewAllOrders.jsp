@@ -6,9 +6,7 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-        <div class="text-center">
-            <h1>Ordreliste</h1>
-        </div>
+            Ordreliste
     </jsp:attribute>
     <jsp:attribute name="footer"></jsp:attribute>
 

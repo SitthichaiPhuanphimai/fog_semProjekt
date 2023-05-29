@@ -32,8 +32,34 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Page 2</a>
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Page 3</a>
+
+                    <c:if test="${sessionScope.user.role == 'customer'}">
+                        <form action="ServletOrderPlacement">
+                            <input type="submit" value="Bestil din carport"
+                                   style="background:none;border: none;color: black;cursor: pointer;">
+                        </form>
+                        <form action="ViewUserOrders" method="get">
+                            <input type="submit" value="Vis dine ordre"
+                                   style="background:none;border: none;color: black;cursor: pointer;">
+                        </form>
+                    </c:if>
+
+                    <c:if test="${sessionScope.user.role =='admin'}">
+                        <form action="viewOrdersServlet" method="post">
+                            <input type="submit" value="Se alle ordre"
+                                   style="background:none;border: none;color: black;cursor: pointer;">
+                        </form>
+                        <form action="ViewMaterialsServlet" method="get">
+                            <input type="submit" value="Vis alle materialer"
+                                   style="background:none;border: none;color: black;cursor: pointer;">
+                        </form>
+                        <form action="ViewTaxesServlet" method="get">
+                            <input type="submit" value="Ændre momssatser"
+                                   style="background:none;border: none;color: black;cursor: pointer;">
+                        </form>
+                    </c:if>
+
+
                     <c:if test="${sessionScope.user == null }">
 
                         <!-- Login button trigger modal -->
@@ -77,7 +103,11 @@
                     </c:if>
 
                     <c:if test="${sessionScope.user != null }">
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/logout">Log out</a>
+
+                        <form action="logout" method="get">
+                            <input type="submit" value="Log ud"
+                                   style="background:none;border: none;color: black;cursor: pointer;">
+                        </form>
                     </c:if>
                 </div>
             </div>
