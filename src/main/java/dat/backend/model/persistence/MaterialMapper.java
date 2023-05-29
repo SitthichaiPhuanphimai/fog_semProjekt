@@ -51,4 +51,30 @@ public class MaterialMapper
 
         return materials;
     }
+
+    static boolean deleteMaterial(ConnectionPool connectionPool, int materialId)
+    {
+        String query = "DELETE FROM fog.material WHERE id = ?";
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);)
+        {
+            preparedStatement.setInt(1, materialId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            } else
+            {
+                throw new DatabaseException("The material with id = " + materialId + " could not be deleted");
+            }
+        } catch (SQLException | DatabaseException sqlException)
+        {
+            System.out.println("could not delete");
+            sqlException.printStackTrace();
+            return false;
+        }
+
+    }
 }

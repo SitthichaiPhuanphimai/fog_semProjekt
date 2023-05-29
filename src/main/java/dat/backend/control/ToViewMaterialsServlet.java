@@ -11,9 +11,7 @@ public class ToViewMaterialsServlet extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        request.getRequestDispatcher("ViewMaterialsServlet").forward(request,response);
-
-
+        request.getRequestDispatcher("ViewMaterialsServlet").forward(request, response);
     }
 
 }

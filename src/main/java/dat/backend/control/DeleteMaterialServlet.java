@@ -1,13 +1,14 @@
 package dat.backend.control;
 
 import dat.backend.model.persistence.ConnectionPool;
+
+import dat.backend.model.persistence.MaterialFacade;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 
 /**
  * The {@code DeleteMaterialServlet} class represents a servlet for
@@ -19,29 +20,21 @@ import java.sql.SQLException;
  */
 
 @WebServlet(name = "DeleteMaterialServlet", value = "/DeleteMaterialServlet")
-public class DeleteMaterialServlet extends HttpServlet {
-
-
+public class DeleteMaterialServlet extends HttpServlet
+{
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
         ConnectionPool connectionPool = new ConnectionPool();
-        int materialID = Integer.parseInt(request.getParameter("id"));
+        int materialId = Integer.parseInt(request.getParameter("id"));
 
-        String query = "DELETE FROM fog.material WHERE id = ?";
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-        )
-        {
-            preparedStatement.setInt(1, materialID);
-            preparedStatement.executeUpdate();
+        MaterialFacade.deleteMaterial(connectionPool, materialId);
 
-            response.sendRedirect("ToViewMaterialsServlet");
-        } catch (SQLException sqlException)
-        {
-            System.out.println("could not delete");
-            sqlException.printStackTrace();
-        }
+        HttpSession session = request.getSession();
+        session.setAttribute("deleteSuccess", true);
+
+        response.sendRedirect("ToViewMaterialsServlet");
 
     }
 }

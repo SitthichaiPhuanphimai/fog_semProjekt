@@ -27,7 +27,6 @@
             <p>A serious error happened at the server.</p>
         </c:if>
 
-
         <c:if test="${requestScope.errormessage != null}">
             <p>${requestScope.errormessage}</p>
         </c:if>
