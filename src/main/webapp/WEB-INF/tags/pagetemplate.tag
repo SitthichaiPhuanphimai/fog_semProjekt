@@ -86,9 +86,9 @@
                                         <h3>Log venligst ind for at fortsætte</h3>
                                         <form action="login" method="post">
                                             <label for="username">Brugernavn: </label><br>
-                                            <input type="text" id="username" name="username"/><br>
+                                            <input type="text" id="username" name="username" required/><br>
                                             <label for="password">Adgangskode: </label><br>
-                                            <input type="password" id="password" name="password"/><br><br>
+                                            <input type="password" id="password" name="password" required/><br><br>
                                             <input type="submit" class="btn btn-success" value="Log in"/>
                                         </form>
                                     </div>

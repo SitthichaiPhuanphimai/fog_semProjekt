@@ -5,16 +5,16 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-         Welcome to the logged in area
+         Opdatere Pris
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-        Logged in area
+        Her kan du opdatere prisen for et materiale
     </jsp:attribute>
 
     <jsp:body>
 
-        <h3>Here you can edit a material</h3>
+        <h3>Udfyld nedenfor for at opdatere prisen</h3>
         <br>
         <div class="container">
             <div class="row">
@@ -22,6 +22,7 @@
                     <form method="post" action="UpdateMaterialServlet" class='card p-3 bg-light' style=" border: 2px solid navy; border-radius: 25px;">
                         <div class="w-35 p-3 rounded-lg" style="border:1px">
                             <label for="price" class="form-label"><strong>Ny Price:</strong></label><br>
+                            <input type="hidden" name="id" value="${material.id}">
                             <input type="number" id="price" name="price" class="form-control" required><br>
                             <div id="descriptionHelp" class="form-text">Udfyld den nye pris for materialet</div>
                         </div>
@@ -34,8 +35,6 @@
             </div>
         </div>
 
-            </form>
-        </div>
 
     </jsp:body>
 
