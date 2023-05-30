@@ -47,12 +47,12 @@ public class OrdersMapperTest {
             try (Statement stmt = testConnection.createStatement())
             {
 
-                // TODO: Remove all rows from all tables - add your own tables here
+
                 stmt.execute("delete from fog_test.orders");
 
-                // TODO: Insert a few users - insert rows into your own tables here
-                stmt.execute("insert into fog_test.orders (username, status) " +
-                        "values ('testUser','pending'),('testUser2','pending')");
+
+                stmt.execute("insert into fog_test.orders (username, status,totalPrice,phone_number) " +
+                        "values ('testUser','pending',100,'12345678'),('testUser2','pending',100,'87654321')");
 
 
             }
