@@ -14,7 +14,7 @@ import java.util.List;
  * required to build a carport of a certain length and width.
  * Each method in this class calculates the amount of a specific item needed.
  *
- * Each method in this class class a method from the {@code ItemFacade} class
+ * Each method in this class calls a method from the {@code ItemFacade} class
  * because the calculations we are doing are based on the items in the database.
  * That is why we are giving the methods in this class a {@code ConnectionPool} object
  * so that it can retrieve the items from the database when called upon.
